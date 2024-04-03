@@ -8,18 +8,18 @@ The project generates boilerplate code for Flask applications.
 `os module is purposely use in this project for some reasons`
 
 
-1. File and Directory Management:
-`Create, delete, rename, move, and check the existence of files and directories`.
-**Get file/directory attributes (size, creation time, etc.).**
-**List directory contents.**
-**Change the current working directory.**
+**1. File and Directory Management:**
+1. Create, delete, rename, move, and check the existence of files and directories.
+2. Get file/directory attributes (size, creation time, etc.).
+3. List directory contents.
+4. Change the current working directory.
 
-2. process management.
-**Execute system commands and capture their output.** 
-**Get information about running processes.**
+**2. process management.**
+1. Execute system commands and capture their output.
+2. Get information about running processes.
 
-3. Environment Variables:
-**Get, set, and delete environment variables**
+**3. Environment Variables:**
+1. Get, set, and delete environment variables
 
 4. Path Manipulation:
 **Join path components to create valid file paths across different operating systems.**
