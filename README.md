@@ -3,12 +3,13 @@
 The project generates boilerplate code for Flask applications.
 
 
-# This project uses os & sys modules
+# This project uses os and sys modules
 
 `os module is purposely use in this project for some reasons`
 
+
 1. File and Directory Management:
-**Create, delete, rename, move, and check the existence of files and directories.**
+`Create, delete, rename, move, and check the existence of files and directories`.
 **Get file/directory attributes (size, creation time, etc.).**
 **List directory contents.**
 **Change the current working directory.**
