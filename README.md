@@ -46,7 +46,6 @@ The project generates boilerplate code for Flask applications.
 `sys moduel is purposely use for some reasons`
 
 **Functions:**
-
 1. sys.argv: A list containing the command-line arguments passed to the Python script when it's executed. The first element (sys.argv[0]) is always the script name itself, and subsequent elements are the arguments provided.
 
 2. sys.exit(exit_code=0): Exits the Python script with an optional exit code. The exit code can be used to indicate success (0) or an error condition (a non-zero value).
@@ -61,8 +60,8 @@ The project generates boilerplate code for Flask applications.
 
 7. sys.version: A string containing the Python interpreter version information.
 
-# Attributes:
 
+# Attributes:
 1. sys.platform: A string indicating the operating system platform the script is running on (e.g., 'win32', 'linux', 'darwin').
 
 2. sys.path: A list containing the search path for modules. This list determines where Python looks for modules when you use the import statement. You can modify sys.path to add custom directories containing modules.
