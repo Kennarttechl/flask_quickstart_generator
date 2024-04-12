@@ -102,7 +102,7 @@ def app_security_headers_middleware(response):
     
 # Import and register blueprint containing application routes
 from my_demo_app.views.routes import view
-from my_demo_app.errors.handlers import errors_
+from my_demo_app.errors.handler import errors_
 from my_demo_app.authentication.authent import authent_
 
 
@@ -259,15 +259,16 @@ class CmdHandler():
         print(f"{GREEN}Please wait installing, Flask, Flask-Session, Flask-SQLAlchemy and Flask-Migrate{RESET}")
         os.system("pip install Flask Flask-Session Flask-SQLAlchemy Flask-Migrate")
 
+    # @staticmethod
     def create_flask_app_structure(app_folder_name):
         try:
             if not os.path.exists(app_folder_name):
                 os.mkdir(app_folder_name)
                 with open(file="app.py", mode="w") as file:
-                    file.write(APP_STARTUP)
+                    file.write(APP_STARTUP.replace("my_demo_app",  app_folder_name))
 
                 with open(file=f"{app_folder_name}/__init__.py", mode="w") as file:
-                    file.write(APP_SETTINGS)
+                    file.write(APP_SETTINGS.replace("my_demo_app", app_folder_name))
                 
                 with open(file=f"{app_folder_name}/.gitignore", mode="w") as file:
                     file.write(GITIGNORE)
@@ -289,10 +290,9 @@ class CmdHandler():
                     if dir in ["templates", "views", "errors", "authentication", "database", "config"]:
                         for temp, value in content.items():
                             with open(os.path.join(app_folder_name, dir, temp), mode="w") as file:
-                                file.write(value)
+                                file.write(value.replace("my_demo_app", app_folder_name))
             else:
                 print(f"{YELLOW} The Folder {app_folder_name} already exists. {RESET}")
         except FileExistsError as e:
             print(f"{YELLOW} Error: {e}{RESET}")
-
         

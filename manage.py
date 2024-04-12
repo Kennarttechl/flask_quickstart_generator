@@ -25,7 +25,7 @@ flask-cli:
     
     command for creating the project folder:
         * python manage.py create-app [project/app name]
-          example =>  python manage.py create-app my_demo_app
+          example =>  python manage.py create-app my_demo_app or any random name.
 
     commands for creating virtualenv venv:
         * python manage.py -i create-app 
