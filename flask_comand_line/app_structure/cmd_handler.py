@@ -1,5 +1,9 @@
 import os
-from flask_cli.app_template.html import BASE_HTML, DEMO_HTML
+from flask_comand_line.app_template.html import (
+    BASE_HTML, 
+    DEMO_HTML, 
+    FLASH_MESSAGE
+)
 
 
 APP_SETTINGS = """
@@ -102,13 +106,19 @@ def app_security_headers_middleware(response):
     
 # Import and register blueprint containing application routes
 from my_demo_app.views.routes import view
-from my_demo_app.errors.handler import errors_
-from my_demo_app.authentication.authent import authent_
+from my_demo_app.search.routes import search_
+from my_demo_app.errors.routes import errors_
+from my_demo_app.admin.routes import admin_controller
+from my_demo_app.authentication.routes import authent_
+from my_demo_app.password_reset.routes import reset_pswd
 
 
 app.register_blueprint(view, url_prefix="/")
+app.register_blueprint(search_, url_prefix="/")
 app.register_blueprint(errors_, url_prefix="/")
 app.register_blueprint(authent_, url_prefix="/")
+app.register_blueprint(reset_pswd, url_prefix="/")
+app.register_blueprint(admin_controller, url_prefix="/")
 """
 
 
@@ -127,11 +137,11 @@ class Session(db.Model):
 
     def __repr__(self):
         return f"Session('{self.session_id}')"
-    
 """
 
 
-APP_STARTUP = """
+APP_STARTUP = \
+"""
 from my_demo_app import db, app
 
 
@@ -143,7 +153,8 @@ if __name__ == "__main__":
 """
 
 
-VIEW_TEMPLATE_CODE = """
+VIEW_TEMPLATE_CODE = \
+"""
 from flask import render_template, Blueprint
 
 
@@ -157,7 +168,23 @@ def home_page():
 """
 
 
-ERROR_HANDLER_TEMPLATE_CODE = """
+SEARCH_TEMPLATE_CODE = \
+"""
+from flask import render_template, Blueprint
+
+
+search_ = Blueprint("search_", __name__, template_folder="templates", 
+static_url_path="static")
+
+
+@search_.route("/")
+def search_page():
+    return render_template("search.html")
+"""
+
+
+ERROR_HANDLER_TEMPLATE_CODE = \
+"""
 from http import HTTPStatus
 from flask import render_template, Blueprint
 
@@ -178,11 +205,11 @@ def error_404(error):
 @errors_.app_errorhandler(500)
 def error_500(error):
     return render_template("error_500.html"), HTTPStatus.INTERNAL_SERVER_ERROR
-
 """
 
 
-AUTHENTICATION_TEMPLATE_CODE = """
+AUTHENTICATION_TEMPLATE_CODE = \
+"""
 from flask import render_template, Blueprint
 
 
@@ -190,11 +217,41 @@ authent_ = Blueprint("authent_", __name__, template_folder="templates", static_u
 
 
 @authent_.route("/")
-def demo_page():
+def secure_authenticate():
     return render_template("authent.html")
 """
 
-GITIGNORE = """
+
+RESET_PASSWORD_TEMPLATE_CODE = \
+"""
+from flask import render_template, Blueprint
+
+
+reset_pswd = Blueprint("reset_pswd", __name__, template_folder="templates", static_url_path="static")
+
+
+@reset_pswd.route("/")
+def secure_password():
+    return render_template("reset_pswd.html")
+"""
+
+
+ADMIN_TEMPLATE_CODE = \
+"""
+from flask import render_template, Blueprint
+
+
+admin_controller = Blueprint("admin_controller", __name__, template_folder="templates", static_url_path="static")
+
+
+@admin_controller.route("/")
+def controller():
+    return render_template("controller.html")
+"""
+
+
+GITIGNORE = \
+"""
 *.db
 venv/
 config/.venv
@@ -205,7 +262,8 @@ config/.venv
 APP_STRUCTURE = {
     "templates": {
         "base.html": BASE_HTML, 
-        "index.html": DEMO_HTML
+        "index.html": DEMO_HTML,
+        "message.html": FLASH_MESSAGE
         },
     
     "views": {
@@ -214,19 +272,38 @@ APP_STRUCTURE = {
         },
     
     "errors": {
-        "handler.py": ERROR_HANDLER_TEMPLATE_CODE,
+        "routes.py": ERROR_HANDLER_TEMPLATE_CODE,
         "__init__.py": "",
     },
     
     "authentication":{
-      "authent.py": AUTHENTICATION_TEMPLATE_CODE,
+      "routes.py": AUTHENTICATION_TEMPLATE_CODE,
+      "form.py": "",
+      "__init__.py": ""  
+    },
+    
+    "password_reset":{
+      "routes.py": RESET_PASSWORD_TEMPLATE_CODE,
+      "form.py": "",
+      "__init__.py": ""  
+    },
+    
+    "search":{
+      "routes.py": SEARCH_TEMPLATE_CODE,
+      "form.py": "",
+      "__init__.py": ""  
+    },
+    
+    "admin":{
+      "routes.py": ADMIN_TEMPLATE_CODE,
+      "form.py": "",
       "__init__.py": ""  
     },
 
     "static": {
         "css": "style.css", 
         "js": "script.js", 
-        "images": "flask_cli.png",
+        "media": "flask_cli.png",
         },
     
     "database": {
@@ -276,7 +353,7 @@ class CmdHandler():
                 for dir, content in APP_STRUCTURE.items():
                     os.mkdir(os.path.join(app_folder_name, dir))
                     
-                    if dir in ["errors", "views", "authentication"]:
+                    if dir in ["errors", "views", "authentication", "admin", "search", "password_reset"]:
                         os.mkdir(os.path.join(app_folder_name, dir, "templates"))
 
                     if dir in ["static"]:
@@ -287,7 +364,7 @@ class CmdHandler():
                             ) as file:
                                 file.write("")
 
-                    if dir in ["templates", "views", "errors", "authentication", "database", "config"]:
+                    if dir in ["templates", "views", "errors", "authentication", "database", "config", "admin", "search", "password_reset"]:
                         for temp, value in content.items():
                             with open(os.path.join(app_folder_name, dir, temp), mode="w") as file:
                                 file.write(value.replace("my_demo_app", app_folder_name))

@@ -1,5 +1,6 @@
 
-BASE_HTML = """
+BASE_HTML = \
+"""
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +29,8 @@ BASE_HTML = """
 """
 
 
-DEMO_HTML = """
+DEMO_HTML = \
+"""
 {% extends "base.html" %}
     
 {% block body %}
@@ -57,4 +59,42 @@ DEMO_HTML = """
     </div>
 </section>
 {% endblock body %}
+"""
+
+
+FLASH_MESSAGE = \
+"""
+{% assets "new_css" %}
+<link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
+{% endassets %}
+
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/fontawesome.min.css') }}"
+/>
+
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/bost-4.1.3/css/bootstrap.min.css')}}"
+/>
+
+{% block message %}
+<div class="container">
+  <div class="flash--message">
+    {% with messages = get_flashed_messages(with_categories=True) %} {% if
+    messages %} {% for category, message in messages %} {% if category ==
+    "error" %}
+
+    <div class="alert alert-danger alter-dismissable fade show" role="alert">
+      {{ message|safe }}
+    </div>
+
+    {% else %}
+    <div class="alert alert-success alter-dismissable fade show" role="alert">
+      {{ message|safe }}
+    </div>
+    {% endif %}{% endfor %}{% endif %}{% endwith %}
+  </div>
+</div>
+{% endblock message %}
 """
