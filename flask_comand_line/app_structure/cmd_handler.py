@@ -9,11 +9,14 @@ from flask_comand_line.app_template.html import (
 APP_SETTINGS = """
 import os
 import secrets 
+from flask_babel import Babel
+from flask_caching import Cache
 from flask_migrate import Migrate
 from flask_session import Session
 from flask_wtf.csrf import CSRFProtect
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, redirect
+from flask_assets import Environment, Bundle
 
 
 # Create a Flask application instance
@@ -36,15 +39,55 @@ DATABASE_PATH = os.path.join(APP_DATABASE, "Database.db") # Database name can be
 app.config["SECRET_KEY"] = SECRET_KEY
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DATABASE_PATH}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+app.config['BABEL_DEFAULT_LOCALE'] = 'en_US'
+app.config['BABEL_DEFAULT_TIMEZONE'] = 'UTC'
 
 
-# Initialize database, CSRF protection, and migration management instances
+# Configure Flask-Caching
+app.config['CACHE_TYPE'] = 'simple'  # You can use 'simple', 'redis', 'memcached'
+app.config['CACHE_DEFAULT_TIMEOUT'] = 300  # Cache timeout in seconds (e.g., 300 seconds = 5 minutes)
+
+
+# Initialize database, babel, cache, CSRF protection, and migration management instances
+babel = Babel(app)
+cache = Cache(app) 
+cache.init_app(app)
 db = SQLAlchemy(app)
 csrf = CSRFProtect(app) # Protect against Cross-Site Request Forgery (CSRF) attacks
 migrate = Migrate(app, db) # Database migration with Flask-Migrate
 
 
+#Flask_Asset for minifying js & css code for faster page loading
+assets = Environment(app)
+
+
+#Creating an instance of the Bundle
+js = Bundle(
+    # filters="",
+    # output="",
+)
+
+
+bootjs = Bundle(
+    # filters="",
+    # output="",
+)
+
+
+css = Bundle(
+    # filters="",
+    # output="",
+)
+
+
+# Flask asset registration
+assets.register("main_js", js)
+assets.register("new_css", css)
+assets.register("bootstrap_js", bootjs)
+
+
 # Configure Flask-Session for database-backed sessions
+app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_TYPE'] = 'sqlalchemy'  # Use SQLAlchemy backend
 app.config['SESSION_SQLALCHEMY'] = db  # Reference SQLAlchemy instance
 app.config['SESSION_SQLALCHEMY_TABLE'] = "flask_sessions"  # Use the Session model
@@ -159,7 +202,7 @@ from flask import render_template, Blueprint
 
 
 view = Blueprint("view", __name__, template_folder="templates", 
-static_url_path="static")
+static_folder="static")
 
 
 @view.route("/")
@@ -174,12 +217,12 @@ from flask import render_template, Blueprint
 
 
 search_ = Blueprint("search_", __name__, template_folder="templates", 
-static_url_path="static")
+static_folder="static")
 
 
 @search_.route("/")
-def search_page():
-    return render_template("search.html")
+def search_item():
+    return render_template("item_search.html")
 """
 
 
@@ -189,7 +232,7 @@ from http import HTTPStatus
 from flask import render_template, Blueprint
 
 
-errors_ = Blueprint("errors_", __name__, template_folder="templates", static_url_path="static")
+errors_ = Blueprint("errors_", __name__, template_folder="templates", static_folder="static")
 
 
 @errors_.app_errorhandler(403)
@@ -227,7 +270,7 @@ RESET_PASSWORD_TEMPLATE_CODE = \
 from flask import render_template, Blueprint
 
 
-reset_pswd = Blueprint("reset_pswd", __name__, template_folder="templates", static_url_path="static")
+reset_pswd = Blueprint("reset_pswd", __name__, template_folder="templates", static_folder="static")
 
 
 @reset_pswd.route("/")
@@ -241,7 +284,7 @@ ADMIN_TEMPLATE_CODE = \
 from flask import render_template, Blueprint
 
 
-admin_controller = Blueprint("admin_controller", __name__, template_folder="templates", static_url_path="static")
+admin_controller = Blueprint("admin_controller", __name__, template_folder="templates", static_folder="static")
 
 
 @admin_controller.route("/")
@@ -257,7 +300,7 @@ venv/
 config/.venv
 **/*/__pycache__
 """
-    
+
 
 APP_STRUCTURE = {
     "templates": {
@@ -325,18 +368,19 @@ RESET = '\033[0m'
 
 #ANSI escape color code for displaying or printing sucessful message
 YELLOW = "\033[33m"
-RESET = "\033[0m"
+RESET = "\033[0m" 
 
 
 class CmdHandler():
 
+    @staticmethod
     def init():
         print(f"{GREEN}Please wait, app is setting up virtual environment......{RESET}")
         os.system("pip install virtualenv && virtualenv env")
         print(f"{GREEN}Please wait installing, Flask, Flask-Session, Flask-SQLAlchemy and Flask-Migrate{RESET}")
         os.system("pip install Flask Flask-Session Flask-SQLAlchemy Flask-Migrate")
 
-    # @staticmethod
+    @staticmethod
     def create_flask_app_structure(app_folder_name):
         try:
             if not os.path.exists(app_folder_name):
@@ -349,12 +393,45 @@ class CmdHandler():
                 
                 with open(file=f"{app_folder_name}/.gitignore", mode="w") as file:
                     file.write(GITIGNORE)
-
+                                          
                 for dir, content in APP_STRUCTURE.items():
                     os.mkdir(os.path.join(app_folder_name, dir))
                     
                     if dir in ["errors", "views", "authentication", "admin", "search", "password_reset"]:
-                        os.mkdir(os.path.join(app_folder_name, dir, "templates"))
+                        template_folder = os.path.join(app_folder_name, dir, "templates")
+                        os.mkdir(template_folder)
+                        
+                        # Create a specific file based on the directory
+                        if dir == "errors":
+                            file_name = "error_404.html"
+                        elif dir == "views":
+                            file_name = "view.html"
+                        elif dir == "authentication":
+                            file_name = "authent.html"
+                        elif dir == "admin":
+                            file_name = "controller.html"
+                        elif dir == "search":
+                            file_name = "item_search.html"
+                        elif dir == "password_reset":
+                            file_name = "reset_pswd.html"
+                        
+                        # Generate the file path and write content
+                        file_path = os.path.join(template_folder, file_name)
+                        with open(file_path, mode="w") as file:
+                            file.write(f"<!-- This is the {file_name} template -->")
+                            
+                    # Check if the directory is "errors"
+                    if dir in "errors":
+                        # For error 500
+                        file_name_500 = "error_500.html"
+                        with open(os.path.join(template_folder, file_name_500), mode="w") as file:
+                            file.write("<!-- This is the error_500.html template -->")
+
+                        # For error 403
+                        file_name_403 = "error_403.html"
+                        with open(os.path.join(template_folder, file_name_403), mode="w") as file:
+                            file.write("<!-- This is the error_403.html template -->")
+
 
                     if dir in ["static"]:
                         for static_dir, value in content.items():
@@ -371,5 +448,6 @@ class CmdHandler():
             else:
                 print(f"{YELLOW} The Folder {app_folder_name} already exists. {RESET}")
         except FileExistsError as e:
-            print(f"{YELLOW} Error: {e}{RESET}")
-        
+            print(f"{YELLOW} Error: {e}{RESET}")  
+
+

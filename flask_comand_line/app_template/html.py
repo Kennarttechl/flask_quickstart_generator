@@ -37,11 +37,12 @@ DEMO_HTML = \
     <section class="hero is-primary">
     <div class="hero-body">
         <div class="container">
-            <h1 class="title is-1">
-                Welcome to Flask CLI
-            </h1>
+            <h3 class="title is-1">
+                Welcome to Flask Boiler Plate!! You can now begin writing your logic
+                OR add more folder..
+            </h3>
             <h2 class="subtitle">
-                By eliminating repetitive tasks, you can focus on the core logic of your application.
+               Congratulation!!
             </h2>
         </div>
     </div>
