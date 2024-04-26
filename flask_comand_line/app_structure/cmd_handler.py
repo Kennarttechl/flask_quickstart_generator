@@ -256,7 +256,7 @@ AUTHENTICATION_TEMPLATE_CODE = \
 from flask import render_template, Blueprint
 
 
-authent_ = Blueprint("authent_", __name__, template_folder="templates", static_url_path="static")
+authent_ = Blueprint("authent_", __name__, template_folder="templates", static_folder="static")
 
 
 @authent_.route("/")
@@ -298,6 +298,7 @@ GITIGNORE = \
 *.db
 venv/
 config/.venv
+__pycache__
 **/*/__pycache__
 """
 
@@ -372,26 +373,26 @@ RESET = "\033[0m"
 
 
 class CmdHandler():
-
-    @staticmethod
+    
     def init():
         print(f"{GREEN}Please wait, app is setting up virtual environment......{RESET}")
-        os.system("pip install virtualenv && virtualenv env")
-        print(f"{GREEN}Please wait installing, Flask, Flask-Session, Flask-SQLAlchemy and Flask-Migrate{RESET}")
-        os.system("pip install Flask Flask-Session Flask-SQLAlchemy Flask-Migrate")
+        os.system("pip install virtualenv")
+        os.system("virtualenv env")
+        os.system("source env/Scripts/activate && pip install Flask, Flask-Session, flask-babel, Flask-Session, Flask-Caching, Flask-Assets, Flask-SQLAlchemy and Flask-Migrate")
 
-    @staticmethod
-    def create_flask_app_structure(app_folder_name):
+        print(f"{GREEN}Please wait installing, Flask, Flask-Session, flask-babel, Flask-Session, Flask-Caching, Flask-Assets, Flask-SQLAlchemy and Flask-Migrate{RESET}")
+    
+    def create_flask_app_folder(app_folder_name):
         try:
             if not os.path.exists(app_folder_name):
                 os.mkdir(app_folder_name)
                 with open(file="app.py", mode="w") as file:
                     file.write(APP_STARTUP.replace("my_demo_app",  app_folder_name))
 
-                with open(file=f"{app_folder_name}/__init__.py", mode="w") as file:
+                with open(file=os.path.join(app_folder_name, "__init__.py"), mode="w") as file:
                     file.write(APP_SETTINGS.replace("my_demo_app", app_folder_name))
                 
-                with open(file=f"{app_folder_name}/.gitignore", mode="w") as file:
+                with open(file=os.path.join(app_folder_name, ".gitignore"), mode="w") as file:
                     file.write(GITIGNORE)
                                           
                 for dir, content in APP_STRUCTURE.items():
@@ -401,53 +402,36 @@ class CmdHandler():
                         template_folder = os.path.join(app_folder_name, dir, "templates")
                         os.mkdir(template_folder)
                         
-                        # Create a specific file based on the directory
                         if dir == "errors":
-                            file_name = "error_404.html"
-                        elif dir == "views":
-                            file_name = "view.html"
-                        elif dir == "authentication":
-                            file_name = "authent.html"
-                        elif dir == "admin":
-                            file_name = "controller.html"
-                        elif dir == "search":
-                            file_name = "item_search.html"
-                        elif dir == "password_reset":
-                            file_name = "reset_pswd.html"
-                        
-                        # Generate the file path and write content
-                        file_path = os.path.join(template_folder, file_name)
-                        with open(file_path, mode="w") as file:
-                            file.write(f"<!-- This is the {file_name} template -->")
+                            error_files = ["error_403.html", "error_404.html", "error_500.html"]
+                            for error_file in error_files:
+                                file_path = os.path.join(template_folder, error_file)
+                                with open(file=file_path, mode="w") as file:
+                                    file.write(f"<!-- This is the {error_file} template -->")
+                        else:
+                            template_filenames = {
+                                "views": "view.html",
+                                "authentication": "authent.html",
+                                "admin": "controller.html",
+                                "search": "item_search.html",
+                                "password_reset": "reset_pswd.html"
+                            }
+                            file_name = template_filenames.get(dir, None)
+                            if file_name:
+                                file_path = os.path.join(template_folder, file_name)
+                                with open(file=file_path, mode="w") as file:
+                                    file.write(f"<!-- This is the {file_name} template -->")
                             
-                    # Check if the directory is "errors"
-                    if dir in "errors":
-                        # For error 500
-                        file_name_500 = "error_500.html"
-                        with open(os.path.join(template_folder, file_name_500), mode="w") as file:
-                            file.write("<!-- This is the error_500.html template -->")
-
-                        # For error 403
-                        file_name_403 = "error_403.html"
-                        with open(os.path.join(template_folder, file_name_403), mode="w") as file:
-                            file.write("<!-- This is the error_403.html template -->")
-
-
-                    if dir in ["static"]:
+                    if dir == "static":
                         for static_dir, value in content.items():
                             os.makedirs(os.path.join(app_folder_name, dir, static_dir))
-                            with open(
-                                os.path.join(app_folder_name, dir, static_dir, value), mode="w"
-                            ) as file:
-                                file.write("")
-
+                            open(os.path.join(app_folder_name, dir, static_dir, value), 'w').close()
+                                
                     if dir in ["templates", "views", "errors", "authentication", "database", "config", "admin", "search", "password_reset"]:
                         for temp, value in content.items():
-                            with open(os.path.join(app_folder_name, dir, temp), mode="w") as file:
+                            with open(file=os.path.join(app_folder_name, dir, temp), mode="w") as file:
                                 file.write(value.replace("my_demo_app", app_folder_name))
             else:
                 print(f"{YELLOW} The Folder {app_folder_name} already exists. {RESET}")
         except FileExistsError as e:
             print(f"{YELLOW} Error: {e}{RESET}")  
-
-

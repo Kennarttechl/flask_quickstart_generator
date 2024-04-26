@@ -12,7 +12,7 @@ BASE_HTML = \
 <title>{% block title %}Flask Boiler Plate{% endblock %}</title>
 {% endblock head %}
 
-<link rel="icon" href="{{ url_for('static', filename='icons/brand-logo.svg')}}">
+<link rel="icon" href="">
 </head>
 <body>
 {% block body %}

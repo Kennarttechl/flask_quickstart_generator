@@ -38,7 +38,7 @@ def main():
     argument = sys.argv[2].strip() if len(sys.argv) > 2 else ""
 
     if command == "create-app" and argument != "":
-        CmdHandler.create_flask_app_structure(argument)
+        CmdHandler.create_flask_app_folder(argument)
         print(f"{GREEN}Project created sucessfully{RESET}")
         # print(success_color + "Project created successfully!" + Style.RESET_ALL)
 
