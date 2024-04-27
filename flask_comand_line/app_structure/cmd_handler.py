@@ -299,6 +299,7 @@ GITIGNORE = \
 venv/
 config/.venv
 __pycache__
+/__pycache__
 **/*/__pycache__
 """
 
@@ -376,11 +377,26 @@ class CmdHandler():
     
     def init():
         print(f"{GREEN}Please wait, app is setting up virtual environment......{RESET}")
+        
         os.system("pip install virtualenv")
-        os.system("virtualenv env")
-        os.system("source env/Scripts/activate && pip install Flask, Flask-Session, flask-babel, Flask-Session, Flask-Caching, Flask-Assets, Flask-SQLAlchemy and Flask-Migrate")
+        
+        os.system("python -m venv venv")
+        
+        print(f"{GREEN}Successfully created virtual environment{RESET}")
+        
+        print("")
 
         print(f"{GREEN}Please wait installing, Flask, Flask-Session, flask-babel, Flask-Session, Flask-Caching, Flask-Assets, Flask-SQLAlchemy and Flask-Migrate{RESET}")
+        
+        os.system("pip install Flask Flask-Session flask-babel Flask-Caching Flask-Assets Flask-SQLAlchemy Flask-Migrate")
+        
+        print(f"{GREEN}These packages are installed globally on your computer. To use them, activate your virtual environment and reinstall them inside.{RESET}")
+        
+        print("")
+
+        print(f"{YELLOW}To activate the virtual environment, navigate into the 'venv' directory and run 'Scripts/activate' on Windows or 'source bin/activate' on Unix-based systems.{RESET}")
+
+        print("")
     
     def create_flask_app_folder(app_folder_name):
         try:
@@ -422,10 +438,14 @@ class CmdHandler():
                                 with open(file=file_path, mode="w") as file:
                                     file.write(f"<!-- This is the {file_name} template -->")
                             
+                            
                     if dir == "static":
                         for static_dir, value in content.items():
                             os.makedirs(os.path.join(app_folder_name, dir, static_dir))
-                            open(os.path.join(app_folder_name, dir, static_dir, value), 'w').close()
+                            with open(file=
+                                os.path.join(app_folder_name, dir, static_dir, value), mode="w") as file:
+                                file.write("")
+
                                 
                     if dir in ["templates", "views", "errors", "authentication", "database", "config", "admin", "search", "password_reset"]:
                         for temp, value in content.items():

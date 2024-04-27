@@ -33,25 +33,48 @@ flask-cli:
         * python manage.py --init create-app  
 """
 
+
 def main():
     command = sys.argv[1].strip() if len(sys.argv) > 1 else ""
     argument = sys.argv[2].strip() if len(sys.argv) > 2 else ""
+    project_name = sys.argv[3].strip() if len(sys.argv) > 3 else ""
 
-    if command == "create-app" and argument != "":
-        CmdHandler.create_flask_app_folder(argument)
-        print(f"{GREEN}Project created sucessfully{RESET}")
-        # print(success_color + "Project created successfully!" + Style.RESET_ALL)
-
-    elif command in ["--init", "-i"]:
+    if command == "-v" and argument == "create-app" and project_name != "":
         CmdHandler.init()
-        print(f"{GREEN}Sucessfully create virtualenv env{RESET}")
+        CmdHandler.create_flask_app_folder(project_name)
+        print(f"{GREEN}Project created successfully{RESET}")
+
+    elif command == "-v" and argument == "":
+        CmdHandler.init()
+        print(f"{GREEN}Virtual environment created successfully{RESET}")
+
+    elif command == "create-app" and argument != "":
+        CmdHandler.create_flask_app_folder(argument)
+        print(f"{GREEN}Project created successfully{RESET}")
 
     else:
         sys.exit(f"{YELLOW}{docs}{RESET}")
 
-
 if __name__ == "__main__":
     main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
