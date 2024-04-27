@@ -1,7 +1,7 @@
 import sys
 import argparse
 # from colorama import Fore, Style
-from flask_comand_line.app_structure.cmd_handler import CmdHandler
+from flask_boilerplate.app_structure.cmd_handler import CmdHandler
 
 
 # ANSI escape color code for displaying or printing sucessful message

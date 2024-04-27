@@ -1,5 +1,5 @@
 import os
-from flask_comand_line.app_template.html import (
+from flask_boilerplate.app_template.html import (
     BASE_HTML, 
     DEMO_HTML, 
     FLASH_MESSAGE
