@@ -386,7 +386,7 @@ class CmdHandler():
         
         print("")
 
-        print(f"{GREEN}Please wait installing, Flask, Flask-Session, flask-babel, Flask-Session, Flask-Caching, Flask-Assets, Flask-SQLAlchemy and Flask-Migrate{RESET}")
+        print(f"{YELLOW}Please wait installing, Flask, Flask-Session, flask-babel, Flask-Session, Flask-Caching, Flask-Assets, Flask-SQLAlchemy and Flask-Migrate{RESET}")
         
         os.system("pip install Flask Flask-Session flask-babel Flask-Caching Flask-Assets Flask-SQLAlchemy Flask-Migrate")
         
@@ -426,7 +426,7 @@ class CmdHandler():
                                     file.write(f"<!-- This is the {error_file} template -->")
                         else:
                             template_filenames = {
-                                "views": "view.html",
+                                "views": "index.html",
                                 "authentication": "authent.html",
                                 "admin": "controller.html",
                                 "search": "item_search.html",

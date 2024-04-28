@@ -48,6 +48,10 @@ The project generates boilerplate code for Flask applications.
 **Functions:**
 1. sys.argv: A list containing the command-line arguments passed to the Python script when it's executed. The first element (sys.argv[0]) is always the script name itself, and subsequent elements are the arguments provided.
 
+1. 1 In Python, argv is a built-in list variable that represents the arguments passed to a script when it's executed from the command line.
+
+2. 2 Use sys.argv when your script needs to process command-line arguments (arguments passed when running the script).
+
 2. sys.exit(exit_code=0): Exits the Python script with an optional exit code. The exit code can be used to indicate success (0) or an error condition (a non-zero value).
 
 3. sys.getsizeof(object): Returns the approximate memory size, in bytes, of an object. This can be helpful for debugging memory usage.

@@ -1,7 +1,6 @@
 from setuptools import setup, find_packages
 
 
-
 setup(
     name="flask_command_line",  # Keep the project name the same for installation
     version="0.1.0",

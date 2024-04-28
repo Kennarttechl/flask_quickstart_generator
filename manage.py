@@ -35,6 +35,8 @@ flask-cli:
 
 
 def main():
+    """This function is the entry point for the script's execution."""
+    
     command = sys.argv[1].strip() if len(sys.argv) > 1 else ""
     argument = sys.argv[2].strip() if len(sys.argv) > 2 else ""
     project_name = sys.argv[3].strip() if len(sys.argv) > 3 else ""
@@ -57,24 +59,6 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
