@@ -1,8 +1,10 @@
 import os
+from flask_boilerplate.app_template.css import DEMO_CSS
 from flask_boilerplate.app_template.html import (
+    DEMO_HTML,
     BASE_HTML, 
-    DEMO_HTML, 
-    FLASH_MESSAGE
+    FLASH_MESSAGE,
+    DEMO_HTML_TEMPLATES
 )
 
 
@@ -69,20 +71,21 @@ js = Bundle(
 
 
 bootjs = Bundle(
-    # filters="",
-    # output="",
+    # filters="jsmin",
+    # output="gen/packed.js",
 )
 
 
 css = Bundle(
-    # filters="",
-    # output="",
+    "css/base_main.css",
+    filters="cssmin",
+    output="gen/packed.css",
 )
 
 
 # Flask asset registration
 assets.register("main_js", js)
-assets.register("new_css", css)
+assets.register("base_main_", css)
 assets.register("bootstrap_js", bootjs)
 
 
@@ -346,7 +349,7 @@ APP_STRUCTURE = {
     },
 
     "static": {
-        "css": "style.css", 
+        "css": "base_main.css", 
         "js": "script.js", 
         "media": "flask_cli.png",
         },
@@ -423,7 +426,7 @@ class CmdHandler():
                             for error_file in error_files:
                                 file_path = os.path.join(template_folder, error_file)
                                 with open(file=file_path, mode="w") as file:
-                                    file.write(f"<!-- This is the {error_file} template -->")
+                                    file.write(f"<!-- This is the  template -->\n{DEMO_HTML_TEMPLATES}")
                         else:
                             template_filenames = {
                                 "views": "index.html",
@@ -432,11 +435,12 @@ class CmdHandler():
                                 "search": "item_search.html",
                                 "password_reset": "reset_pswd.html"
                             }
+                            
                             file_name = template_filenames.get(dir, None)
                             if file_name:
                                 file_path = os.path.join(template_folder, file_name)
                                 with open(file=file_path, mode="w") as file:
-                                    file.write(f"<!-- This is the {file_name} template -->")
+                                    file.write(f"<!-- This is the {file_name} template -->\n{DEMO_HTML_TEMPLATES}")
                             
                             
                     if dir == "static":
@@ -444,7 +448,7 @@ class CmdHandler():
                             os.makedirs(os.path.join(app_folder_name, dir, static_dir))
                             with open(file=
                                 os.path.join(app_folder_name, dir, static_dir, value), mode="w") as file:
-                                file.write("")
+                                file.write(DEMO_CSS)
 
                                 
                     if dir in ["templates", "views", "errors", "authentication", "database", "config", "admin", "search", "password_reset"]:
