@@ -129,9 +129,13 @@ def app_security_headers_middleware(response):
     
     # Content-Security-Policy (Basic implementation): Provides a starting point for restricting resource loading.
     
+    '''Content-Security-Policy (CSP) Header
+    The Content-Security-Policy (CSP) header is a security feature that helps prevent various types of attacks, such as Cross-Site Scripting (XSS) and data injection attacks. It allows web developers to control which resources (e.g., scripts, stylesheets, fonts, images) the browser is allowed to load for a specific web page.'''
+    
     # X-Frame-Options: # Prevent clickjacking
     
-    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin" 
+    # Or you can set response.headers to "no-referrer" to prevent any information leaking from your site.
 
     response.headers["X-Content-Type-Options"] = "nosniff"
     
@@ -140,12 +144,20 @@ def app_security_headers_middleware(response):
     response.headers["Content-Security-Policy"] = (
         "default-src 'self'; "
         "script-src 'self' https://cdn.example.com https://cdnjs.cloudflare.com; "
-        "style-src 'self' https://cdn.example.com; "
+        "style-src 'self' https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css; "
         "font-src 'self' https://fonts.gstatic.com; "
         "img-src 'self' https://cdn.example.com data;"
+        
+        #"style-src 'self' https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css https://example.com/other.css static/css/;" Example of of accepting or including more links
     )
 
     response.headers["X-Frame-Options"] = "DENY" # Prevent clickjacking
+    
+    # When this js code is type in the console and execute it display empty page and block the page from displaying in iframe
+    
+    ''' var iframe = document.createElement('iframe');
+    iframe.src = 'http://127.0.0.1:5000/';
+    document.body.appendChild(iframe); '''
 
     return response
     
@@ -389,7 +401,7 @@ class CmdHandler():
         
         print("")
 
-        print(f"{YELLOW}Please wait installing, Flask, Flask-Session, flask-babel, Flask-Session, Flask-Caching, Flask-Assets, Flask-SQLAlchemy and Flask-Migrate{RESET}")
+        print(f"{YELLOW}Please wait installing, Flask, Flask-Session, flask-babel, Flask-Caching, Flask-Assets, Flask-SQLAlchemy and Flask-Migrate{RESET}")
         
         os.system("pip install Flask Flask-Session flask-babel Flask-Caching Flask-Assets Flask-SQLAlchemy Flask-Migrate")
         

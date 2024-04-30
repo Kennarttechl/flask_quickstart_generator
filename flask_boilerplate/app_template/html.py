@@ -6,13 +6,15 @@ BASE_HTML = \
 <head>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE-edge">
-<meta name="viewport" content="device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 {% block head %}
-<title>{% block title %}Flask Boiler Plate{% endblock title %}</title>
+<title>{% block title %}Flask BoilerPlate{% endblock title %}</title>
 {% endblock head %}
 
 <link rel="icon" href="">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
 </head>
 
 {% assets "base_main_" %}
@@ -21,9 +23,7 @@ BASE_HTML = \
 
 <body>
 {% block body %}
-<h2>Flask Boiler Plate</h2>
-<p>Congratulation!</p>
-{% endblock body %}
+
 
 
 <div class="flash--message">
@@ -32,14 +32,12 @@ BASE_HTML = \
   "error" %}
 
   <div class="alert alert-danger alter-dismissable fade show" role="alert">
-    <!-- <i class="bi bi-x-circle-fill"></i> -->
     <i class="fa-solid fa-circle-xmark"></i>
     {{ message }}
   </div>
 
   {% else %}
   <div class="alert alert-success alter-dismissable fade show" role="alert">
-    <!-- <i class="bi bi-check-circle-fill"></i> -->
     <i class="fa-solid fa-circle-check"></i>
     {{ message }} {% endif %}{% endfor %}{% endif %}{% endwith %}
   </div>
@@ -52,7 +50,9 @@ BASE_HTML = \
 {% assets "bootstrap_js" %}
 <script src="{{ ASSET_URL }}"></script>
 {% endassets %}
+
 {% block content %}{% endblock content %}
+{% endblock body %}
 
 {% block footer %}
 {% endblock footer %}
@@ -78,9 +78,6 @@ DEMO_HTML_TEMPLATES = \
 {% block body %}
 
 
-
-
-
 {% assets "main_js" %}
 <script src="{{ ASSET_URL }}"></script>
 {% endassets %}
@@ -89,6 +86,8 @@ DEMO_HTML_TEMPLATES = \
 <script src="{{ ASSET_URL }}"></script>
 {% endassets %}
 
+{% block footer %}
+{% endblock footer %}
 {% endblock body %}
 """
 
@@ -98,19 +97,41 @@ DEMO_HTML = \
 {% extends "base.html" %}
 
 {% block body %}
-    <!-- Hero section with background image -->
-    <section class="hero is-primary is-fullheight" style="background-image: url('https://via.placeholder.com/1500x800')">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title is-1">
-                    Welcome to Flask Boilerplate Generator
-                </h1>
-                <h2 class="subtitle">
-                    Kickstart your Flask projects with ease
-                </h2>
-            </div>
+<section class="hero is-primary">
+    <div class="hero-body">
+        <div class="container">
+            <h1 class="title is-1">
+                Welcome to Flask Boilerplate Generator
+            </h1>
+            <h2 class="subtitle">
+                By eliminating repetitive tasks, you can focus on the core logic of your application.
+            </h2>
         </div>
-    </section>
+    </div>
+</section>
+
+<section class="section">
+    <div class="container">
+        <div class="content">
+            <h1></h1>
+            <h1>flask-boilerplate</h1>
+            <ul>
+                <li class=""><b>-v  for creating virtualenv</b></li>
+                <li class=""> <b>command for creating app => create-app </b> <i>my_demo_app</i></li>
+            </ul>
+        </div>
+    </div>
+</section>
+    
+{% block footer %}
+<footer class="footer is-fixed-bottom">
+    <div class="content has-text-centered">
+    <p>
+      Happy Hacking!
+    </p>
+    </div>
+</footer>
+{% endblock footer %}
 {% endblock body %}
 """
 
@@ -118,7 +139,7 @@ DEMO_HTML = \
 FLASH_MESSAGE = \
 """
 {% assets "new_css" %}
-<link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
+<link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
 {% endassets %}
 
 <link
