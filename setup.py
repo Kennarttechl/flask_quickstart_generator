@@ -34,15 +34,16 @@ setup(
     install_requires=[
         "Flask",
         "flask-babel",
+        "Flask-Limiter"
         "Flask-Caching",
         "Flask-Session",
         "Flask-Migrate",
         "Flask-SQLAlchemy"
     ],
-    # django-admin = django.core.management:execute_from_command_line
+
     entry_points={
         "console_scripts": [
-            "manage = flask_boilerplate.manage:main"  
+            "manage = flask_boilerplate.manage:manage"  
         ],
     },
     

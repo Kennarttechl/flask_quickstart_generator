@@ -24,6 +24,8 @@ BASE_HTML = \
 <body>
 {% block body %}
 
+<!-- Write the rest of your code hear -->
+
 
 
 <div class="flash--message">
@@ -43,9 +45,11 @@ BASE_HTML = \
   </div>
 </div>
 
+
 {% assets "main_js" %}
 <script src="{{ ASSET_URL }}"></script>
 {% endassets %}
+
 
 {% assets "bootstrap_js" %}
 <script src="{{ ASSET_URL }}"></script>
@@ -53,6 +57,7 @@ BASE_HTML = \
 
 {% block content %}{% endblock content %}
 {% endblock body %}
+
 
 {% block footer %}
 {% endblock footer %}
@@ -67,8 +72,6 @@ DEMO_HTML_TEMPLATES = \
 
 {% block head %}
 <title>{% block title %}Flask Boiler_Plate{% endblock title %}</title>
-
-<link rel="icon" href="">
 
 {% assets "new_css" %}
 <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>

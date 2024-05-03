@@ -8,17 +8,20 @@ from flask_boilerplate.app_template.html import (
 )
 
 
-APP_SETTINGS = """
+APP_SETTINGS = \
+"""
 import os
-import secrets 
+import secrets
 from flask_babel import Babel
 from flask_caching import Cache
+from flask_limiter import Limiter
 from flask_migrate import Migrate
 from flask_session import Session
 from flask_wtf.csrf import CSRFProtect
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, request, redirect
 from flask_assets import Environment, Bundle
+from flask_limiter.util import get_remote_address
 
 
 # Create a Flask application instance
@@ -28,42 +31,65 @@ app = Flask(__name__)
 # SECURITY WARNING: keep the secret key used in production secret!
 # Use a secure environment variable to store the secret key.
 # You can use the 'secrets' module (available in Python 3.6+) to generate a secret key:
-SECRET_KEY = 'flask-insecure-c#y(k55srf&7q^i@mi+f*tw_%ll$^w@#cd1=fwa6&8tr^2qwv1'
-secret_key = secrets.token_urlsafe(20) # Generate a secure secret key
+SECRET_KEY = "flask-insecure-c#y(k55srf&7q^i@mi+f*tw_%ll$^w@#cd1=fwa6&8tr^2qwv1"
+secret_key = secrets.token_urlsafe(20)  # Generate a secure secret key
 
 
-# Define the database path relative to the application directory 
+# Define the database path relative to the application directory
 APP_DATABASE = os.path.join(os.path.dirname(__file__), "database")
-DATABASE_PATH = os.path.join(APP_DATABASE, "Database.db") # Database name can be change
+DATABASE_PATH = os.path.join(APP_DATABASE, "Database.db")  # Database name can be change
+
+
+#Flask-Limiter adds rate limiting to Flask applications (e.g limiting the number of request a client can send).
+limiter = Limiter(
+    app=app,
+    headers_enabled=True,
+    storage_uri="memory://",
+    key_func=get_remote_address,
+    default_limits=["3000 per hour"],
+)
 
 
 # Configure Flask application settings
 app.config["SECRET_KEY"] = SECRET_KEY
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DATABASE_PATH}"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.config['BABEL_DEFAULT_LOCALE'] = 'en_US'
-app.config['BABEL_DEFAULT_TIMEZONE'] = 'UTC'
+app.config["BABEL_DEFAULT_LOCALE"] = "en_US"
+app.config["BABEL_DEFAULT_TIMEZONE"] = "UTC"
 
 
 # Configure Flask-Caching
-app.config['CACHE_TYPE'] = 'simple'  # You can use 'simple', 'redis', 'memcached'
-app.config['CACHE_DEFAULT_TIMEOUT'] = 300  # Cache timeout in seconds (e.g., 300 seconds = 5 minutes)
+app.config["CACHE_TYPE"] = "simple"  # You can use 'simple', 'redis', 'memcached'
+app.config["CACHE_DEFAULT_TIMEOUT"] = (
+    300  # Cache timeout in seconds (e.g., 300 seconds = 5 minutes)
+)
 
 
 # Initialize database, babel, cache, CSRF protection, and migration management instances
 babel = Babel(app)
-cache = Cache(app) 
+cache = Cache(app)
 cache.init_app(app)
 db = SQLAlchemy(app)
-csrf = CSRFProtect(app) # Protect against Cross-Site Request Forgery (CSRF) attacks
-migrate = Migrate(app, db) # Database migration with Flask-Migrate
+csrf = CSRFProtect(app)  # Protect against Cross-Site Request Forgery (CSRF) attacks
+migrate = Migrate(app, db)  # Database migration with Flask-Migrate
 
 
-#Flask_Asset for minifying js & css code for faster page loading
+# Configure Flask-Session for database-backed sessions
+app.config["SESSION_COOKIE_HTTPONLY"] = True
+app.config["SESSION_TYPE"] = "sqlalchemy"  # Use SQLAlchemy backend
+app.config["SESSION_SQLALCHEMY"] = db  # Reference SQLAlchemy instance
+app.config["SESSION_SQLALCHEMY_TABLE"] = "flask_sessions"  # Use the Session model
+app.config["SESSION_PERMANENT"] = False  # Set to True for persistent sessions
+app.config["SESSION_USE_SIGNER"] = True  # Use a secret key for signing
+
+Session(app)  # Initialize Flask-Session extension
+
+
+# Flask_Asset for minifying js & css code for faster page loading
 assets = Environment(app)
 
 
-#Creating an instance of the Bundle
+# Creating an instance of the Bundle
 js = Bundle(
     # filters="",
     # output="",
@@ -89,23 +115,12 @@ assets.register("base_main_", css)
 assets.register("bootstrap_js", bootjs)
 
 
-# Configure Flask-Session for database-backed sessions
-app.config['SESSION_COOKIE_HTTPONLY'] = True
-app.config['SESSION_TYPE'] = 'sqlalchemy'  # Use SQLAlchemy backend
-app.config['SESSION_SQLALCHEMY'] = db  # Reference SQLAlchemy instance
-app.config['SESSION_SQLALCHEMY_TABLE'] = "flask_sessions"  # Use the Session model
-app.config['SESSION_PERMANENT'] = False  # Set to True for persistent sessions
-app.config['SESSION_USE_SIGNER'] = True  # Use a secret key for signing
-
-Session(app)  # Initialize Flask-Session extension
-
-
 @app.before_request
 def app_middleware():
-    #This middleware function performs several actions before each request:
+    # This middleware function performs several actions before each request:
 
     # URL Canonicalization: Redirects URLs with uppercase letters to lowercase for consistent URL handling.
-    
+
     # Trailing Slash Removal: Removes trailing slashes from URLs except for the root URL, promoting cleaner URLs.
 
     # URL Canonicalization: Redirect URLs with uppercase letters to lowercase
@@ -113,8 +128,8 @@ def app_middleware():
         return redirect(request.path.lower())
 
     # Remove trailing slashes except for root URL
-    if request.path != '/' and request.path.endswith('/'):
-        return redirect(request.path.rstrip('/'))
+    if request.path != "/" and request.path.endswith("/"):
+        return redirect(request.path.rstrip("/"))
 
 
 @app.after_request
@@ -135,11 +150,9 @@ def app_security_headers_middleware(response):
     # X-Frame-Options: # Prevent clickjacking
     
     response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin" 
-    # Or you can set response.headers to "no-referrer" to prevent any information leaking from your site.
+    # You can set response.headers to "no-referrer" to prevent any information leaking from your site.
 
     response.headers["X-Content-Type-Options"] = "nosniff"
-    
-    response.headers["Content-Security-Policy"] = "default-src 'self'"
 
     response.headers["Content-Security-Policy"] = (
         "default-src 'self'; "
@@ -148,18 +161,19 @@ def app_security_headers_middleware(response):
         "font-src 'self' https://fonts.gstatic.com; "
         "img-src 'self' https://cdn.example.com data;"
         
-        #"style-src 'self' https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css https://example.com/other.css static/css/;" Example of of accepting or including more links
+        #Example of adding 1 or more links to => "style-src 'self' https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css https://example.com/other.css static/css/;" 
     )
 
     response.headers["X-Frame-Options"] = "DENY" # Prevent clickjacking
     
-    # When this js code is type in the console and execute it display empty page and block the page from displaying in iframe
+    # When executed the code below in a browser's console, it attempts to create an iframe pointing to http://127.0.0.1:5000/. However, because you've set the X-Frame-Options header to DENY, the browser will refuse to load your web page within an iframe, regardless of where it's hosted.
     
     ''' var iframe = document.createElement('iframe');
     iframe.src = 'http://127.0.0.1:5000/';
     document.body.appendChild(iframe); '''
 
     return response
+    
     
     
 # Import and register blueprint containing application routes
@@ -186,6 +200,8 @@ from my_demo_app import db
 
 
 
+
+
 class Session(db.Model):
     __tablename__ = 'sessions'  # Customize table name if desired
 
@@ -203,6 +219,7 @@ APP_STARTUP = \
 from my_demo_app import db, app
 
 
+
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
@@ -214,6 +231,8 @@ if __name__ == "__main__":
 VIEW_TEMPLATE_CODE = \
 """
 from flask import render_template, Blueprint
+
+
 
 
 view = Blueprint("view", __name__, template_folder="templates", 
@@ -228,7 +247,9 @@ def home_page():
 
 SEARCH_TEMPLATE_CODE = \
 """
+from my_demo_app import limiter
 from flask import render_template, Blueprint
+
 
 
 search_ = Blueprint("search_", __name__, template_folder="templates", 
@@ -236,6 +257,7 @@ static_folder="static")
 
 
 @search_.route("/")
+@limiter.limit("4 per minute")
 def search_item():
     return render_template("item_search.html")
 """
@@ -244,7 +266,8 @@ def search_item():
 ERROR_HANDLER_TEMPLATE_CODE = \
 """
 from http import HTTPStatus
-from flask import render_template, Blueprint
+from flask import render_template, Blueprint, flash
+
 
 
 errors_ = Blueprint("errors_", __name__, template_folder="templates", static_folder="static")
@@ -258,31 +281,49 @@ def error_403(error):
 @errors_.app_errorhandler(404)
 def error_404(error):
     return render_template("error_404.html"), HTTPStatus.NOT_FOUND
+
+
+@errors_.app_errorhandler(429)
+def error_429(error):
+    flash(message="Your request is too much, try again in a few minute", category="error")
+    return render_template("error_429.html"), HTTPStatus.TOO_MANY_REQUESTS
     
 
 @errors_.app_errorhandler(500)
 def error_500(error):
     return render_template("error_500.html"), HTTPStatus.INTERNAL_SERVER_ERROR
+    
 """
 
 
 AUTHENTICATION_TEMPLATE_CODE = \
 """
+from my_demo_app import app, limiter
 from flask import render_template, Blueprint
+
 
 
 authent_ = Blueprint("authent_", __name__, template_folder="templates", static_folder="static")
 
 
 @authent_.route("/")
-def secure_authenticate():
-    return render_template("authent.html")
+@limiter.limit("5 per minute")
+def secure_register():
+    return render_template("register.html")
+
+    
+@authent_.route("/")
+@limiter.limit("5 per minute")
+def secure_login():
+    return render_template("login.html")
 """
 
 
 RESET_PASSWORD_TEMPLATE_CODE = \
 """
 from flask import render_template, Blueprint
+
+
 
 
 reset_pswd = Blueprint("reset_pswd", __name__, template_folder="templates", static_folder="static")
@@ -297,6 +338,8 @@ def secure_password():
 ADMIN_TEMPLATE_CODE = \
 """
 from flask import render_template, Blueprint
+
+
 
 
 admin_controller = Blueprint("admin_controller", __name__, template_folder="templates", static_folder="static")
@@ -401,9 +444,9 @@ class CmdHandler():
         
         print("")
 
-        print(f"{YELLOW}Please wait installing, Flask, Flask-Session, flask-babel, Flask-Caching, Flask-Assets, Flask-SQLAlchemy and Flask-Migrate{RESET}")
+        print(f"{YELLOW}Please wait installing, Flask, Flask-Session, Flask-Limiter, flask-babel, Flask-Caching, Flask-Assets, Flask-SQLAlchemy and Flask-Migrate{RESET}")
         
-        os.system("pip install Flask Flask-Session flask-babel Flask-Caching Flask-Assets Flask-SQLAlchemy Flask-Migrate")
+        os.system("pip install Flask Flask-Session flask-babel Flask-Limiter Flask-Caching Flask-Assets Flask-SQLAlchemy Flask-Migrate")
         
         print(f"{GREEN}These packages are installed globally on your computer. To use them, activate your virtual environment and reinstall them inside.{RESET}")
         
@@ -434,17 +477,18 @@ class CmdHandler():
                         os.mkdir(template_folder)
                         
                         if dir == "errors":
-                            error_files = ["error_403.html", "error_404.html", "error_500.html"]
+                            error_files = ["error_403.html", "error_404.html", "error_500.html", "error_429.html"]
                             for error_file in error_files:
                                 file_path = os.path.join(template_folder, error_file)
                                 with open(file=file_path, mode="w") as file:
-                                    file.write(f"<!-- This is the  template -->\n{DEMO_HTML_TEMPLATES}")
+                                    file.write(f"<!-- This is the {error_file} template -->\n{DEMO_HTML_TEMPLATES}")
                         else:
                             template_filenames = {
                                 "views": "index.html",
-                                "authentication": "authent.html",
                                 "admin": "controller.html",
                                 "search": "item_search.html",
+                                "authentication": "login.html",
+                                "authentication": "register.html",
                                 "password_reset": "reset_pswd.html"
                             }
                             
