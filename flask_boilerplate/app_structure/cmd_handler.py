@@ -487,16 +487,28 @@ class CmdHandler():
                                 "views": "index.html",
                                 "admin": "controller.html",
                                 "search": "item_search.html",
-                                "authentication": "login.html",
-                                "authentication": "register.html",
+                                "authentication": ["login.html", "register.html"],
+                                # "authentication": "register.html",
                                 "password_reset": "reset_pswd.html"
                             }
                             
                             file_name = template_filenames.get(dir, None)
-                            if file_name:
+                            if isinstance(file_name, list):
+                                for name in file_name:
+                                    file_path = os.path.join(template_folder, name)
+                                    with open(file=file_path, mode="w") as file:
+                                        file.write(f"<!-- This is the {name} template -->\n{DEMO_HTML_TEMPLATES}")
+                            else:
                                 file_path = os.path.join(template_folder, file_name)
                                 with open(file=file_path, mode="w") as file:
                                     file.write(f"<!-- This is the {file_name} template -->\n{DEMO_HTML_TEMPLATES}")
+
+                            
+                            # file_name = template_filenames.get(dir, None)
+                            # if file_name:
+                            #     file_path = os.path.join(template_folder, file_name)
+                            #     with open(file=file_path, mode="w") as file:
+                            #         file.write(f"<!-- This is the {file_name} template -->\n{DEMO_HTML_TEMPLATES}")
                             
                             
                     if dir == "static":
