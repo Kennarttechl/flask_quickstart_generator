@@ -73,33 +73,14 @@ DEMO_HTML_TEMPLATES = \
 {% block head %}
 <title>{% block title %}Flask Boiler_Plate{% endblock title %}</title>
 
-{% assets "new_css" %}
+{% assets "base_main_" %}
 <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
 {% endassets %}
 {% endblock head %}
 
 {% block body %}
+<!-- The rest of your code here -->
 
-
-{% assets "main_js" %}
-<script src="{{ ASSET_URL }}"></script>
-{% endassets %}
-
-{% assets "bootstrap_js" %}
-<script src="{{ ASSET_URL }}"></script>
-{% endassets %}
-
-{% block footer %}
-{% endblock footer %}
-{% endblock body %}
-"""
-
-
-DEMO_HTML = \
-"""
-{% extends "base.html" %}
-
-{% block body %}
 <section class="hero is-primary">
     <div class="hero-body">
         <div class="container">
@@ -120,12 +101,22 @@ DEMO_HTML = \
             <h1>flask-boilerplate</h1>
             <ul>
                 <li class=""><b>-v  for creating virtualenv</b></li>
-                <li class=""> <b>command for creating app => create-app </b> <i>my_demo_app</i></li>
+                <li class=""> <b>command for creating app => create-app </b> <i>college_mgs</i></li>
             </ul>
         </div>
     </div>
 </section>
-    
+
+
+{% assets "main_js" %}
+<script src="{{ ASSET_URL }}"></script>
+{% endassets %}
+
+{% assets "bootstrap_js" %}
+<script src="{{ ASSET_URL }}"></script>
+{% endassets %}
+
+
 {% block footer %}
 <footer class="footer is-fixed-bottom">
     <div class="content has-text-centered">

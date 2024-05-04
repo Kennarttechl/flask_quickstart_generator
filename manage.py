@@ -21,7 +21,7 @@ RESET = "\033[0m"
 docs = \
 """ 
 flask-cli:
-    Flask-CLI is a command-line interface (CLI) tool built using Python and the Flask framework. It aims to provide developers with a convenient way to generate Flask boilerplate code for creating new Flask applications. Flask-CLI simplifies the process of creating new Flask projects, enabling developers to focus on building application logic rather than spending time on repetitive setup tasks.
+    Flask Boilerplate Generator is a command-line interface (CLI) tool built using Python and the Flask framework. It aims to provide developers with a convenient way to generate Flask Boilerplate code for creating new Flask applications. Flask Boilerplate Generator simplifies the process of creating new Flask projects, enabling developers to focus on building application logic rather than spending time on repetitive setup tasks.
 
     
     command for creating the project folder:
@@ -29,8 +29,11 @@ flask-cli:
           example =>  python manage.py create-app my_demo_app or any random name.
 
     commands for creating virtualenv venv:
-        * python manage.py -i create-app 
-        * python manage.py --init create-app  
+        * python manage.py -v create-app 
+        
+    commands for creating both virtual environment & app Or app folder:
+        * python manage.py -v create-app my_demo_app
+
 """
 
 

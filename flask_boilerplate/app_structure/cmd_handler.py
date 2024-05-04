@@ -1,7 +1,6 @@
 import os
 from flask_boilerplate.app_template.css import DEMO_CSS
 from flask_boilerplate.app_template.html import (
-    DEMO_HTML,
     BASE_HTML, 
     FLASH_MESSAGE,
     DEMO_HTML_TEMPLATES
@@ -197,20 +196,38 @@ app.register_blueprint(admin_controller, url_prefix="/")
 APP_SESSION = \
 """
 from my_demo_app import db
-
-
-
+from college_mgs import db
+from sqlalchemy.sql import func
+from flask_login import UserMixin
 
 
 class Session(db.Model):
-    __tablename__ = 'sessions'  # Customize table name if desired
+    __tablename__ = "sessions"  # Customize table name if desired
 
+    user_id = db.Column(db.String(255), primary_key=True, unique=True)
     session_id = db.Column(db.String(255), primary_key=True, unique=True)
     session_data = db.Column(db.Text)  # Store session data as serialized JSON
     expiration_time = db.Column(db.DateTime, index=True)
 
     def __repr__(self):
         return f"Session('{self.session_id}')"
+
+
+class User(db.Model, UserMixin):
+    user = db.Column(db.Integer(), primary_key=True, unique=True)
+    username = db.Column(db.String(length=50), nullable=False)
+    password = db.Column(db.String(length=50), nullable=False)
+    confirm_password = db.Column(db.String(50))
+    email = db.Column(db.String(length=100), nullable=True)
+    user_profile = db.Column(
+        db.String(length=100), nullable=False, default="default.jpg"
+    )
+    date_created = db.Column(
+        db.DateTime(timezone=True), nullable=False, default=func.now()
+    )
+
+    def __repr__(self) -> str:
+        return f"User('{self.username}')"
 """
 
 
@@ -257,7 +274,7 @@ static_folder="static")
 
 
 @search_.route("/")
-@limiter.limit("4 per minute")
+@limiter.limit("4 per minute", override_defaults=True)
 def search_item():
     return render_template("item_search.html")
 """
@@ -307,13 +324,13 @@ authent_ = Blueprint("authent_", __name__, template_folder="templates", static_f
 
 
 @authent_.route("/")
-@limiter.limit("5 per minute")
+@limiter.limit("5 per minute", override_defaults=True)
 def secure_register():
     return render_template("register.html")
 
     
 @authent_.route("/")
-@limiter.limit("5 per minute")
+@limiter.limit("5 per minute", override_defaults=True)
 def secure_login():
     return render_template("login.html")
 """
@@ -365,7 +382,6 @@ __pycache__
 APP_STRUCTURE = {
     "templates": {
         "base.html": BASE_HTML, 
-        "index.html": DEMO_HTML,
         "message.html": FLASH_MESSAGE
         },
     
