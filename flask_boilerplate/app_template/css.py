@@ -226,4 +226,95 @@ body {
     padding-right: 15px; /* Side space*/
   }
 }    
+
+
+/* ====== toggle switch ========= */
+
+/* Light theme */
+body.light-mode {
+  background-color: #fff;
+  color: #000;
+}
+
+/* Dark theme */
+body.dark-mode {
+  background-color: #2c2c37;
+  color: #fff;
+}
+
+/* Toggle switch styles */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 65px;
+  height: 34px;
+  background-color: #ccc;
+  border-radius: 34px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transition: .4s;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  width: 26px;
+  height: 26px;
+  top: 3.6px;
+  left: 7px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  transition: .4s;
+  
+}
+
+.toggle-switch input:checked + .slider {
+  background-color: #0cc73a;
+  border-radius: 34px;
+  
+}
+
+.toggle-switch input:checked + .slider::before {
+  transform: translateX(26px);
+}
+
+
+
+
+/* const toggleSwitch = document.getElementById('dark-mode-toggle');
+
+toggleSwitch.addEventListener('change', () => {
+  const body = document.body;
+  if (toggleSwitch.checked) {
+    body.classList.add('dark-mode');
+    body.classList.remove('light-mode');
+    // Store preference in session
+    sessionStorage.setItem('dark_mode', true);
+  } else {
+    body.classList.add('light-mode');
+    body.classList.remove('dark-mode');
+    // Remove preference from session (optional)
+    sessionStorage.removeItem('dark_mode');
+  }
+});
+
+// Check initial session preference (optional)
+if (sessionStorage.getItem('dark_mode') === 'true') {
+  toggleSwitch.checked = true;
+  document.body.classList.add('dark-mode');
+}
+*/
 """

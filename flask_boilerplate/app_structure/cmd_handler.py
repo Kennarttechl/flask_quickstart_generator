@@ -77,7 +77,7 @@ migrate = Migrate(app, db)  # Database migration with Flask-Migrate
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_TYPE"] = "sqlalchemy"  # Use SQLAlchemy backend
 app.config["SESSION_SQLALCHEMY"] = db  # Reference SQLAlchemy instance
-app.config["SESSION_SQLALCHEMY_TABLE"] = "flask_sessions"  # Use the Session model
+app.config["SESSION_SQLALCHEMY_TABLE"] = "user_sessions"  # Use the Session model
 app.config["SESSION_PERMANENT"] = False  # Set to True for persistent sessions
 app.config["SESSION_USE_SIGNER"] = True  # Use a secret key for signing
 
@@ -90,8 +90,9 @@ assets = Environment(app)
 
 # Creating an instance of the Bundle
 js = Bundle(
-    # filters="",
-    # output="",
+    #"js/script.js",
+    #filters="jsmin",
+    #output="gen/packed.js",
 )
 
 
@@ -196,21 +197,8 @@ app.register_blueprint(admin_controller, url_prefix="/")
 APP_SESSION = \
 """
 from my_demo_app import db
-from college_mgs import db
 from sqlalchemy.sql import func
 from flask_login import UserMixin
-
-
-class Session(db.Model):
-    __tablename__ = "sessions"  # Customize table name if desired
-
-    user_id = db.Column(db.String(255), primary_key=True, unique=True)
-    session_id = db.Column(db.String(255), primary_key=True, unique=True)
-    session_data = db.Column(db.Text)  # Store session data as serialized JSON
-    expiration_time = db.Column(db.DateTime, index=True)
-
-    def __repr__(self):
-        return f"Session('{self.session_id}')"
 
 
 class User(db.Model, UserMixin):
@@ -315,7 +303,7 @@ def error_500(error):
 
 AUTHENTICATION_TEMPLATE_CODE = \
 """
-from my_demo_app import app, limiter
+from my_demo_app import limiter
 from flask import render_template, Blueprint
 
 
@@ -543,3 +531,5 @@ class CmdHandler():
                 print(f"{YELLOW} The Folder {app_folder_name} already exists. {RESET}")
         except FileExistsError as e:
             print(f"{YELLOW} Error: {e}{RESET}")  
+
+

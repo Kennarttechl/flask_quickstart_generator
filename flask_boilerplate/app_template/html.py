@@ -90,6 +90,10 @@ DEMO_HTML_TEMPLATES = \
             <h2 class="subtitle">
                 By eliminating repetitive tasks, you can focus on the core logic of your application.
             </h2>
+            <label class="toggle-switch">
+                <input type="checkbox" id="dark-mode-toggle">
+                <span class="slider round"></span>
+            </label>
         </div>
     </div>
 </section>
@@ -101,7 +105,7 @@ DEMO_HTML_TEMPLATES = \
             <h1>flask-boilerplate</h1>
             <ul>
                 <li class=""><b>-v  for creating virtualenv</b></li>
-                <li class=""> <b>command for creating app => create-app </b> <i>college_mgs</i></li>
+                <li class=""> <b>command for creating app => create-app </b> <i>demo_app</i></li>
             </ul>
         </div>
     </div>
