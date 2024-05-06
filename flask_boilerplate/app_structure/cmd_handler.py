@@ -156,7 +156,7 @@ def app_security_headers_middleware(response):
 
     response.headers["Content-Security-Policy"] = (
         "default-src 'self'; "
-        "script-src 'self' https://cdn.example.com https://cdnjs.cloudflare.com; "
+        "script-src 'self' https://unpkg.com/htmx.org@1.9.12 https://cdn.example.com https://cdnjs.cloudflare.com; "
         "style-src 'self' https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css; "
         "font-src 'self' https://fonts.gstatic.com; "
         "img-src 'self' https://cdn.example.com data;"
@@ -194,7 +194,7 @@ app.register_blueprint(admin_controller, url_prefix="/")
 """
 
 
-APP_SESSION = \
+USER_MODEL = \
 """
 from my_demo_app import db
 from sqlalchemy.sql import func
@@ -250,21 +250,70 @@ def home_page():
 """
 
 
+SEARCH_FORM_DATA = \
+""" 
+from flask_wtf import FlaskForm
+from wtforms.validators import DataRequired
+from wtforms import SearchField, SubmitField
+
+
+class ProductSearchForm(FlaskForm):
+    search_query = SearchField(validators=[DataRequired()], render_kw={"placeholder": "Search product name"})
+    submit = SubmitField(label="Search")
+"""
+
+
 SEARCH_TEMPLATE_CODE = \
 """
+from sqlalchemy import or_
 from my_demo_app import limiter
-from flask import render_template, Blueprint
+from .form import ProductSearchForm
+from my_demo_app.database.models import User
+from flask import render_template, Blueprint, flash
 
 
-
-search_ = Blueprint("search_", __name__, template_folder="templates", 
-static_folder="static")
+search_ = Blueprint(
+    "search_", __name__, template_folder="templates", static_folder="static"
+)
 
 
 @search_.route("/")
-@limiter.limit("4 per minute", override_defaults=True)
+@limiter.limit("5 per minute", override_defaults=True)
 def search_item():
-    return render_template("item_search.html")
+    form = ProductSearchForm()
+    search_results = []  # Intialize early to avoid UnboundLocalError
+
+    if form.validate_on_submit():
+        search_query = form.search_query.data
+        search_results = User.query.filter(
+            User.username.ilike(f"%{search_query}%")
+        ).all()
+        if search_results:
+            flash(
+                message=f"{len(search_query)}Data found for query: {search_query}",
+                category="success",
+            )
+        else:
+            flash(message=f"Data not found for query: {search_query}", category="error")
+    return render_template("item_search.html", form=form, search_results=search_results)
+    
+
+# @search_.route("/search")
+# def search():
+#     q = request.args.get("f")
+#     if q:
+#         result = (
+#             User.query.filter(
+#                 or_(User.email.ilike(f"%{q}%"), User.date_created.ilike(f"%{q}%"))
+#             )
+#             .order_by(User.password.asc())
+#             .order_by(User.email.desc())
+#             .limit(100)
+#             .all()
+#         )
+#     else:
+#         result = []
+#     return render_template("item_search.html", result=result)
 """
 
 
@@ -397,7 +446,7 @@ APP_STRUCTURE = {
     
     "search":{
       "routes.py": SEARCH_TEMPLATE_CODE,
-      "form.py": "",
+      "form.py": SEARCH_FORM_DATA,
       "__init__.py": ""  
     },
     
@@ -414,7 +463,7 @@ APP_STRUCTURE = {
         },
     
     "database": {
-        "models.py": APP_SESSION, 
+        "models.py": USER_MODEL, 
         "__init__.py": ""
         },
     
@@ -486,6 +535,7 @@ class CmdHandler():
                                 file_path = os.path.join(template_folder, error_file)
                                 with open(file=file_path, mode="w") as file:
                                     file.write(f"<!-- This is the {error_file} template -->\n{DEMO_HTML_TEMPLATES}")
+                                    
                         else:
                             template_filenames = {
                                 "views": "index.html",

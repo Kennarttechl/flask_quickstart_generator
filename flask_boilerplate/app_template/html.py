@@ -131,6 +131,27 @@ DEMO_HTML_TEMPLATES = \
 </footer>
 {% endblock footer %}
 {% endblock body %}
+
+
+<!-- This form use jinja syntax to grab input from a user and process it -->
+
+<!-- <form method="POST">
+  {{ form.hidden_tag() }}
+  <div class="input-group-append rounded-left">
+    {{ form.search_query(class="form-control rounded-left mb-3 form-control-sm",
+    id="search-input", autocomplete="on") }} {{ form.submit(class="btn
+    btn-success btn-sm rounded-right mb-3", style="border-radius: 10; height:
+    30px;") }}
+
+    <button
+      class="btn btn-success btn-sm rounded-right mb-3"
+      style="border-radius: 10"
+      type="submit"
+    >
+      Search
+    </button>
+  </div>
+</form> -->
 """
 
 
@@ -169,4 +190,49 @@ FLASH_MESSAGE = \
   </div>
 </div>
 {% endblock message %}
+"""
+
+
+NOT_USE = \
+""" 
+<script src="https://unpkg.com/htmx.org@1.9.12"></script>
+
+<select class="section">
+  <div class="columns">
+    <div class="column is-on-third is-offset-one-third">
+      <input
+        type="text"
+        class="input"
+        placeholder="Search"
+        name="q"
+        hx-get="search"
+        hx-trigger="keyup change delay:500ms"
+        hx-target="#results"
+      />
+    </div>
+    <table class="table is-fullwidth">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Performance</th>
+          <th>Peak Position</th>
+          <th>Time on Chart</th>
+          <th>Chart Debut</th>
+        </tr>
+      </thead>
+      <tbody id="results"></tbody>
+    </table>
+  </div>
+</select>
+
+{% for result in results %}
+<tr>
+  <td>{{ result.username }}</td>
+  <td>{{ result.email }}</td>
+  <td>{{ result.password }}</td>
+  <td>{{ result.user_profile }}</td>
+  <td>{{ result.confirm_password }}</td>
+</tr>
+{% endfor %} -->
+
 """
