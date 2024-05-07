@@ -1,6 +1,6 @@
 import os
-from flask_boilerplate.app_template.css import DEMO_CSS
-from flask_boilerplate.app_template.html import (
+from flask_boilerplate.app_structure.css import DEMO_CSS
+from flask_boilerplate.app_structure.html import (
     BASE_HTML, 
     FLASH_MESSAGE,
     DEMO_HTML_TEMPLATES
@@ -360,13 +360,13 @@ from flask import render_template, Blueprint
 authent_ = Blueprint("authent_", __name__, template_folder="templates", static_folder="static")
 
 
-@authent_.route("/")
+@authent_.route("/register")
 @limiter.limit("5 per minute", override_defaults=True)
 def secure_register():
     return render_template("register.html")
 
     
-@authent_.route("/")
+@authent_.route("/login")
 @limiter.limit("5 per minute", override_defaults=True)
 def secure_login():
     return render_template("login.html")

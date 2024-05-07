@@ -234,5 +234,4 @@ NOT_USE = \
   <td>{{ result.confirm_password }}</td>
 </tr>
 {% endfor %} -->
-
 """
