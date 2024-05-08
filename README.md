@@ -14,4 +14,3 @@ Flask Boilerplate Generator streamlines the development process by automating th
 
 **Security Enhancements:** Includes built-in security measures such as CSRF protection, HTTP headers middleware, and secure session management to help keep your application safe from common vulnerabilities.
 
-We're excited to announce that Flask Boilerplate Generator will soon be available for download on PyPI! Stay tuned for updates and be among the first to experience the convenience and efficiency of Flask development with Flask Boilerplate Generator.

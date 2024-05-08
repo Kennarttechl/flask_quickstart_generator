@@ -1,12 +1,14 @@
 import sys
 import argparse
 # from colorama import Fore, Style
-from flask_boilerplate.app_structure.cmd_handler import CmdHandler
+from .cmd_handler import CmdHandler
+
+# from flask_boilerplate.cli import main
 
 
 # ANSI escape color code for displaying or printing sucessful message
-GREEN = '\033[92m'
-RESET = '\033[0m'
+GREEN = "\033[92m"
+RESET = "\033[0m"
 
 
 # ANSI escape color code for displaying or printing the docs
@@ -18,22 +20,19 @@ RESET = "\033[0m"
 # success_color = Fore.GREEN
 
 
-docs = \
-""" 
-flask-cli:
+docs = """ 
+flask-boilerplate generator:
     Flask Boilerplate Generator is a command-line interface (CLI) tool built using Python and the Flask framework. It aims to provide developers with a convenient way to generate Flask Boilerplate code for creating new Flask applications. Flask Boilerplate Generator simplifies the process of creating new Flask projects, enabling developers to focus on building application logic rather than spending time on repetitive setup tasks.
 
     
     command for creating the project folder:
-        * python manage.py create-app [project/app name]
-          example =>  python manage.py create-app my_demo_app or any random name.
+        * flask-manage create-app [project/app name]
 
-    commands for creating virtualenv venv:
-        * python manage.py -v create-app 
+    command for creating `Only` virtualenv venv:
+        * flask-manage -v  
         
-    commands for creating both virtual environment & app Or app folder:
-        * python manage.py -v create-app my_demo_app
-
+    commands for creating `Both` virtual environment & app (app folder):
+        * flask-manage -v create-app my_demo_app
 """
 
 
@@ -47,7 +46,7 @@ def main():
     if command == "-v" and argument == "create-app" and project_name != "":
         CmdHandler.init()
         CmdHandler.create_flask_app_folder(project_name)
-        print(f"{GREEN}Project created successfully{RESET}")
+        # print(f"{GREEN}Project created successfully{RESET}")
 
     elif command == "-v" and argument == "":
         CmdHandler.init()
@@ -60,10 +59,9 @@ def main():
     else:
         sys.exit(f"{YELLOW}{docs}{RESET}")
 
+
 if __name__ == "__main__":
     main()
-
-
 
 
 # def main():
