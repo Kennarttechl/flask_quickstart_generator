@@ -1,5 +1,4 @@
-GITIGNORE = \
-"""
+GITIGNORE = """
 *.db
 venv/
 config/.venv
@@ -9,8 +8,7 @@ __pycache__
 """
 
 
-APP_STARTUP = \
-"""
+APP_STARTUP = """
 from my_demo_app import db, app
 
 
@@ -23,8 +21,7 @@ if __name__ == "__main__":
 """
 
 
-VIEW_TEMPLATE_CODE = \
-"""
+VIEW_TEMPLATE_CODE = """
 from flask import render_template, Blueprint
 
 
@@ -40,8 +37,7 @@ def home_page():
 """
 
 
-SEARCH_FORM_DATA = \
-""" 
+SEARCH_FORM_DATA = """ 
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired
 from wtforms import SearchField, SubmitField
@@ -53,8 +49,7 @@ class ProductSearchForm(FlaskForm):
 """
 
 
-SEARCH_TEMPLATE_CODE = \
-"""
+SEARCH_TEMPLATE_CODE = """
 from sqlalchemy import or_
 from my_demo_app import limiter
 from .form import ProductSearchForm
@@ -107,8 +102,7 @@ def search_item():
 """
 
 
-ERROR_HANDLER_TEMPLATE_CODE = \
-"""
+ERROR_HANDLER_TEMPLATE_CODE = """
 from http import HTTPStatus
 from flask import render_template, Blueprint, flash
 
@@ -136,12 +130,22 @@ def error_429(error):
 @errors_.app_errorhandler(500)
 def error_500(error):
     return render_template("error_500.html"), HTTPStatus.INTERNAL_SERVER_ERROR
-    
+
+
+def maintainance():
+    # Your logic here
+    pass
+
+@errors_.app_errorhandler(503)
+def maintenance_mode(error):
+  if maintainance:  # Replace with your logic to check maintenance mode
+    return render_template("maintenance.html"), HTTPStatus.SERVICE_UNAVAILABLE
+  # Code to handle other 503 errors (optional)
+  return None  # Fallback for non-maintenance related 503 errors
 """
 
 
-AUTHENTICATION_TEMPLATE_CODE = \
-"""
+AUTHENTICATION_TEMPLATE_CODE = """
 from my_demo_app import limiter
 from flask import render_template, Blueprint
 
@@ -163,24 +167,89 @@ def secure_login():
 """
 
 
-RESET_PASSWORD_TEMPLATE_CODE = \
+ACCOUNT_UTILS = """ 
+import os
+import secrets
+from PIL import Image
+from my_demo_app import app
+from flask import Blueprint
+from flask_login import current_user
+
+
+img_utils = Blueprint(
+    "img_utils", __name__, template_folder="templates", static_folder="static"
+)
+
+
+def save_picture(form_picture):
+    random_hex = secrets.token_hex(8)
+    _, f_ext = os.path.splitext(form_picture.filename)
+    picture_fn = random_hex + f_ext
+    picture_path = os.path.join(
+        app.root_path, "static/profile_pics", picture_fn
+    )  # app.
+    if os.path.exists(
+        app.root_path + "/static/media/" + current_user.user_profile
+    ):
+        os.remove(app.root_path + "/static/media/" + current_user.user_profile)
+
+    output_size = (100, 100)
+    i = Image.open(form_picture)
+    i.thumbnail(output_size)
+    i.save(picture_path)
+    return picture_fn
 """
+
+
+ACCOUNT_SETTINGS_FORM = """ 
+from flask_wtf import FlaskForm
+from flask_login import current_user
+from my_demo_app.database.models import User
+from wtforms import StringField, SubmitField
+from flask_wtf.file import FileField, FileAllowed
+from wtforms.validators import DataRequired, ValidationError
+
+
+class UpdateAccount(FlaskForm):
+    username = StringField(validators=[DataRequired()])
+    picture = FileField(
+        label="Update account profile", validators=[FileAllowed(["jpg", "png"])]
+    )
+    submit = SubmitField(label="Update")
+
+    def validate_username(self, username):
+        if username.data != current_user.username:
+            user = User.query.filter_by(username=username.data).first()
+            if user:
+                raise ValidationError(
+                    "That username already exist! Please try a different username"
+                )
+"""
+
+
+ACCOUNT_SETTINGS_TEMPLATE_CODE = """
+import secrets
+from my_demo_app import db
+from .form import UpdateAccount
 from flask import render_template, Blueprint
 
 
 
+account_ = Blueprint("account_", __name__, template_folder="templates", static_folder="static")
 
-reset_pswd = Blueprint("reset_pswd", __name__, template_folder="templates", static_folder="static")
 
-
-@reset_pswd.route("/")
+@account_.route("/")
 def secure_password():
     return render_template("reset_pswd.html")
+
+
+@account_.route("/")
+def secure_account_update():
+    return render_template("update_account.html")
 """
 
 
-ADMIN_TEMPLATE_CODE = \
-"""
+ADMIN_TEMPLATE_CODE = """
 from flask import render_template, Blueprint
 
 

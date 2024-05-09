@@ -6,13 +6,15 @@ from .html import BASE_HTML, FLASH_MESSAGE, DEMO_HTML_TEMPLATES
 from .routes_ import (
     GITIGNORE,
     APP_STARTUP,
+    ACCOUNT_UTILS,
     SEARCH_FORM_DATA,
     VIEW_TEMPLATE_CODE,
     ADMIN_TEMPLATE_CODE,
     SEARCH_TEMPLATE_CODE,
+    ACCOUNT_SETTINGS_FORM,
     ERROR_HANDLER_TEMPLATE_CODE,
     AUTHENTICATION_TEMPLATE_CODE,
-    RESET_PASSWORD_TEMPLATE_CODE,
+    ACCOUNT_SETTINGS_TEMPLATE_CODE,
 )
 
 
@@ -48,12 +50,6 @@ APP_STRUCTURE = {
       "__init__.py": ""  
     },
     
-    "password_reset":{
-      "routes.py": RESET_PASSWORD_TEMPLATE_CODE,
-      "form.py": "",
-      "__init__.py": ""  
-    },
-    
     "search":{
       "routes.py": SEARCH_TEMPLATE_CODE,
       "form.py": SEARCH_FORM_DATA,
@@ -77,6 +73,17 @@ APP_STRUCTURE = {
         "__init__.py": ""
         },
     
+    "account_settings":{
+      "routes.py": ACCOUNT_SETTINGS_TEMPLATE_CODE,
+      "form.py": ACCOUNT_SETTINGS_FORM,
+      "__init__.py": "" 
+    },
+    
+    "media_utils":{
+      "utils.py": ACCOUNT_UTILS, 
+      "__init__.py": "" 
+    },
+    
     "config":{
         ".env": "",
         ".flaskenv": ""
@@ -98,11 +105,12 @@ class CmdHandler:
         print("")
 
         print(
-            f"{YELLOW}Please wait installing, Flask, Flask-Session, Flask-Limiter, flask-babel, Flask-Caching, Flask-Assets, Flask-SQLAlchemy and Flask-Migrate{RESET}"
+            f"{YELLOW}Please wait installing, Flask, Flask-Session, Flask-Limiter, flask-babel, Flask-Caching, Flask-Assets, Flask-SQLAlchemy and Flask-Migrate
+            Flask-WTF WTForms cssmin jsmin rcssmin rjsmin pillow Flask-Login{RESET}"
         )
 
         os.system(
-            "pip install Flask Flask-Assets flask-babel Flask-Bcrypt Flask-Caching Flask-Limiter Flask-Login Flask-Migrate Flask-Session Flask-SQLAlchemy Flask-WTF WTForms cssmin jsmin rcssmin rjsmin"
+            "pip install Flask Flask-Assets flask-babel Flask-Bcrypt Flask-Caching Flask-Limiter Flask-Login Flask-Migrate Flask-Session Flask-SQLAlchemy Flask-WTF WTForms cssmin jsmin rcssmin rjsmin pillow Flask-Login"
         )
 
         print(
@@ -117,7 +125,7 @@ class CmdHandler:
 
         print("")
 
-    def create_flask_app_folder(app_folder_name):
+    def generate_flask_app_folder(app_folder_name):
         try:
             if not os.path.exists(app_folder_name):
                 os.mkdir(app_folder_name)
@@ -143,7 +151,7 @@ class CmdHandler:
                         "authentication",
                         "admin",
                         "search",
-                        "password_reset",
+                        "account_settings",
                     ]:
                         template_folder = os.path.join(
                             app_folder_name, dir, "templates"
@@ -156,6 +164,7 @@ class CmdHandler:
                                 "error_404.html",
                                 "error_500.html",
                                 "error_429.html",
+                                "maintenance.html",
                             ]
                             for error_file in error_files:
                                 file_path = os.path.join(template_folder, error_file)
@@ -170,8 +179,10 @@ class CmdHandler:
                                 "admin": "controller.html",
                                 "search": "item_search.html",
                                 "authentication": ["login.html", "register.html"],
-                                # "authentication": "register.html",
-                                "password_reset": "reset_pswd.html",
+                                "account_settings": [
+                                    "reset_pswd.html",
+                                    "update_account.html",
+                                ],
                             }
 
                             file_name = template_filenames.get(dir, None)
@@ -207,15 +218,16 @@ class CmdHandler:
                                 file.write(DEMO_CSS)
 
                     if dir in [
-                        "templates",
                         "views",
-                        "errors",
-                        "authentication",
-                        "database",
-                        "config",
                         "admin",
+                        "errors",
+                        "config",
                         "search",
-                        "password_reset",
+                        "database",
+                        "templates",
+                        "media_utils",
+                        "authentication",
+                        "account_settings",
                     ]:
                         for temp, value in content.items():
                             with open(

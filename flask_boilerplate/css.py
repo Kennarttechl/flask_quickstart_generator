@@ -1,5 +1,4 @@
-DEMO_CSS = \
-""" 
+DEMO_CSS = """ 
 @font-face {
   font-family: "navfont";
   src: url("../"),
@@ -290,31 +289,4 @@ body.dark-mode {
 .toggle-switch input:checked + .slider::before {
   transform: translateX(26px);
 }
-
-
-
-
-/* const toggleSwitch = document.getElementById('dark-mode-toggle');
-
-toggleSwitch.addEventListener('change', () => {
-  const body = document.body;
-  if (toggleSwitch.checked) {
-    body.classList.add('dark-mode');
-    body.classList.remove('light-mode');
-    // Store preference in session
-    sessionStorage.setItem('dark_mode', true);
-  } else {
-    body.classList.add('light-mode');
-    body.classList.remove('dark-mode');
-    // Remove preference from session (optional)
-    sessionStorage.removeItem('dark_mode');
-  }
-});
-
-// Check initial session preference (optional)
-if (sessionStorage.getItem('dark_mode') === 'true') {
-  toggleSwitch.checked = true;
-  document.body.classList.add('dark-mode');
-}
-*/
 """

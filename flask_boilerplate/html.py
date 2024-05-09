@@ -1,6 +1,4 @@
-
-BASE_HTML = \
-"""
+BASE_HTML = """
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -66,8 +64,7 @@ BASE_HTML = \
 """
 
 
-DEMO_HTML_TEMPLATES = \
-""" 
+DEMO_HTML_TEMPLATES = """ 
 {% extends "base.html" %}
 
 {% block head %}
@@ -155,8 +152,7 @@ DEMO_HTML_TEMPLATES = \
 """
 
 
-FLASH_MESSAGE = \
-"""
+FLASH_MESSAGE = """
 {% assets "new_css" %}
 <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
 {% endassets %}
@@ -193,8 +189,7 @@ FLASH_MESSAGE = \
 """
 
 
-NOT_USE = \
-""" 
+NOT_USE = """ 
 <script src="https://unpkg.com/htmx.org@1.9.12"></script>
 
 <select class="section">

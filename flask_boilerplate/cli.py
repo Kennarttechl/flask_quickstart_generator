@@ -1,9 +1,5 @@
 import sys
-import argparse
-# from colorama import Fore, Style
 from .cmd_handler import CmdHandler
-
-# from flask_boilerplate.cli import main
 
 
 # ANSI escape color code for displaying or printing sucessful message
@@ -16,14 +12,9 @@ YELLOW = "\033[33m"
 RESET = "\033[0m"
 
 
-# Define colors for messages
-# success_color = Fore.GREEN
-
-
 docs = """ 
 flask-boilerplate generator:
-    Flask Boilerplate Generator is a command-line interface (CLI) tool built using Python and the Flask framework. It aims to provide developers with a convenient way to generate Flask Boilerplate code for creating new Flask applications. Flask Boilerplate Generator simplifies the process of creating new Flask projects, enabling developers to focus on building application logic rather than spending time on repetitive setup tasks.
-
+    The Flask Boilerplate Generator is a command-line tool (CLI) built with Python and the Flask framework. It provides developers with a convenient way to generate the folder structure and code for new Flask applications. This simplifies the process of starting new projects, allowing developers to focus on building application logic instead of skipping the boilerplate setup.
     
     command for creating the project folder:
         * flask-manage create-app [project/app name]
@@ -38,14 +29,14 @@ flask-boilerplate generator:
 
 def main():
     """This function is the entry point for the script's execution."""
-    
+
     command = sys.argv[1].strip() if len(sys.argv) > 1 else ""
     argument = sys.argv[2].strip() if len(sys.argv) > 2 else ""
     project_name = sys.argv[3].strip() if len(sys.argv) > 3 else ""
 
     if command == "-v" and argument == "create-app" and project_name != "":
         CmdHandler.init()
-        CmdHandler.create_flask_app_folder(project_name)
+        CmdHandler.generate_flask_app_folder(project_name)
         # print(f"{GREEN}Project created successfully{RESET}")
 
     elif command == "-v" and argument == "":
@@ -53,7 +44,7 @@ def main():
         print(f"{GREEN}Virtual environment created successfully{RESET}")
 
     elif command == "create-app" and argument != "":
-        CmdHandler.create_flask_app_folder(argument)
+        CmdHandler.generate_flask_app_folder(argument)
         print(f"{GREEN}Project created successfully{RESET}")
 
     else:
@@ -62,28 +53,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-# def main():
-#     parser = argparse.ArgumentParser(description="Flask app creator")
-#     parser.add_argument("app_name", help="The name of your Flask application")
-#     parser.add_argument("-i", "--init", action="store_true", help="Create a virtual environment")
-#     parser.add_argument("-f", "--force", action="store_true", help="Force overwrite existing files")
-#     args = parser.parse_args()
-
-#     if args.init:
-#         CmdHandler.init()
-#         print(f"{GREEN}Successfully created virtualenv env{RESET}")
-#     else:
-#         CmdHandler.create_flask_app_structure(args.app_name)
-#         print(f"{GREEN}Project created successfully{RESET}")
-
-#     # You can access other arguments using args.<argument_name>
-#     # For example, if you add another argument:
-#     # parser.add_argument("-f", "--force", action="store_true", help="Force overwrite existing files")
-#     # You could check for it like this:
-#     # if args.force:
-#     #     print("Overwriting existing files...")
-
-# if __name__ == "__main__":
-#     main()

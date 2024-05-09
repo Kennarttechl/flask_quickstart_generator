@@ -1,5 +1,4 @@
-APP_SETTINGS = \
-"""
+APP_SETTINGS = """
 import os
 import secrets
 from flask_babel import Babel
@@ -9,9 +8,9 @@ from flask_migrate import Migrate
 from flask_session import Session
 from flask_wtf.csrf import CSRFProtect
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, request, redirect
 from flask_assets import Environment, Bundle
 from flask_limiter.util import get_remote_address
+from flask import Flask, request, redirect, url_for
 
 
 # Create a Flask application instance
@@ -110,17 +109,45 @@ assets.register("bootstrap_js", bootjs)
 def app_middleware():
     # This middleware function performs several actions before each request:
 
-    # URL Canonicalization: Redirects URLs with uppercase letters to lowercase for consistent URL handling.
+    '''
+    # Skip Processing for Dynamic Routes:
+    # We check if the path starts with a slash (/) to handle potential invalid paths.
 
-    # Trailing Slash Removal: Removes trailing slashes from URLs except for the root URL, promoting cleaner URLs.
+    # We use a generator expression and any to determine if any character after the first slash in the path (request.path[1:]) is non-alphanumeric. This identifies dynamic routes that likely use tokens or IDs.
 
-    # URL Canonicalization: Redirect URLs with uppercase letters to lowercase
-    if request.path != request.path.lower():
-        return redirect(request.path.lower())
+    # If the path is identified as dynamic, the function returns None, effectively skipping URL processing for that route.
 
-    # Remove trailing slashes except for root URL
-    if request.path != "/" and request.path.endswith("/"):
-        return redirect(request.path.rstrip("/"))
+    # Canonicalization and Trailing Slash Removal:
+    # If the path isn't a dynamic route, the middleware applies URL canonicalization (lowercase URLs) and trailing slash removal for static routes.
+
+    # Benefits:
+    # This approach avoids modifying URLs generated using secrets.token_urlsafe(), ensuring your dynamic routes maintain their integrity.
+
+    # It keeps URL processing logic in a separate, reusable function for better organization.
+    '''
+    try:
+        # Check for valid request path format (starts with a slash)
+        if not request.path.startswith("/"):
+            raise ValueError("Invalid request path format")
+
+        # Skip processing for dynamic routes (non-alphanumeric characters)
+        if any(not char.isalnum() for char in request.path[1:]):
+            return None
+        
+        # URL Canonicalization: Redirect URLs with uppercase letters to lowercase
+        if request.path != request.path.lower():
+            return redirect(request.path.lower())
+
+        # Remove trailing slashes except for root URL
+        if request.path != "/" and request.path.endswith("/"):
+            return redirect(request.path.rstrip("/"))
+
+    except ValueError as e:
+        app.logger.error(f"Middleware error: {e}")
+        return redirect(url_for("errors_.invalid_path"))  # Custom error handler route
+
+    # No need to modify the URL for non-dynamic routes
+    return None
 
 
 @app.after_request
@@ -171,15 +198,17 @@ def app_security_headers_middleware(response):
 from my_demo_app.views.routes import view
 from my_demo_app.search.routes import search_
 from my_demo_app.errors.routes import errors_
+from my_demo_app.media_utils.utils import img_utils
 from my_demo_app.admin.routes import admin_controller
 from my_demo_app.authentication.routes import authent_
-from my_demo_app.password_reset.routes import reset_pswd
+from my_demo_app.account_settings.routes import account_
 
 
 app.register_blueprint(view, url_prefix="/")
 app.register_blueprint(search_, url_prefix="/")
 app.register_blueprint(errors_, url_prefix="/")
 app.register_blueprint(authent_, url_prefix="/")
-app.register_blueprint(reset_pswd, url_prefix="/")
+app.register_blueprint(account_, url_prefix="/")
+app.register_blueprint(img_utils, url_prefix"/")
 app.register_blueprint(admin_controller, url_prefix="/")
 """
