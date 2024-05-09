@@ -209,6 +209,6 @@ app.register_blueprint(search_, url_prefix="/")
 app.register_blueprint(errors_, url_prefix="/")
 app.register_blueprint(authent_, url_prefix="/")
 app.register_blueprint(account_, url_prefix="/")
-app.register_blueprint(img_utils, url_prefix"/")
+app.register_blueprint(img_utils, url_prefix="/")
 app.register_blueprint(admin_controller, url_prefix="/")
 """
