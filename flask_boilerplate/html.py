@@ -128,27 +128,6 @@ DEMO_HTML_TEMPLATES = """
 </footer>
 {% endblock footer %}
 {% endblock body %}
-
-
-<!-- This form use jinja syntax to grab input from a user and process it -->
-
-<!-- <form method="POST">
-  {{ form.hidden_tag() }}
-  <div class="input-group-append rounded-left">
-    {{ form.search_query(class="form-control rounded-left mb-3 form-control-sm",
-    id="search-input", autocomplete="on") }} {{ form.submit(class="btn
-    btn-success btn-sm rounded-right mb-3", style="border-radius: 10; height:
-    30px;") }}
-
-    <button
-      class="btn btn-success btn-sm rounded-right mb-3"
-      style="border-radius: 10"
-      type="submit"
-    >
-      Search
-    </button>
-  </div>
-</form> -->
 """
 
 

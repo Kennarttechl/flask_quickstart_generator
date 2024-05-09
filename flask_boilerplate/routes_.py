@@ -145,25 +145,34 @@ def maintenance_mode(error):
 """
 
 
-AUTHENTICATION_TEMPLATE_CODE = """
-from my_demo_app import limiter
+AUTHENTICATION_TEMPLATE_CODE = \
+"""
+import secrets
+from college_mgs import limiter
 from flask import render_template, Blueprint
 
 
+authent_ = Blueprint(
+    "authent_", __name__, template_folder="templates", static_folder="static"
+)
 
-authent_ = Blueprint("authent_", __name__, template_folder="templates", static_folder="static")
 
-
-@authent_.route("/register")
+@authent_.route(f"/{secrets.token_urlsafe(nbytes=20)}")
 @limiter.limit("5 per minute", override_defaults=True)
 def secure_register():
     return render_template("register.html")
 
-    
-@authent_.route("/login")
+
+@authent_.route(f"/{secrets.token_urlsafe(nbytes=20)}")
 @limiter.limit("5 per minute", override_defaults=True)
 def secure_login():
     return render_template("login.html")
+
+
+# route can be define and render without using secrets & limiter module but using it add more robustness to your route and application 
+# @authent_.route("/login")
+# def secure_login():
+#     return render_template("login.html")
 """
 
 
@@ -227,38 +236,41 @@ class UpdateAccount(FlaskForm):
 """
 
 
-ACCOUNT_SETTINGS_TEMPLATE_CODE = """
+ACCOUNT_SETTINGS_TEMPLATE_CODE = \
+"""
 import secrets
-from my_demo_app import db
+from college_mgs import db
 from .form import UpdateAccount
 from flask import render_template, Blueprint
 
 
+account_ = Blueprint(
+    "account_", __name__, template_folder="templates", static_folder="static"
+)
 
-account_ = Blueprint("account_", __name__, template_folder="templates", static_folder="static")
 
-
-@account_.route("/")
+@account_.route(f"/{secrets.token_urlsafe(nbytes=20)}")
 def secure_password():
     return render_template("reset_pswd.html")
 
 
-@account_.route("/")
+@account_.route(f"/{secrets.token_urlsafe(nbytes=20)}")
 def secure_account_update():
     return render_template("update_account.html")
 """
 
 
 ADMIN_TEMPLATE_CODE = """
+import secrets
 from flask import render_template, Blueprint
 
 
+admin_controller = Blueprint(
+    "admin_controller", __name__, template_folder="templates", static_folder="static"
+)
 
 
-admin_controller = Blueprint("admin_controller", __name__, template_folder="templates", static_folder="static")
-
-
-@admin_controller.route("/")
+@admin_controller.route(f"/{secrets.token_urlsafe(nbytes=20)}")
 def controller():
     return render_template("controller.html")
 """
