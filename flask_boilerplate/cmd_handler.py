@@ -177,7 +177,7 @@ class CmdHandler:
                                 "views": "index.html",
                                 "admin": "controller.html",
                                 "search": "item_search.html",
-                                "authentication": ["login.html", "register.html"],
+                                "authentication": ["login.html", "signup.html"],
                                 "account_settings": [
                                     "reset_pswd.html",
                                     "update_account.html",

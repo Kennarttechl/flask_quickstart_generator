@@ -157,13 +157,13 @@ authent_ = Blueprint(
 )
 
 
-@authent_.route(f"/{secrets.token_urlsafe(nbytes=20)}")
+@authent_.route(f"/{secrets.token_urlsafe()}")
 @limiter.limit("5 per minute", override_defaults=True)
 def secure_register():
-    return render_template("register.html")
+    return render_template("signup.html")
 
 
-@authent_.route(f"/{secrets.token_urlsafe(nbytes=20)}")
+@authent_.route(f"/{secrets.token_urlsafe()}")
 @limiter.limit("5 per minute", override_defaults=True)
 def secure_login():
     return render_template("login.html")
@@ -249,12 +249,12 @@ account_ = Blueprint(
 )
 
 
-@account_.route(f"/{secrets.token_urlsafe(nbytes=20)}")
+@account_.route(f"/{secrets.token_urlsafe()}")
 def secure_password():
     return render_template("reset_pswd.html")
 
 
-@account_.route(f"/{secrets.token_urlsafe(nbytes=20)}")
+@account_.route(f"/{secrets.token_urlsafe()}")
 def secure_account_update():
     return render_template("update_account.html")
 """
