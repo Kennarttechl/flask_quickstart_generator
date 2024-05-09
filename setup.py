@@ -35,7 +35,7 @@ setup(
         "Flask-Login",
         "Flask-Migrate",
         "Flask-Session",
-        "Flask-Login"
+        "Flask-Login",
         "Flask-SQLAlchemy",
         "Flask-WTF",
         "WTForms",

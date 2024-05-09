@@ -105,8 +105,7 @@ class CmdHandler:
         print("")
 
         print(
-            f"{YELLOW}Please wait installing, Flask, Flask-Session, Flask-Limiter, flask-babel, Flask-Caching, Flask-Assets, Flask-SQLAlchemy and Flask-Migrate
-            Flask-WTF WTForms cssmin jsmin rcssmin rjsmin pillow Flask-Login{RESET}"
+            f"{YELLOW}Please wait installing collected packages: Flask, Flask-Session, Flask-Limiter, flask-babel, Flask-Caching, Flask-Assets, Flask-SQLAlchemy,Flask-Migrate, Flask-WTF, WTForms, cssmin, jsmin, rcssmin, rjsmin, pillow, Flask-Login{RESET}"
         )
 
         os.system(

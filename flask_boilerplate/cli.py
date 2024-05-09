@@ -37,7 +37,6 @@ def main():
     if command == "-v" and argument == "create-app" and project_name != "":
         CmdHandler.init()
         CmdHandler.generate_flask_app_folder(project_name)
-        # print(f"{GREEN}Project created successfully{RESET}")
 
     elif command == "-v" and argument == "":
         CmdHandler.init()
