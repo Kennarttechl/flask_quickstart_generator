@@ -1,6 +1,7 @@
 APP_SETTINGS = """
 import os
 import secrets
+from flask import session
 from flask_babel import Babel
 from flask_caching import Cache
 from flask_limiter import Limiter
@@ -29,7 +30,7 @@ APP_DATABASE = os.path.join(os.path.dirname(__file__), "database")
 DATABASE_PATH = os.path.join(APP_DATABASE, "Database.db")  # Database name can be change
 
 
-#Flask-Limiter adds rate limiting to Flask applications (e.g limiting the number of request a client can send).
+# Flask-Limiter adds rate limiting to Flask applications (e.g limiting the number of request a client can send).
 limiter = Limiter(
     app=app,
     headers_enabled=True,
@@ -80,9 +81,9 @@ assets = Environment(app)
 
 # Creating an instance of the Bundle
 js = Bundle(
-    #"js/script.js",
-    #filters="jsmin",
-    #output="gen/packed.js",
+    # "js/script.js",
+    # filters="jsmin",
+    # output="gen/packed.js",
 )
 
 
@@ -133,7 +134,7 @@ def app_middleware():
         # Skip processing for dynamic routes (non-alphanumeric characters)
         if any(not char.isalnum() for char in request.path[1:]):
             return None
-        
+
         # URL Canonicalization: Redirect URLs with uppercase letters to lowercase
         if request.path != request.path.lower():
             return redirect(request.path.lower())
@@ -143,8 +144,11 @@ def app_middleware():
             return redirect(request.path.rstrip("/"))
 
     except ValueError as e:
-        app.logger.error(f"Middleware error: {e}")
-        return redirect(url_for("errors_.invalid_path"))  # Custom error handler route
+        app.logger.error(f"Middleware error: {e}, Request Path: {request.path}")
+        session["error_message"] = (
+            f"Middleware error: {e}, Request Path: {request.path}"
+        )
+        return redirect(url_for("errors_.handle_value_error"))
 
     # No need to modify the URL for non-dynamic routes
     return None
@@ -152,22 +156,23 @@ def app_middleware():
 
 @app.after_request
 def app_security_headers_middleware(response):
-    #This middleware function sets the X-Frame-Options header to "DENY" to prevent clickjacking attacks.
-    
+    # This middleware function sets the X-Frame-Options header to "DENY" to prevent clickjacking attacks.
+
     # Security Headers: Sets essential security headers to mitigate potential vulnerabilities:
-    
+
     # Referrer-Policy: Limits referrer information leaks.
-    
+
     # X-Content-Type-Options: Prevents MIME-sniffing.
-    
+
     # Content-Security-Policy (Basic implementation): Provides a starting point for restricting resource loading.
-    
+
     '''Content-Security-Policy (CSP) Header
-    The Content-Security-Policy (CSP) header is a security feature that helps prevent various types of attacks, such as Cross-Site Scripting (XSS) and data injection attacks. It allows web developers to control which resources (e.g., scripts, stylesheets, fonts, images) the browser is allowed to load for a specific web page.'''
-    
+    The Content-Security-Policy (CSP) header is a security feature that helps prevent various types of attacks, such as Cross-Site Scripting (XSS) and data injection attacks. It allows web developers to control which resources (e.g., scripts, stylesheets, fonts, images) the browser is allowed to load for a specific web page.
+    '''
+
     # X-Frame-Options: # Prevent clickjacking
-    
-    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin" 
+
+    response.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
     # You can set response.headers to "no-referrer" to prevent any information leaking from your site.
 
     response.headers["X-Content-Type-Options"] = "nosniff"
@@ -178,30 +183,28 @@ def app_security_headers_middleware(response):
         "style-src 'self' https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css; "
         "font-src 'self' https://fonts.gstatic.com; "
         "img-src 'self' https://cdn.example.com data;"
-        
-        #Example of adding 1 or more links to => "style-src 'self' https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css https://example.com/other.css static/css/;" 
+        # Example of adding 1 or more links to => "style-src 'self' https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css https://example.com/other.css static/css/;"
     )
 
-    response.headers["X-Frame-Options"] = "DENY" # Prevent clickjacking
-    
+    response.headers["X-Frame-Options"] = "DENY"  # Prevent clickjacking
+
     # When executed the code below in a browser's console, it attempts to create an iframe pointing to http://127.0.0.1:5000/. However, because you've set the X-Frame-Options header to DENY, the browser will refuse to load your web page within an iframe, regardless of where it's hosted.
-    
+
     ''' var iframe = document.createElement('iframe');
     iframe.src = 'http://127.0.0.1:5000/';
     document.body.appendChild(iframe); '''
 
     return response
-    
-    
-    
+
+
 # Import and register blueprint containing application routes
-from my_demo_app.views.routes import view
-from my_demo_app.search.routes import search_
-from my_demo_app.errors.routes import errors_
-from my_demo_app.media_utils.utils import img_utils
-from my_demo_app.admin.routes import admin_controller
-from my_demo_app.authentication.routes import authent_
-from my_demo_app.account_settings.routes import account_
+from college_mgs.views.routes import view
+from college_mgs.search.routes import search_
+from college_mgs.errors.routes import errors_
+from college_mgs.media_utils.utils import img_utils
+from college_mgs.admin.routes import admin_controller
+from college_mgs.authentication.routes import authent_
+from college_mgs.account_settings.routes import account_
 
 
 app.register_blueprint(view, url_prefix="/")
@@ -211,4 +214,5 @@ app.register_blueprint(authent_, url_prefix="/")
 app.register_blueprint(account_, url_prefix="/")
 app.register_blueprint(img_utils, url_prefix="/")
 app.register_blueprint(admin_controller, url_prefix="/")
+
 """

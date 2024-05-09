@@ -81,34 +81,19 @@ def search_item():
         else:
             flash(message=f"Data not found for query: {search_query}", category="error")
     return render_template("item_search.html", form=form, search_results=search_results)
-    
-
-# @search_.route("/search")
-# def search():
-#     q = request.args.get("f")
-#     if q:
-#         result = (
-#             User.query.filter(
-#                 or_(User.email.ilike(f"%{q}%"), User.date_created.ilike(f"%{q}%"))
-#             )
-#             .order_by(User.password.asc())
-#             .order_by(User.email.desc())
-#             .limit(100)
-#             .all()
-#         )
-#     else:
-#         result = []
-#     return render_template("item_search.html", result=result)
 """
 
 
 ERROR_HANDLER_TEMPLATE_CODE = """
+from flask import session
+from my_demo_app import app
 from http import HTTPStatus
 from flask import render_template, Blueprint, flash
 
 
-
-errors_ = Blueprint("errors_", __name__, template_folder="templates", static_folder="static")
+errors_ = Blueprint(
+    "errors_", __name__, template_folder="templates", static_folder="static"
+)
 
 
 @errors_.app_errorhandler(403)
@@ -123,25 +108,38 @@ def error_404(error):
 
 @errors_.app_errorhandler(429)
 def error_429(error):
-    flash(message="Your request is too much, try again in a few minute", category="error")
+    flash(
+        message="Your request is too much, try again in a few minute", category="error"
+    )
     return render_template("error_429.html"), HTTPStatus.TOO_MANY_REQUESTS
-    
+
 
 @errors_.app_errorhandler(500)
 def error_500(error):
     return render_template("error_500.html"), HTTPStatus.INTERNAL_SERVER_ERROR
 
 
+@errors_.app_errorhandler(ValueError)
+def handle_value_error(error):
+    error_message = session.pop("error_message", None)
+    if error_message:
+        app.logger.error(error_message)
+    else:
+        app.logger.error(f"Error occurred: {error}")
+    return render_template("invalid_path.html")
+
+
 def maintainance():
     # Your logic here
     pass
 
+
 @errors_.app_errorhandler(503)
 def maintenance_mode(error):
-  if maintainance:  # Replace with your logic to check maintenance mode
-    return render_template("maintenance.html"), HTTPStatus.SERVICE_UNAVAILABLE
-  # Code to handle other 503 errors (optional)
-  return None  # Fallback for non-maintenance related 503 errors
+    if maintainance:  # Replace with your logic to check maintenance mode
+        return render_template("maintenance.html"), HTTPStatus.SERVICE_UNAVAILABLE
+    # Code to handle other 503 errors (optional)
+    return None  # Fallback for non-maintenance related 503 errors
 """
 
 

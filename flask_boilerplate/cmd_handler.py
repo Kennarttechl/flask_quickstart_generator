@@ -164,6 +164,7 @@ class CmdHandler:
                                 "error_500.html",
                                 "error_429.html",
                                 "maintenance.html",
+                                "invalid_path.html",
                             ]
                             for error_file in error_files:
                                 file_path = os.path.join(template_folder, error_file)

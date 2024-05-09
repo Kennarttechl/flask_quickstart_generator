@@ -154,12 +154,12 @@ FLASH_MESSAGE = """
     "error" %}
 
     <div class="alert alert-danger alter-dismissable fade show" role="alert">
-      {{ message safe }}
+      {{ message }}
     </div>
 
     {% else %}
     <div class="alert alert-success alter-dismissable fade show" role="alert">
-      {{ message safe }}
+      {{ message }}
     </div>
     {% endif %}{% endfor %}{% endif %}{% endwith %}
   </div>
