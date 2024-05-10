@@ -47,11 +47,11 @@ With Flask Boilerplate Generator, you can focus on building the core functionali
 Flask Boilerplate Generator empowers you with a comprehensive set of features to streamline request processing and safeguard your application against common web vulnerabilities.
 
 
-***===============User Commands: Get Started Quickly================***
+***=======User Commands: Get Started Quickly=======***
 
 Flask Boilerplate Generator provides convenient commands to streamline your project setup:
 
-**==============Create Project Folder:===============**
+**=======Create Project Folder:=======**
 
 `Bash`
 
@@ -59,7 +59,7 @@ flask-manage create-app my_demo_app
 
 This command creates a new directory for your Flask application.
 
-**==============Create Virtual Environment:===============**
+**=======Create Virtual Environment:=======**
 
 `Bash`
 
@@ -67,11 +67,11 @@ flask-manage -v
 
 (The -v flag creates a virtual environment to isolate your project's dependencies.)
 
-**=========Create Both (Virtual Environment & App or Project):==============**
+**=======Create Both (Virtual Environment & App or Project):=======**
 
 `Bash`
 
 flask-manage -v create-app my_demo_app
 
-## ============== Note ===========
+## ==== Note =====
 1. You can change `my_demo_app` to any name of your choice
