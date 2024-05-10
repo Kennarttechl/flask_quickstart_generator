@@ -1,4 +1,4 @@
- **Introducing Flask Boilerplate Generator**
+# Introducing Flask Boilerplate Generator
 
 Are you tired of spending valuable time setting up the same boilerplate code every time you start a new Flask project? Say hello to Flask Boilerplate Generator - your ultimate time-saving tool for Flask development!
 
