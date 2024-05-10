@@ -7,7 +7,7 @@ with open(file="Readme.md", encoding="utf-8", mode="r") as file:
 
 setup(
     name="flask_boilerplate",
-    version="1.0.0",
+    version="1.0",
     description="Flask Boilerplate streamlines Flask development by automatically generating a structured folder layout, expediting project setup.",
     long_description=long_description,
     long_description_content_type="text/markdown",
