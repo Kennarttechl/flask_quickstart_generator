@@ -100,7 +100,7 @@ class CmdHandler:
 
         os.system("python -m venv venv")
 
-        print(f"{GREEN}Successfully created virtual environment{RESET}")
+        print(f"***----{GREEN}Successfully created virtual environment{RESET}----***")
 
         print("")
 
@@ -123,7 +123,7 @@ class CmdHandler:
         )
         print("")
         
-        print(f"{GREEN}Project created successfully{RESET}")
+        print(f"***----{GREEN}Project created successfully{RESET}----***")
 
         print("")
 
