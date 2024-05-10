@@ -12,7 +12,6 @@ APP_STARTUP = """
 from my_demo_app import db, app
 
 
-
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
@@ -146,7 +145,7 @@ def maintenance_mode(error):
 AUTHENTICATION_TEMPLATE_CODE = \
 """
 import secrets
-from college_mgs import limiter
+from my_demo_app import limiter
 from flask import render_template, Blueprint
 
 
