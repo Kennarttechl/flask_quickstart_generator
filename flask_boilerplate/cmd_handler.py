@@ -121,6 +121,9 @@ class CmdHandler:
         print(
             f"{YELLOW}To activate the virtual environment, navigate into the 'venv' directory and run 'Scripts/activate' on Windows or 'source bin/activate' on Unix-based systems.{RESET}"
         )
+        print("")
+        
+        print(f"{GREEN}Project created successfully{RESET}")
 
         print("")
 
