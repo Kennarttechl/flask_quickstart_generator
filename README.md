@@ -51,9 +51,6 @@ Flask Boilerplate Generator empowers you with a comprehensive set of features to
 
 Flask Boilerplate Generator provides convenient commands to streamline your project setup:
 
-following commands displays user command to type`:
-flask-manage OR flask-manage create-app
-
 **=======Create Project Folder:=======**
 `Bash or Terminal`
 
