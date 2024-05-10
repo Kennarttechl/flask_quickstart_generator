@@ -88,3 +88,5 @@ Flask Boilerplate Generator provides convenient commands to streamline your proj
 
 
 ## ==== Link to the github ====
+
+**https://github.com/Kennarttechl/flask_boilerplate_generator.git**
