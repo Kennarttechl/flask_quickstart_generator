@@ -44,7 +44,7 @@ def main():
 
     elif command == "create-app" and argument != "":
         CmdHandler.generate_flask_app_folder(argument)
-        print(f"{GREEN}Project created successfully{RESET}")
+        print(f"{GREEN}***--- Project created successfully ---***{RESET}")
 
     else:
         sys.exit(f"{YELLOW}{docs}{RESET}")
