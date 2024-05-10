@@ -5,7 +5,7 @@ Are you tired of spending valuable time setting up the same boilerplate code eve
 Flask Boilerplate Generator streamlines the development process by automating the setup of a Flask project with just a few simple commands. Whether you're a seasoned Flask developer or just starting out, this tool will help you get your project up and running in no time.
 
 
-**Key Features:**
+## == Key Features ==
 
 **Effortless Setup:** Simply install the package from PyPI OR github and use the command-line interface to create a new Flask project with a predefined folder structure and blueprint setup.
 
@@ -16,7 +16,7 @@ Flask Boilerplate Generator streamlines the development process by automating th
 **Security Enhancements:** Includes built-in security measures such as CSRF protection, HTTP headers middleware, and secure session management to help keep your application safe from common vulnerabilities.
 
 
-**Robust Request Handling and Enhanced Security Measures**
+## == Robust Request Handling and Enhanced Security Measures ==
 
 **URL Validation:** Ensures valid request path format by rejecting paths without a leading slash or containing non-alphanumeric characters (excluding root URL).This helps prevent potential security issues and improves routing clarity.
 
@@ -28,8 +28,18 @@ Flask Boilerplate Generator streamlines the development process by automating th
 
 **Asset Minification:** Flask Boilerplate Generator integrates with Flask-Assets to automatically minify JavaScript and CSS files, improving page load times and performance.
 
+**Rate Limiting** Flask-Limiter, a powerful tool for implementing rate limiting in your application. This helps protect your server from malicious attacks by limiting the number of requests a client can send within a specific timeframe. 
 
-**Comprehensive Security Headers:**
+The default configuration in `__init__.py` sets a limit of 3000 requests per hour. You can easily customize this limit to fit your specific needs.
+
+**Benefits of Rate Limiting:**
+
+* Mitigates denial-of-service (DoS) attacks by preventing a single user or automated script from overwhelming your server with requests.
+* Improves application performance by ensuring resources are available to legitimate users.
+* Enhances security by making it more difficult for attackers to exploit vulnerabilities.
+
+
+## ==== Comprehensive Security Headers === 
 
 **Clickjacking Protection:** Sets the `X-Frame-Options` header to `DENY`, effectively blocking clickjacking attacks that attempt to trick users into clicking on malicious content within your application's frame.
   
@@ -74,3 +84,4 @@ Flask Boilerplate Generator provides convenient commands to streamline your proj
 
 ## ==== Note =====
 1. You can change `my_demo_app` to any name of your choice
+
