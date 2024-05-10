@@ -72,3 +72,6 @@ flask-manage -v
 `Bash`
 
 flask-manage -v create-app my_demo_app
+
+**==============Note===========**
+1. You can change `my_demo_app` to any name of your choice
