@@ -236,7 +236,7 @@ class UpdateAccount(FlaskForm):
 ACCOUNT_SETTINGS_TEMPLATE_CODE = \
 """
 import secrets
-from college_mgs import db
+from my_demo_app import db
 from .form import UpdateAccount
 from flask import render_template, Blueprint
 

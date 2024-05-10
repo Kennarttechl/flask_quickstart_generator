@@ -198,13 +198,13 @@ def app_security_headers_middleware(response):
 
 
 # Import and register blueprint containing application routes
-from college_mgs.views.routes import view
-from college_mgs.search.routes import search_
-from college_mgs.errors.routes import errors_
-from college_mgs.media_utils.utils import img_utils
-from college_mgs.admin.routes import admin_controller
-from college_mgs.authentication.routes import authent_
-from college_mgs.account_settings.routes import account_
+from my_demo_app.views.routes import view
+from my_demo_app.search.routes import search_
+from my_demo_app.errors.routes import errors_
+from my_demo_app.media_utils.utils import img_utils
+from my_demo_app.admin.routes import admin_controller
+from my_demo_app.authentication.routes import authent_
+from my_demo_app.account_settings.routes import account_
 
 
 app.register_blueprint(view, url_prefix="/")
