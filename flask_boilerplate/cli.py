@@ -16,14 +16,19 @@ docs = """
 flask-boilerplate generator:
     The Flask Boilerplate Generator is a command-line tool (CLI) built with Python and the Flask framework. It provides developers with a convenient way to generate the folder structure and code for new Flask applications. This simplifies the process of starting new projects, allowing developers to focus on building application logic instead of skipping the boilerplate setup.
     
-    command for creating the project folder:
-        * flask-manage create-app [project/app name]
+    **==== User Commands: Get Started Quickly ====**
+
+    command for creating the project folder `Only`:
+        flask-manage create-app my_demo_app
 
     command for creating `Only` virtualenv venv:
-        * flask-manage -v  
+        flask-manage -v  
         
     commands for creating `Both` virtual environment & app (app folder):
-        * flask-manage -v create-app my_demo_app
+        flask-manage -v create-app my_demo_app
+        
+    ==== Note =====
+    You can change `my_demo_app` to any name of your choice
 """
 
 
