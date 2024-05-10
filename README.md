@@ -47,7 +47,7 @@ With Flask Boilerplate Generator, you can focus on building the core functionali
 Flask Boilerplate Generator empowers you with a comprehensive set of features to streamline request processing and safeguard your application against common web vulnerabilities.
 
 
-## ======== User Commands: Get Started Quickly =======
+## ======== User Commands: To Get Started Quickly =======
 
 Flask Boilerplate Generator provides convenient commands to streamline your project setup:
 
