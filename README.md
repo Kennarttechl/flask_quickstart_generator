@@ -86,3 +86,5 @@ Flask Boilerplate Generator provides convenient commands to streamline your proj
 ## ==== Note =====
 1. You can change `my_demo_app` to any name of your choice
 
+
+## ==== Link to the github ====
