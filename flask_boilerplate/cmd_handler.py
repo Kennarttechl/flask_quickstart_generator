@@ -10,7 +10,7 @@ from .routes_ import (
     SEARCH_FORM_DATA,
     VIEW_TEMPLATE_CODE,
     ADMIN_TEMPLATE_CODE,
-    SEARCH_TEMPLATE_CODE,
+    SEARCH_TEMPLATE_CODE, 
     ACCOUNT_SETTINGS_FORM,
     ERROR_HANDLER_TEMPLATE_CODE,
     AUTHENTICATION_TEMPLATE_CODE,
@@ -25,6 +25,10 @@ RESET = "\033[0m"
 
 # ANSI escape color code for displaying or printing sucessful message
 YELLOW = "\033[33m"
+RESET = "\033[0m"
+
+
+PINK = "\033[95m"
 RESET = "\033[0m"
 
 
@@ -119,7 +123,7 @@ class CmdHandler:
         print("")
 
         print(
-            f"{YELLOW}To activate the virtual environment, navigate into the 'venv' directory and run 'Scripts/activate' on Windows or 'source bin/activate' on Unix-based systems.{RESET}"
+            f"{PINK}To activate the virtual environment, navigate into the 'venv' directory and run 'Scripts/activate' on Windows or 'source bin/activate' on Unix-based systems.{RESET}"
         )
         print("")
         
