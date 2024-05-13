@@ -32,7 +32,7 @@ PINK = "\033[95m"
 RESET = "\033[0m"
 
 
-APP_STRUCTURE = {
+APPLICATION_STRUCTURE = {
     "templates": {
         "base.html": BASE_HTML, 
         "message.html": FLASH_MESSAGE
@@ -148,7 +148,7 @@ class CmdHandler:
                 ) as file:
                     file.write(GITIGNORE)
 
-                for dir, content in APP_STRUCTURE.items():
+                for dir, content in APPLICATION_STRUCTURE.items():
                     os.mkdir(os.path.join(app_folder_name, dir))
 
                     if dir in [
