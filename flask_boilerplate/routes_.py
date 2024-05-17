@@ -83,9 +83,10 @@ def search_item():
 """
 
 
-ERROR_HANDLER_TEMPLATE_CODE = """
+ERROR_HANDLER_TEMPLATE_CODE = \
+"""
 from flask import session
-from my_demo_app import app
+from college_mgs import app
 from http import HTTPStatus
 from flask import render_template, Blueprint, flash
 
@@ -96,30 +97,38 @@ errors_ = Blueprint(
 
 
 @errors_.app_errorhandler(403)
-def error_403(error):
-    return render_template("error_403.html"), HTTPStatus.FORBIDDEN
+def forbidden_error(error):
+    return render_template("forbidden.html"), HTTPStatus.FORBIDDEN
 
 
 @errors_.app_errorhandler(404)
-def error_404(error):
-    return render_template("error_404.html"), HTTPStatus.NOT_FOUND
+def not_found_error(error):
+    return render_template("not_found.html"), HTTPStatus.NOT_FOUND
+
+
+@errors_.app_errorhandler(413)
+def payload_too_large_error(error):
+    return render_template("payload_data.html"), HTTPStatus.PAYLOAD_TOO_LARGE
 
 
 @errors_.app_errorhandler(429)
-def error_429(error):
+def too_many_requests_error(error):
     flash(
-        message="Your request is too much, try again in a few minute", category="error"
+        message="Your request is too much, try again in a few minutes", category="error"
     )
-    return render_template("error_429.html"), HTTPStatus.TOO_MANY_REQUESTS
+    return render_template("too_many_requests_error.html"), HTTPStatus.TOO_MANY_REQUESTS
 
 
 @errors_.app_errorhandler(500)
-def error_500(error):
-    return render_template("error_500.html"), HTTPStatus.INTERNAL_SERVER_ERROR
+def internal_server_error(error):
+    return (
+        render_template("internal_server.html"),
+        HTTPStatus.INTERNAL_SERVER_ERROR,
+    )
 
 
 @errors_.app_errorhandler(ValueError)
-def handle_value_error(error):
+def value_error(error):
     error_message = session.pop("error_message", None)
     if error_message:
         app.logger.error(error_message)
@@ -134,11 +143,12 @@ def maintainance():
 
 
 @errors_.app_errorhandler(503)
-def maintenance_mode(error):
+def app_maintenance_mode(error):  # Optional prefix for consistency
     if maintainance:  # Replace with your logic to check maintenance mode
         return render_template("maintenance.html"), HTTPStatus.SERVICE_UNAVAILABLE
     # Code to handle other 503 errors (optional)
     return None  # Fallback for non-maintenance related 503 errors
+
 """
 
 
@@ -173,7 +183,8 @@ def secure_login():
 """
 
 
-ACCOUNT_UTILS = """ 
+ACCOUNT_UTILS = \
+""" 
 import os
 import secrets
 from PIL import Image
@@ -207,7 +218,8 @@ def save_picture(form_picture):
 """
 
 
-ACCOUNT_SETTINGS_FORM = """ 
+ACCOUNT_SETTINGS_FORM = \
+""" 
 from flask_wtf import FlaskForm
 from flask_login import current_user
 from my_demo_app.database.models import User
@@ -254,6 +266,121 @@ def secure_password():
 @account_.route(f"/{secrets.token_urlsafe()}")
 def secure_account_update():
     return render_template("update_account.html")
+"""
+
+
+UPLOAD_FILES_FORM = \
+""" 
+from flask_wtf import FlaskForm
+from wtforms import FileField, SubmitField
+from flask_wtf.file import FileField, MultipleFileField, DataRequired
+
+
+class SingleFileUploadForm(FlaskForm):
+    file = FileField(label="Select File", validators=[DataRequired()])
+    submit = SubmitField("Submit")
+
+
+class MultipleFileUploadForm(FlaskForm):
+    files_ = MultipleFileField(label="Select files", validators=[DataRequired()])
+    submit = SubmitField(label="Submit")
+"""
+
+
+UPLOAD_FILES_TEMPLATE_CODE = \
+""" 
+import os
+import secrets
+from my_demo_app import limiter, app
+from werkzeug.utils import secure_filename
+from .form import MultipleFileUploadForm, SingleFileUploadForm
+from flask import render_template, Blueprint, redirect, url_for
+
+
+file_upload_ = Blueprint(
+    "file_upload_", __name__, template_folder="templates", static_folder="static"
+)
+
+
+# Route for handling single file upload
+# @authent_.route(f"/{secrets.token_urlsafe()}", methods=["GET", "POST"])
+@authent_.route("/single_upload", methods=["GET", "POST"])
+@limiter.limit("10 per minute", override_defaults=True)
+def secure_single_upload():
+    # Create form instance
+    form = SingleFileUploadForm()
+
+    # Check if form is submitted and valid
+    if form.validate_on_submit():
+        # Access the uploaded file
+        file = form.file.data
+
+        # Check if a file was uploaded
+        if file:
+            # Get file extension and lowercase it
+            extension = os.path.splitext(file.filename)[1].lower()
+
+            # Generate secure file path
+            file_path = os.path.join(
+                app.config["UPLOAD_FOLDER"], secure_filename(file.filename)
+            )
+
+            # Check if file extension is allowed
+            if extension not in app.config["ALLOWED_EXTENSIONS"]:
+                return "File is not an allowed type"
+
+            # Save the file to the upload folder
+            file.save(file_path)
+
+            # Redirect to registration page after successful upload
+            return redirect(url_for("view.home_page"))
+        else:
+            # Inform user if no file was selected
+            return "No file selected"
+
+    # Render the template with the form
+    return render_template("upload.html", form=form)
+
+
+# Route for handling multiple file uploads
+# @authent_.route("/multiple_upload", methods=["GET", "POST"])
+# @limiter.limit("10 per minute", override_defaults=True)
+# def secure_multiple_upload():
+#     # Create form instance
+#     form = MultipleFileUploadForm()
+
+#     # Check if form is submitted and valid
+#     if form.validate_on_submit():
+#         # Access uploaded files as a list
+#         files = form.files_.data
+
+#         # Check if any files were uploaded
+#         if files:
+#             # Loop through each uploaded file
+#             for file in files:
+#                 # Get file extension and lowercase it
+#                 extension = os.path.splitext(file.filename)[1].lower()
+
+#                 # Generate secure file path
+#                 file_path = os.path.join(
+#                     app.config["UPLOAD_FOLDER"], secure_filename(file.filename)
+#                 )
+
+#                 # Check if file extension is allowed
+#                 if extension not in app.config["ALLOWED_EXTENSIONS"]:
+#                     return "File is not an allowed type"
+
+#                 # Save the file to the upload folder
+#                 file.save(file_path)
+
+#             # Redirect to registration page after successful upload
+#             return redirect(url_for("view.home_page"))
+#         else:
+#             # Inform user if no files were selected
+#             return "No files selected"
+
+#     # Render the template with the form
+#     return render_template("upload.html", form=form)
 """
 
 

@@ -8,10 +8,12 @@ from .routes_ import (
     APP_STARTUP,
     ACCOUNT_UTILS,
     SEARCH_FORM_DATA,
+    UPLOAD_FILES_FORM,
     VIEW_TEMPLATE_CODE,
     ADMIN_TEMPLATE_CODE,
     SEARCH_TEMPLATE_CODE, 
     ACCOUNT_SETTINGS_FORM,
+    UPLOAD_FILES_TEMPLATE_CODE,
     ERROR_HANDLER_TEMPLATE_CODE,
     AUTHENTICATION_TEMPLATE_CODE,
     ACCOUNT_SETTINGS_TEMPLATE_CODE,
@@ -90,8 +92,8 @@ APPLICATION_STRUCTURE = {
     },
     
     "uploads":{
-      "routes.py": "",
-      "form.py": "",
+      "routes.py": UPLOAD_FILES_TEMPLATE_CODE,
+      "form.py": UPLOAD_FILES_FORM,
       "__init__.py": ""  
     },
     
@@ -105,7 +107,7 @@ APPLICATION_STRUCTURE = {
 class CmdHandler:
 
     def init():
-        print(f"{GREEN}Please wait, app is setting up virtual environment......{RESET}")
+        print(f"{GREEN}Please wait, app is setting up virtual environment....{RESET}")
 
         os.system("pip install virtualenv")
 
