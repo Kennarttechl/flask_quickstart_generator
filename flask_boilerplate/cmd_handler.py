@@ -161,7 +161,7 @@ class CmdHandler:
                     os.mkdir(os.path.join(app_folder_name, dir))
 
                     if dir in [
-                        "uploads"
+                        "uploads",
                         "errors",
                         "views",
                         "admin",
