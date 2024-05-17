@@ -85,7 +85,14 @@ APPLICATION_STRUCTURE = {
     
     "media_utils":{
       "utils.py": ACCOUNT_UTILS, 
+      "routes.py": "",
       "__init__.py": "" 
+    },
+    
+    "uploads":{
+      "routes.py": "",
+      "form.py": "",
+      "__init__.py": ""  
     },
     
     "config":{
@@ -152,11 +159,12 @@ class CmdHandler:
                     os.mkdir(os.path.join(app_folder_name, dir))
 
                     if dir in [
+                        "uploads"
                         "errors",
                         "views",
-                        "authentication",
                         "admin",
                         "search",
+                        "authentication",
                         "account_settings",
                     ]:
                         template_folder = os.path.join(
@@ -166,12 +174,13 @@ class CmdHandler:
 
                         if dir == "errors":
                             error_files = [
-                                "error_403.html",
-                                "error_404.html",
-                                "error_500.html",
-                                "error_429.html",
+                                "forbidden.html",
+                                "not_found.html",
                                 "maintenance.html",
+                                "payload_data.html",
                                 "invalid_path.html",
+                                "internal_server.html",
+                                "too_many_requests.html",
                             ]
                             for error_file in error_files:
                                 file_path = os.path.join(template_folder, error_file)
@@ -185,6 +194,7 @@ class CmdHandler:
                                 "views": "index.html",
                                 "admin": "controller.html",
                                 "search": "item_search.html",
+                                "uploads": "file_upload.html",
                                 "authentication": ["login.html", "signup.html"],
                                 "account_settings": [
                                     "reset_pswd.html",
@@ -230,6 +240,7 @@ class CmdHandler:
                         "errors",
                         "config",
                         "search",
+                        "uploads",
                         "database",
                         "templates",
                         "media_utils",
