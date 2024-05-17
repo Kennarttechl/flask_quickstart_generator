@@ -48,6 +48,12 @@ app.config["BABEL_DEFAULT_LOCALE"] = "en_US"
 app.config["BABEL_DEFAULT_TIMEZONE"] = "UTC"
 
 
+# Configure upload media files
+app.config["MAX_CONTENT_LENGTH"] = 16 * 1024 * 1024 # 16MB 
+app.config["ALLOWED_EXTENSIONS"] = [".jpg", ".jpeg", ".png"] # file type to accept
+app.config["UPLOAD_FOLDER"] = os.path.join("my_demo_app", "static", "media") # upload dir
+
+
 # Configure Flask-Caching
 app.config["CACHE_TYPE"] = "simple"  # You can use 'simple', 'redis', 'memcached'
 app.config["CACHE_DEFAULT_TIMEOUT"] = (
@@ -201,6 +207,7 @@ def app_security_headers_middleware(response):
 from my_demo_app.views.routes import view
 from my_demo_app.search.routes import search_
 from my_demo_app.errors.routes import errors_
+from my_demo_app.uploads.routes import file_upload_
 from my_demo_app.media_utils.utils import img_utils
 from my_demo_app.admin.routes import admin_controller
 from my_demo_app.authentication.routes import authent_
@@ -213,6 +220,6 @@ app.register_blueprint(errors_, url_prefix="/")
 app.register_blueprint(authent_, url_prefix="/")
 app.register_blueprint(account_, url_prefix="/")
 app.register_blueprint(img_utils, url_prefix="/")
+app.register_blueprint(file_upload_, url_prefix="/")
 app.register_blueprint(admin_controller, url_prefix="/")
-
 """
