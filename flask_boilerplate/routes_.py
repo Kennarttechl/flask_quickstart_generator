@@ -303,7 +303,7 @@ file_upload_ = Blueprint(
 
 
 # Route for handling single file upload
-# @authent_.route(f"/{secrets.token_urlsafe()}", methods=["GET", "POST"])
+# @file_upload_.route(f"/{secrets.token_urlsafe()}", methods=["GET", "POST"])
 @authent_.route("/single_upload", methods=["GET", "POST"])
 @limiter.limit("10 per minute", override_defaults=True)
 def secure_single_upload():
@@ -343,7 +343,7 @@ def secure_single_upload():
 
 
 # Route for handling multiple file uploads
-# @authent_.route("/multiple_upload", methods=["GET", "POST"])
+# @file_upload_.route("/multiple_upload", methods=["GET", "POST"])
 # @limiter.limit("10 per minute", override_defaults=True)
 # def secure_multiple_upload():
 #     # Create form instance
