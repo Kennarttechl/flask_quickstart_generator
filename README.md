@@ -4,6 +4,10 @@ Are you tired of spending valuable time setting up the same boilerplate code eve
 
 Flask Boilerplate Generator streamlines the development process by automating the setup of a Flask project with just a few simple commands. Whether you're a seasoned Flask developer or just starting out, this tool will help you get your project up and running in no time.
 
+## Features
+| Features  |   Status | Details
+| ------------- | ------------- | -------- |
+
 
 ## == Key Features ==
 
