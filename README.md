@@ -31,13 +31,12 @@ Flask Boilerplate Generator streamlines the development process by automating th
 
 
 **Benefits of Rate Limiting:**
+|           |           |
+|Mitigates denial-of-service (DoS) attacks by preventing a single user or automated script from overwhelming your server with requests.
+|Improves application performance by ensuring resources are available to legitimate users.
+|Enhances security by making it more difficult for attackers to exploit vulnerabilities.
 
-* Mitigates denial-of-service (DoS) attacks by preventing a single user or automated script from overwhelming your server with requests.
-* Improves application performance by ensuring resources are available to legitimate users.
-* Enhances security by making it more difficult for attackers to exploit vulnerabilities.
-
-
-## ==== Comprehensive Security Headers === 
+## Comprehensive Security Headers 
 
 **Clickjacking Protection:** Sets the `X-Frame-Options` header to `DENY`, effectively blocking clickjacking attacks that attempt to trick users into clicking on malicious content within your application's frame.
   
