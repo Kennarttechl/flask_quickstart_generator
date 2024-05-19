@@ -20,7 +20,7 @@ Flask Boilerplate Generator streamlines the development process by automating th
 |**URL Validation:**|✅         | Ensures valid request path format by rejecting paths without a leading slash or containing non-alphanumeric characters (excluding root URL).This helps prevent potential security issues and improves routing clarity.
 |**URL Canonicalization:**|✅           | Redirects URLs with uppercase letters to their lowercase equivalents. This promotes consistency and prevents duplicate content issues.         
 |**Trailing Slash Removal:**|✅         | Removes trailing slashes from URLs (except for the root URL) to prevent duplicate content issues, search engine optimization (SEO) problems and duplicate content.
-|**Enhanced Security Measures:**|✅         |
+|**Enhanced Security Measures:**|✅         
 
 **In addition to features mentioned previously**
 
