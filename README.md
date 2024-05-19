@@ -11,7 +11,6 @@ Flask Boilerplate Generator streamlines the development process by automating th
 |**Virtual Environment Management:**|✅         | Automatically sets up a virtual environment for your project, ensuring clean and isolated dependencies.
 |**Blueprint Configuration:**|✅            | Quickly scaffold your project with pre-configured blueprints for common application components like authentication, administration, error handling, search, account settings, views, database(model) and more.
 |**Security Enhancements:**|✅          | Includes built-in security measures such as CSRF protection, HTTP headers middleware, and secure session management to help keep your application safe from common vulnerabilities.
-|
 
 
 ## Robust Request Handling and Enhanced Security Measures 
