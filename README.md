@@ -22,9 +22,12 @@ Flask Boilerplate Generator streamlines the development process by automating th
 |**Trailing Slash Removal:**|✅         | Removes trailing slashes from URLs (except for the root URL) to prevent duplicate content issues, search engine optimization (SEO) problems and duplicate content.
 |**Enhanced Security Measures:**|✅         
 
-**In addition to features mentioned previously**
+**In addition to features mentioned previously**|
 
-|**Asset Minification:**|✅         |Flask Boilerplate Generator integrates with Flask-Assets to automatically minify JavaScript and CSS files, improving page load times and performance.
+| Features  |   Status | Details
+| ------------- | ------------- | -------- |
+
+|**Asset Minification:**|✅         | Flask Boilerplate Generator integrates with Flask-Assets to automatically minify JavaScript and CSS files, improving page load times and performance.
 |**Rate Limiting**|✅           |Flask-Limiter, a powerful tool for implementing rate limiting in your application. This helps protect your server from malicious attacks by limiting the number of requests a client can send within a specific timeframe.
 |The default configuration in `__init__.py` sets a limit of 3000 requests per hour. You can easily customize this limit to fit your specific needs.
 
