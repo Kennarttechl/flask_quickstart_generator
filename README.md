@@ -14,7 +14,7 @@ Flask Boilerplate Generator streamlines the development process by automating th
 |
 
 
-## == Robust Request Handling and Enhanced Security Measures ==
+## Robust Request Handling and Enhanced Security Measures 
 | Features  |   Status | Details
 | ------------- | ------------- | -------- |
 |**URL Validation:**|✅         | Ensures valid request path format by rejecting paths without a leading slash or containing non-alphanumeric characters (excluding root URL).This helps prevent potential security issues and improves routing clarity.
@@ -22,7 +22,7 @@ Flask Boilerplate Generator streamlines the development process by automating th
 |**Trailing Slash Removal:**|✅         | Removes trailing slashes from URLs (except for the root URL) to prevent duplicate content issues, search engine optimization (SEO) problems and duplicate content.
 |**Enhanced Security Measures:**|✅         
 
-**In addition to features mentioned previously**|
+**In addition to features mentioned previously**
 
 | Features  |   Status | Details
 | ------------- | ------------- | -------- |
