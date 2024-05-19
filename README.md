@@ -30,10 +30,10 @@ Flask Boilerplate Generator streamlines the development process by automating th
 |The default configuration in `__init__.py` sets a limit of 3000 requests per hour. You can easily customize this limit to fit your specific needs.
 
 
-**Benefits of Rate Limiting:**
+# Benefits of Rate Limiting:
 | Benefits  |   Status | Details
 | ------------- | ------------- | -------- |
-|1. Mitigates denial-of-service (DoS) attacks by preventing a single user or automated script from overwhelming your server with requests.
+|1. Mitigates denial-of-service (DoS) attacks by preventing a single user or automated script from overwhelming your server with requests.|✅ |✅ 
 |2. Improves application performance by ensuring resources are available to legitimate users.
 |3. Enhances security by making it more difficult for attackers to exploit vulnerabilities.
 
