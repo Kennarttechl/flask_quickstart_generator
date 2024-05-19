@@ -9,29 +9,25 @@ Flask Boilerplate Generator streamlines the development process by automating th
 | ------------- | ------------- | -------- |
 |**Effortless Setup:** |✅          | Simply install the package from PyPI OR github and use the command-line interface to create a new Flask project with a predefined folder structure and blueprint setup.
 |**Virtual Environment Management:**|✅         | Automatically sets up a virtual environment for your project, ensuring clean and isolated dependencies.
-|**Blueprint Configuration:**|✅
- 
-
- Quickly scaffold your project with pre-configured blueprints for common application components like authentication, administration, error handling, search, account settings, views, database(model) and more.
-
-**Security Enhancements:** Includes built-in security measures such as CSRF protection, HTTP headers middleware, and secure session management to help keep your application safe from common vulnerabilities.
+|**Blueprint Configuration:**|✅            | Quickly scaffold your project with pre-configured blueprints for common application components like authentication, administration, error handling, search, account settings, views, database(model) and more.
+|**Security Enhancements:**|✅          | Includes built-in security measures such as CSRF protection, HTTP headers middleware, and secure session management to help keep your application safe from common vulnerabilities.
+|
 
 
 ## == Robust Request Handling and Enhanced Security Measures ==
+| Features  |   Status | Details
+| ------------- | ------------- | -------- |
+|**URL Validation:**|✅         | Ensures valid request path format by rejecting paths without a leading slash or containing non-alphanumeric characters (excluding root URL).This helps prevent potential security issues and improves routing clarity.
+|**URL Canonicalization:**|✅           | Redirects URLs with uppercase letters to their lowercase equivalents. This promotes consistency and prevents duplicate content issues.         
+|**Trailing Slash Removal:**|✅         | Removes trailing slashes from URLs (except for the root URL) to prevent duplicate content issues, search engine optimization (SEO) problems and duplicate content.
+|**Enhanced Security Measures:**|✅         |
 
-**URL Validation:** Ensures valid request path format by rejecting paths without a leading slash or containing non-alphanumeric characters (excluding root URL).This helps prevent potential security issues and improves routing clarity.
+**In addition to features mentioned previously**
 
-**URL Canonicalization:** Redirects URLs with uppercase letters to their lowercase equivalents. This promotes consistency and prevents duplicate content issues.
-  
-**Trailing Slash Removal:** Removes trailing slashes from URLs (except for the root URL) to prevent duplicate content issues, search engine optimization (SEO) problems and duplicate content.
+|**Asset Minification:**|✅         |Flask Boilerplate Generator integrates with Flask-Assets to automatically minify JavaScript and CSS files, improving page load times and performance.
+|**Rate Limiting**|✅           |Flask-Limiter, a powerful tool for implementing rate limiting in your application. This helps protect your server from malicious attacks by limiting the number of requests a client can send within a specific timeframe.
+|The default configuration in `__init__.py` sets a limit of 3000 requests per hour. You can easily customize this limit to fit your specific needs.
 
-**Enhanced Security Measures:** (In addition to features mentioned previously)
-
-**Asset Minification:** Flask Boilerplate Generator integrates with Flask-Assets to automatically minify JavaScript and CSS files, improving page load times and performance.
-
-**Rate Limiting** Flask-Limiter, a powerful tool for implementing rate limiting in your application. This helps protect your server from malicious attacks by limiting the number of requests a client can send within a specific timeframe. 
-
-The default configuration in `__init__.py` sets a limit of 3000 requests per hour. You can easily customize this limit to fit your specific needs.
 
 **Benefits of Rate Limiting:**
 
