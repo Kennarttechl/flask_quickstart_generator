@@ -39,11 +39,11 @@ Flask Boilerplate Generator streamlines the development process by automating th
 
 ## Comprehensive Security Headers 
 | Security Headers  |   Status | Details
-| ------------- | ------------- | -------- |
-|**Clickjacking Protection:** |✅           |Sets the `X-Frame-Options` header to `DENY`, effectively blocking clickjacking attacks that attempt to trick users into clicking on malicious content within your application's frame.
-|**Referrer-Policy Control:** |✅           |Limits referrer information exposure using the `Referrer-Policy` header. This can be set to `strict-origin-when-cross-origin` to restrict referrer leaks to the same origin (your domain) when navigating away from your site in a cross-origin context. Alternatively, for stricter control, you can use `no-referrer` to prevent any referrer information from being sent.
-|**MIME-Sniffing Prevention:** |✅          |Configures `X-Content-Type-Options` to `nosniff`. This mitigates MIME-sniffing vulnerabilities where the browser attempts to guess the content type of a resource based on its initial bytes, potentially allowing attackers to inject malicious content.
-|**Content Security Policy (CSP):** |✅         Implements a foundational CSP to restrict resource loading and enhance protection against XSS and data injection attacks. You can further customize this policy to specify allowed origins for scripts, stylesheets, fonts, images, and other resources. The provided example serves as a starting point:
+| ------------- | ------ | -------- |
+|**Clickjacking Protection:** |✅       |Sets the `X-Frame-Options` header to `DENY`, effectively blocking clickjacking attacks that attempt to trick users into clicking on malicious content within your application's frame.
+|**Referrer-Policy Control:** |✅       |Limits referrer information exposure using the `Referrer-Policy` header. This can be set to `strict-origin-when-cross-origin` to restrict referrer leaks to the same origin (your domain) when navigating away from your site in a cross-origin context. Alternatively, for stricter control, you can use `no-referrer` to prevent any referrer information from being sent.
+|**MIME-Sniffing Prevention:** |✅      |Configures `X-Content-Type-Options` to `nosniff`. This mitigates MIME-sniffing vulnerabilities where the browser attempts to guess the content type of a resource based on its initial bytes, potentially allowing attackers to inject malicious content.
+|**Content Security Policy (CSP):** |✅     |Implements a foundational CSP to restrict resource loading and enhance protection against XSS and data injection attacks. You can further customize this policy to specify allowed origins for scripts, stylesheets, fonts, images, and other resources. The provided example serves as a starting point:
 
 
 **Increased Developer Efficiency:**
