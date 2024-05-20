@@ -92,7 +92,7 @@ Flask Boilerplate Generator provides convenient commands to streamline your proj
 
 | Screenshot | Name |
 ----------|-----
-| Cloning project /Installing the package |  ![Cloning](documentation/screenshots/Git_Clone.png) |
+| Cloning package /Installing the package |  ![Cloning](documentation/screenshots/Git_Clone.png) |
 | Commands  |  ![Commands](documentation/screenshots/Commands.png) |
 | Project Creating |  ![Creating project](documentation/screenshots/Creating_Project.png) |
 | Installation Complete  |  ![Instatllation](documentation/screenshots/Installation_Complete.png) |
