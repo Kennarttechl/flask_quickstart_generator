@@ -88,16 +88,13 @@ Flask Boilerplate Generator provides convenient commands to streamline your proj
 **https://github.com/Kennarttechl/flask_boilerplate_generator.git**
 
 
+## Screenshot
+
 | Screenshot | Name |
 ----------|-----
-| Login / Signup / OAuth / Password Reset |  ![login](documentation/screenshots/login.png) |
-| Dashboard  |  ![Dashboard](documentation/screenshots/dashboard.png) |
-| Saas Subscription Billing + Console  |  ![Billing](documentation/screenshots/billing.png) |
-| Teams  |  ![Team](documentation/screenshots/team.png) |
-| GDPR/Legal  |  ![GDPR](documentation/screenshots/gdpr.png) |
-| Admin  |  ![Admin](documentation/screenshots/admin.png) |
-| API Tokens |  ![API](documentation/screenshots/api.png) |
-| Delayed Jobs |  ![Jobs](documentation/screenshots/jobs.png) |
-| Emails |  ![Emails](documentation/screenshots/email.png) |
-| File Uploads |  ![Files](documentation/screenshots/file-uploads.png) |
-| Stripe Customer Portal Integration | ![Stripe](documentation/screenshots/stripe-console.png) |
+| Cloning project |  ![Cloning](documentation/screenshots/Git_Clone.png) |
+| Commands  |  ![Commands](documentation/screenshots/Commands.png) |
+| Project Creation |  ![Creating project](documentation/screenshots/Creating_Project.png) |
+| Installation  |  ![Instatllation](documentation/screenshots/Installation_Complete.png) |
+| Application Startup  |  ![Application Start](documentation/screenshots/Application_Startup.png) |
+
