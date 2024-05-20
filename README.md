@@ -97,5 +97,5 @@ Flask Boilerplate Generator provides convenient commands to streamline your proj
 | Project Creating |  ![Creating project](documentation/screenshots/Creating_Project.png) |
 | Installation Complete  |  ![Instatllation](documentation/screenshots/Installation_Complete.png) |
 | Application Startup  |  ![Application Start](documentation/screenshots/Application_Startup.png) |
-|Landing page   |   ![Landing Page](documentation/screenshots/Landing_Page.png)|
+|Landing Page   |   ![Landing Page](documentation/screenshots/Landing_Page.png)|
 
