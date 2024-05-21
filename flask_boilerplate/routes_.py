@@ -1,4 +1,5 @@
-GITIGNORE = """
+GITIGNORE = \
+"""
 *.db
 venv/
 config/.venv
@@ -8,7 +9,8 @@ __pycache__
 """
 
 
-APP_STARTUP = """
+APP_STARTUP = \
+"""
 from my_demo_app import db, app
 
 
@@ -20,7 +22,8 @@ if __name__ == "__main__":
 """
 
 
-VIEW_TEMPLATE_CODE = """
+VIEW_TEMPLATE_CODE = \
+"""
 import os
 from my_demo_app import app
 from flask import render_template, Blueprint, send_from_directory, abort
@@ -29,43 +32,43 @@ from flask import render_template, Blueprint, send_from_directory, abort
 view = Blueprint("view", __name__, template_folder="templates", static_folder="static")
 
 
-# @view.route("/")
-# def home_page():
-#     # This function retrieves a list of allowed image filenames and renders the homepage template.
-
-#     # Get list of all files in the upload folder
-#     files = os.listdir(app.config["UPLOAD_FOLDER"])
-
-#     # Create an empty list to store allowed image filenames
-#     images = []
-
-#     # Loop through each file in the upload folder
-#     for file in files:
-#         # Extract the file extension and convert it to lowercase
-#         extention = os.path.splitext(file)[1].lower()
-
-#         # Check if the extension is allowed (e.g., ".jpg", ".png")
-#         if extention in app.config["ALLOWED_EXTENSIONS"]:
-#             # If the extension is allowed, add the filename to the images list
-#             images.append(file)
-
-#     # Render the homepage template and pass the list of images
-#     return render_template("index.html", images=images)
-
-
 @view.route("/")
 def home_page():
-    # This function retrieves a list of allowed image filenames using list comprehension and renders the homepage template.
+    # This function retrieves a list of allowed image filenames and renders the homepage template.
 
     # Get list of all files in the upload folder
     files = os.listdir(app.config["UPLOAD_FOLDER"])
 
-    # Use list comprehension to filter allowed image filenames based on extension
-    images = [file for file in files if os.path.splitext(file)[1].lower() in app.config["ALLOWED_EXTENSIONS"]
-    ]
+    # Create an empty list to store allowed image filenames
+    images = []
+
+    # Loop through each file in the upload folder
+    for file in files:
+        # Extract the file extension and convert it to lowercase
+        extention = os.path.splitext(file)[1].lower()
+
+        # Check if the extension is allowed (e.g., ".jpg", ".png")
+        if extention in app.config["ALLOWED_EXTENSIONS"]:
+            # If the extension is allowed, add the filename to the images list
+            images.append(file)
 
     # Render the homepage template and pass the list of images
     return render_template("index.html", images=images)
+
+
+# @view.route("/")
+# def home_page():
+#     # This function retrieves a list of allowed image filenames using list comprehension and renders the homepage template.
+
+#     # Get list of all files in the upload folder
+#     files = os.listdir(app.config["UPLOAD_FOLDER"])
+
+#     # Use list comprehension to filter allowed image filenames based on extension
+#     images = [file for file in files if os.path.splitext(file)[1].lower() in app.config["ALLOWED_EXTENSIONS"]
+#     ]
+
+#     # Render the homepage template and pass the list of images
+#     return render_template("index.html", images=images)
 
 
 @view.route("/serve-image/<filename>", methods=["GET"])
@@ -83,11 +86,11 @@ def serve_image(filename):
 
     # Use Flask's send_from_directory utility to serve the image
     return send_from_directory(directory=app.config["UPLOAD_FOLDER"], path=filename)
-
 """
 
 
-SEARCH_FORM_DATA = """ 
+SEARCH_FORM_DATA = \
+""" 
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired
 from wtforms import SearchField, SubmitField
@@ -99,7 +102,8 @@ class ProductSearchForm(FlaskForm):
 """
 
 
-SEARCH_TEMPLATE_CODE = """
+SEARCH_TEMPLATE_CODE = \
+"""
 from sqlalchemy import or_
 from my_demo_app import limiter
 from .form import ProductSearchForm
@@ -134,7 +138,8 @@ def search_item():
 """
 
 
-ERROR_HANDLER_TEMPLATE_CODE = """
+ERROR_HANDLER_TEMPLATE_CODE = \
+"""
 from flask import session
 from college_mgs import app
 from http import HTTPStatus
@@ -202,7 +207,8 @@ def app_maintenance_mode(error):  # Optional prefix for consistency
 """
 
 
-AUTHENTICATION_TEMPLATE_CODE = """
+AUTHENTICATION_TEMPLATE_CODE = \
+"""
 import secrets
 from my_demo_app import limiter
 from flask import render_template, Blueprint
@@ -232,7 +238,8 @@ def secure_login():
 """
 
 
-ACCOUNT_UTILS = """ 
+ACCOUNT_UTILS = \
+""" 
 import os
 import secrets
 from PIL import Image
@@ -266,7 +273,8 @@ def save_picture(form_picture):
 """
 
 
-ACCOUNT_SETTINGS_FORM = """ 
+ACCOUNT_SETTINGS_FORM = \
+""" 
 from flask_wtf import FlaskForm
 from flask_login import current_user
 from my_demo_app.database.models import User
@@ -292,7 +300,8 @@ class UpdateAccount(FlaskForm):
 """
 
 
-ACCOUNT_SETTINGS_TEMPLATE_CODE = """
+ACCOUNT_SETTINGS_TEMPLATE_CODE = \
+"""
 import secrets
 from my_demo_app import db
 from .form import UpdateAccount
@@ -315,7 +324,8 @@ def secure_account_update():
 """
 
 
-UPLOAD_FILES_FORM = """ 
+UPLOAD_FILES_FORM = \
+""" 
 from flask_wtf import FlaskForm
 from wtforms import FileField, SubmitField
 from flask_wtf.file import FileField, MultipleFileField, DataRequired
@@ -332,7 +342,8 @@ class MultipleFileUploadForm(FlaskForm):
 """
 
 
-UPLOAD_FILES_TEMPLATE_CODE = """ 
+UPLOAD_FILES_TEMPLATE_CODE = \
+""" 
 import os
 import secrets
 from my_demo_app import limiter, app
@@ -429,7 +440,8 @@ def secure_single_upload():
 """
 
 
-ADMIN_TEMPLATE_CODE = """
+ADMIN_TEMPLATE_CODE = \
+"""
 import secrets
 from flask import render_template, Blueprint
 
