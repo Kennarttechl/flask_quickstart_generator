@@ -352,14 +352,14 @@ from .form import MultipleFileUploadForm, SingleFileUploadForm
 from flask import render_template, Blueprint, redirect, url_for
 
 
-authent_ = Blueprint(
-    "authent_", __name__, template_folder="templates", static_folder="static"
+file_upload_ = Blueprint(
+    "file_upload_", __name__, template_folder="templates", static_folder="static"
 )
 
 
 # Route for handling single file upload
-@authent_.route(f"/{secrets.token_urlsafe()}", methods=["GET", "POST"])
-# @authent_.route("/singleupload", methods=["GET", "POST"])
+#@file_upload_.route(f"/{secrets.token_urlsafe()}", methods=["GET", "POST"])
+@file_upload_.route("/singleupload", methods=["GET", "POST"])
 @limiter.limit("10 per minute", override_defaults=True)
 def secure_single_upload():
     # Create form instance
@@ -398,7 +398,7 @@ def secure_single_upload():
 
 
 # Route for handling multiple file uploads
-# @authent_.route("/multiple_upload", methods=["GET", "POST"])
+# @file_upload_.route("/multiple_upload", methods=["GET", "POST"])
 # @limiter.limit("10 per minute", override_defaults=True)
 # def secure_multiple_upload():
 #     # Create form instance
