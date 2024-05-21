@@ -394,7 +394,7 @@ def secure_single_upload():
             return "No file selected"
 
     # Render the template with the form
-    return render_template("upload.html", form=form)
+    return render_template("file_upload.html", form=form)
 
 
 # Route for handling multiple file uploads
@@ -435,7 +435,7 @@ def secure_single_upload():
 #             return "No files selected"
 
 #     # Render the template with the form
-#     return render_template("upload.html", form=form)
+#     return render_template("file_upload.html", form=form)
 
 """
 
