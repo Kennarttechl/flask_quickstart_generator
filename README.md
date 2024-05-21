@@ -80,53 +80,53 @@ Flask Boilerplate Generator provides convenient commands to streamline your proj
 **flask-manage -v create-app my_demo_app**
 
 # Requirements to Intall :
-| Requirements  |   Status | Details
-| ------------- | ------------- | -------- |
-|alembic==1.13.1|✅ |✅ 
-Babel==2.15.0
-bcrypt==4.1.3
-blinker==1.8.2
-cachelib==0.9.0
-click==8.1.7
-colorama==0.4.6
-cssmin==0.2.0
-Deprecated==1.2.14
-Flask==3.0.3
-Flask-Assets==2.1.0
-flask-babel==4.0.0
-Flask-Bcrypt==1.0.1
-Flask-Caching==2.3.0
-Flask-Limiter==3.6.0
-Flask-Login==0.6.3
-Flask-Migrate==4.0.7
-Flask-Session==0.8.0
-Flask-SQLAlchemy==3.1.1
-Flask-WTF==1.2.1
-greenlet==3.0.3
-importlib_resources==6.4.0
-itsdangerous==2.2.0
-Jinja2==3.1.4
-jsmin==3.0.1
-limits==3.11.0
-Mako==1.3.3
-markdown-it-py==3.0.0
-MarkupSafe==2.1.5
-mdurl==0.1.2
-msgspec==0.18.6
-ordered-set==4.1.0
-packaging==24.0
-pillow==10.3.0
-Pygments==2.18.0
-pytz==2024.1
-rcssmin==1.1.2
-rich==13.7.1
-rjsmin==1.2.2
-SQLAlchemy==2.0.30
-typing_extensions==4.11.0
-webassets==2.0
-Werkzeug==3.0.3
-wrapt==1.16.0
-WTForms==3.1.2
+| Requirements  |   Status |
+| ------------- | ----------
+|alembic==1.13.1 |✅ 
+Babel==2.15.0 |✅  
+bcrypt==4.1.3   |✅ 
+blinker==1.8.2  |✅ 
+cachelib==0.9.0 |✅ 
+click==8.1.7    |✅ 
+colorama==0.4.6 |✅ 
+cssmin==0.2.0   |✅ 
+Deprecated==1.2.14  |✅ 
+Flask==3.0.3    |✅ 
+Flask-Assets==2.1.0 |✅ 
+flask-babel==4.0.0  |✅ 
+Flask-Bcrypt==1.0.1 |✅ 
+Flask-Caching==2.3.0    |✅ 
+Flask-Limiter==3.6.0    |✅ 
+Flask-Login==0.6.3  |✅ 
+Flask-Migrate==4.0.7    |✅ 
+Flask-Session==0.8.0    |✅ 
+Flask-SQLAlchemy==3.1.1 |✅ 
+Flask-WTF==1.2.1    |✅ 
+greenlet==3.0.3 |✅ 
+importlib_resources==6.4.0  |✅ 
+itsdangerous==2.2.0 |✅ 
+Jinja2==3.1.4   |✅ 
+jsmin==3.0.1    |✅ 
+limits==3.11.0  |✅ 
+Mako==1.3.3 |✅ 
+markdown-it-py==3.0.0   |✅ 
+MarkupSafe==2.1.5   |✅ 
+mdurl==0.1.2    |✅ 
+msgspec==0.18.6 |✅ 
+ordered-set==4.1.0  |✅ 
+packaging==24.0 |✅ 
+pillow==10.3.0  |✅ 
+Pygments==2.18.0    |✅ 
+pytz==2024.1    |✅ 
+rcssmin==1.1.2  |✅ 
+rich==13.7.1    |✅ 
+rjsmin==1.2.2   |✅ 
+SQLAlchemy==2.0.30  |✅ 
+typing_extensions==4.11.0   |✅ 
+webassets==2.0  |✅ 
+Werkzeug==3.0.3 |✅ 
+wrapt==1.16.0   |✅ 
+WTForms==3.1.2  |✅ 
 
 
 
