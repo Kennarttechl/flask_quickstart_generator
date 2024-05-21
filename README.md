@@ -73,7 +73,7 @@ Flask Boilerplate Generator provides convenient commands to streamline your proj
 
 (The -v flag creates a virtual environment to isolate your project's dependencies.)
 
-**===Create Both (Virtual Environment & Flask project with a predefined folder structure and blueprint setup):====**
+**Create Both (Virtual Environment & Flask project with a predefined folder structure and blueprint setup)**
 
 `Bash or Terminal`
 
