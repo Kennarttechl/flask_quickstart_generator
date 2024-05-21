@@ -120,11 +120,7 @@ DEMO_HTML_TEMPLATES = """
 
 {% block footer %}
 <footer class="footer is-fixed-bottom">
-    <div class="content has-text-centered">
-    <p>
-      Happy Hacking!
-    </p>
-    </div>
+
 </footer>
 {% endblock footer %}
 {% endblock body %}
