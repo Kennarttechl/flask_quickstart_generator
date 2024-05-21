@@ -99,3 +99,5 @@ Flask Boilerplate Generator provides convenient commands to streamline your proj
 | Application Startup  |  ![Application Start](documentation/screenshots/Application_Startup.png) |
 |Landing Page   |   ![Landing Page](documentation/screenshots/Landing_Page.png)|
 
+| Requirements | Name |
+----------|----- ✅
