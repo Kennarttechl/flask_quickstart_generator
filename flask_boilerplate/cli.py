@@ -45,7 +45,7 @@ def main():
 
     elif command == "-v" and argument == "":
         CmdHandler.init()
-        print(f"{GREEN}Virtual environment created successfully{RESET}")
+        # print(f"{GREEN}Virtual environment created successfully{RESET}")
 
     elif command == "create-app" and argument != "":
         CmdHandler.generate_flask_app_folder(argument)
