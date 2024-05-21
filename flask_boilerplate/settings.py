@@ -48,10 +48,10 @@ app.config["BABEL_DEFAULT_LOCALE"] = "en_US"
 app.config["BABEL_DEFAULT_TIMEZONE"] = "UTC"
 
 
-# Configure upload media files for file uploads
-app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024 # 10MB 
-app.config["ALLOWED_EXTENSIONS"] = [".jpg", ".jpeg", ".png"] # file type to accept
-app.config["UPLOAD_FOLDER"] = os.path.join("my_demo_app", "static", "media") # upload dir
+# Configure media files for file uploads
+app.config["MAX_CONTENT_LENGTH"] = 10 * 1024 * 1024 #10MB
+app.config["ALLOWED_EXTENSIONS"] = [".jpg", ".jpeg", ".png", ".pdf"]
+app.config["UPLOAD_FOLDER"] = os.path.abspath(os.path.join("college_mgs", "static", "media"))
 
 
 # Configure Flask-Caching
