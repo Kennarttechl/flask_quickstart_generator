@@ -80,8 +80,8 @@ Flask Boilerplate Generator provides convenient commands to streamline your proj
 **flask-manage -v create-app my_demo_app**
 
 # Requirements to Intall :
-| Requirements  |   Status |
-| ------------- | ----------
+| Requirements  |   
+| ------------- | 
 |alembic==1.13.1 
 Babel==2.15.0  
 bcrypt==4.1.3   
