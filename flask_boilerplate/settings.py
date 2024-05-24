@@ -201,6 +201,13 @@ def app_security_headers_middleware(response):
     document.body.appendChild(iframe); '''
 
     return response
+    
+
+def flask_db_init():
+    # This function creates and initiates the `db migration` folder if it does not exist.
+    migrations_folder = os.path.join(os.getcwd(), 'migrations')
+    if not os.path.exists(migrations_folder):
+        os.system("flask db init")
 
 
 # Import and register blueprint containing application routes
