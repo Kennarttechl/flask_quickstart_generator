@@ -65,7 +65,7 @@ Flask Boilerplate Generator provides convenient commands to streamline your proj
 
 (This command creates Flask project with a predefined folder structure and blueprint setup) 
 
-**====Create Virtual Environment:====**
+**===Create Virtual Environment:===**
 
 `Bash or Terminal`
 
