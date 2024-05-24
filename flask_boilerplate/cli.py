@@ -21,7 +21,7 @@ flask-boilerplate generator:
     command for creating the project folder `Only`:
         flask-manage create-app my_demo_app
 
-    command for creating `Only` virtualenv venv:
+    command for creating virtualenv venv `Only`:
         flask-manage -v  
         
     commands for creating Both (Virtual Environment & App or Project) :
