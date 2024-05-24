@@ -212,6 +212,7 @@ from my_demo_app.media_utils.utils import img_utils
 from my_demo_app.admin.routes import admin_controller
 from my_demo_app.authentication.routes import authent_
 from my_demo_app.account_settings.routes import account_
+from my_demo_app.caching.cache_constant import app_cache
 
 
 app.register_blueprint(view, url_prefix="/")
@@ -220,6 +221,7 @@ app.register_blueprint(errors_, url_prefix="/")
 app.register_blueprint(authent_, url_prefix="/")
 app.register_blueprint(account_, url_prefix="/")
 app.register_blueprint(img_utils, url_prefix="/")
+app.register_blueprint(app_cache, url_prefix="/")
 app.register_blueprint(file_upload_, url_prefix="/")
 app.register_blueprint(admin_controller, url_prefix="/")
 """

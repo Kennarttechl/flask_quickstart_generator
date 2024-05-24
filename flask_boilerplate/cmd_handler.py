@@ -7,13 +7,14 @@ from .routes_ import (
     GITIGNORE,
     APP_STARTUP,
     ACCOUNT_UTILS,
+    CACHING_CONSTANT,
     SEARCH_FORM_DATA,
     UPLOAD_FILES_FORM,
     VIEW_TEMPLATE_CODE,
     ADMIN_TEMPLATE_CODE,
     SEARCH_TEMPLATE_CODE, 
     ACCOUNT_SETTINGS_FORM,
-    UPLOAD_FILES_TEMPLATE_CODE,
+    FILES_UPLOAD_TEMPLATE_CODE,
     ERROR_HANDLER_TEMPLATE_CODE,
     AUTHENTICATION_TEMPLATE_CODE,
     ACCOUNT_SETTINGS_TEMPLATE_CODE,
@@ -92,9 +93,14 @@ APPLICATION_STRUCTURE = {
     },
     
     "uploads":{
-      "routes.py": UPLOAD_FILES_TEMPLATE_CODE,
+      "routes.py": FILES_UPLOAD_TEMPLATE_CODE,
       "form.py": UPLOAD_FILES_FORM,
       "__init__.py": ""  
+    },
+    
+    "caching":{
+        "cache_constant.py": CACHING_CONSTANT,
+        "__init__.py": ""
     },
     
     "config":{
@@ -113,7 +119,7 @@ class CmdHandler:
 
         os.system("python -m venv venv")
 
-        print(f"{GREEN}***--- Successfully created virtual environment ---***{RESET}")
+        print(f"{GREEN}***** Successfully created virtual environment *****{RESET}")
 
         print("")
 
@@ -136,7 +142,7 @@ class CmdHandler:
         )
         print("")
         
-        print(f"{GREEN}***--- Project created successfully ---***{RESET}")
+        print(f"{GREEN}***** Project created successfully *****{RESET}")
 
         print("")
 
@@ -242,6 +248,7 @@ class CmdHandler:
                         "errors",
                         "config",
                         "search",
+                        "caching",
                         "uploads",
                         "database",
                         "templates",
