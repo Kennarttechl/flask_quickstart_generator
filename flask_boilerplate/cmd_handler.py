@@ -145,11 +145,6 @@ class CmdHandler:
         print(f"{GREEN}***** Project created successfully *****{RESET}")
 
         print("")
-    
-    
-    def flask_db_init():
-        """This function create and initiate the `db migration` folder"""
-        os.system("flask db init")
 
 
     def generate_flask_app_folder(app_folder_name):
