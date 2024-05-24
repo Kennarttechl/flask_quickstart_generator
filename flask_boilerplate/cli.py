@@ -41,7 +41,7 @@ def main():
     command = sys.argv[1].strip() if len(sys.argv) > 1 else ""
     argument = sys.argv[2].strip() if len(sys.argv) > 2 else ""
     project_name = sys.argv[3].strip() if len(sys.argv) > 3 else ""
-    # flask_db = sys.argv[4].strip() if len(sys.argv) > 4 else ""
+    argument = sys.argv[4].strip() if len(sys.argv) > 4 else ""
 
     if (
         command == "-v"
