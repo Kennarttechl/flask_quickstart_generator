@@ -143,7 +143,7 @@ def search_item():
 ERROR_HANDLER_TEMPLATE_CODE = \
 """
 from flask import session
-from college_mgs import app
+from my_demo_app import app
 from http import HTTPStatus
 from flask import render_template, Blueprint, flash
 
