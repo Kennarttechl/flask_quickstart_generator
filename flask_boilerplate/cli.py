@@ -41,7 +41,7 @@ def main():
     command = sys.argv[1].strip() if len(sys.argv) > 1 else ""
     argument = sys.argv[2].strip() if len(sys.argv) > 2 else ""
     project_name = sys.argv[3].strip() if len(sys.argv) > 3 else ""
-    flask_db = sys.argv[4].strip() if len(sys.argv) > 4 else ""
+    # flask_db = sys.argv[4].strip() if len(sys.argv) > 4 else ""
 
     if (
         command == "-v"
@@ -57,7 +57,7 @@ def main():
         CmdHandler.init()
 
     elif command == "-migrate" and argument == "":
-        CmdHandler.flask_db_init(flask_db)
+        CmdHandler.flask_db_init()
 
     elif command == "create-app" and argument != "":
         CmdHandler.generate_flask_app_folder(argument)
