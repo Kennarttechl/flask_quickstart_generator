@@ -22,13 +22,10 @@ flask-boilerplate generator:
         flask-manage create-app my_demo_app
 
     command for creating `Only` virtualenv venv:
-        flask-manage -v 
-    
-    command for creating `Only` database migration:
-        flask-manage -migrate  
+        flask-manage -v  
         
-    commands for creating Both (Virtual Environment, DB Migration & App or Project) :
-        flask-manage -v -migrate create-app my_demo_app
+    commands for creating Both (Virtual Environment & App or Project) :
+        flask-manage -v create-app my_demo_app
         
     ==== Note =====
     You can change `my_demo_app` to any name of your choice
@@ -41,21 +38,14 @@ def main():
     command = sys.argv[1].strip() if len(sys.argv) > 1 else ""
     argument = sys.argv[2].strip() if len(sys.argv) > 2 else ""
     project_name = sys.argv[3].strip() if len(sys.argv) > 3 else ""
-    argument = sys.argv[4].strip() if len(sys.argv) > 4 else ""
 
-    if (
-        command == "-v"
-        and command == "-migrate"
-        and argument == "create-app"
-        and project_name != ""
-    ):
+    if command == "-v" and argument == "create-app" and project_name != "":
         CmdHandler.init()
-        CmdHandler.flask_db_init()
         CmdHandler.generate_flask_app_folder(project_name)
 
     elif command == "-v" and argument == "":
         CmdHandler.init()
-
+        
     elif command == "-migrate" and argument == "":
         CmdHandler.flask_db_init()
 
