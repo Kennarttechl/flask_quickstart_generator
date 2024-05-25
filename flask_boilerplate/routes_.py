@@ -18,7 +18,7 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
         # db.drop_all()  
-        flask_db_init()  
+        flask_db_init()  # This function creates and initiates the `db migration`
     app.run(debug=True, port=5000)
 """
 
@@ -92,7 +92,7 @@ def serve_image(filename):
 """
 
 
-SEARCH_FORM_DATA = \
+SEARCH_FORM = \
 """ 
 from flask_wtf import FlaskForm
 from wtforms.validators import DataRequired

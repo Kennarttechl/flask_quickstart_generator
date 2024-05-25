@@ -6,9 +6,9 @@ from .html import BASE_HTML, FLASH_MESSAGE, DEMO_HTML_TEMPLATES
 from .routes_ import (
     GITIGNORE,
     APP_STARTUP,
+    SEARCH_FORM,
     ACCOUNT_UTILS,
     CACHING_CONSTANT,
-    SEARCH_FORM_DATA,
     UPLOAD_FILES_FORM,
     VIEW_TEMPLATE_CODE,
     ADMIN_TEMPLATE_CODE,
@@ -59,7 +59,7 @@ APPLICATION_STRUCTURE = {
     
     "search":{
       "routes.py": SEARCH_TEMPLATE_CODE,
-      "form.py": SEARCH_FORM_DATA,
+      "form.py": SEARCH_FORM,
       "__init__.py": ""  
     },
     

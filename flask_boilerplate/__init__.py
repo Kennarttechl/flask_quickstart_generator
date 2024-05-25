@@ -6,10 +6,10 @@ from .cmd_handler import CmdHandler
 from .html import BASE_HTML, FLASH_MESSAGE, DEMO_HTML_TEMPLATES
 from .routes_ import (
     GITIGNORE,
+    SEARCH_FORM,
     APP_STARTUP,
     ACCOUNT_UTILS,
     CACHING_CONSTANT,
-    SEARCH_FORM_DATA,
     UPLOAD_FILES_FORM,
     VIEW_TEMPLATE_CODE,
     ADMIN_TEMPLATE_CODE,
