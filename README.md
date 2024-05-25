@@ -9,7 +9,7 @@ Flask Boilerplate Generator streamlines the development process by automating th
 | ------------- | ------------- | -------- |
 |**Effortless Setup:** |✅          | Simply install the package from PyPI OR github and use the command-line interface to create a new Flask project with a predefined folder structure and blueprint setup.
 |**Virtual Environment Management:**|✅         | Automatically sets up a virtual environment for your project, ensuring clean and isolated dependencies.
-|**Blueprint Configuration:**|✅            | Quickly scaffold your project with pre-configured blueprints for common application components like authentication, administration, error handling, search, uploads, account settings, views, database(model) and more.
+|**Blueprint Configuration:**|✅            | Quickly scaffold your project with pre-configured blueprints for common application components like authentication, administration, error handling, search, caching, db migrations, uploads, account settings, views, database(model) and more.
 |**Security Enhancements:**|✅          | Includes built-in security measures such as CSRF protection, HTTP headers middleware, and secure session management to help keep your application safe from common vulnerabilities.
 
 
