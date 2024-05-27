@@ -1,8 +1,8 @@
-# Introducing Flask Boilerplate Generator
+# Introducing Flask Quickstart Generator
 
-Are you tired of spending valuable time setting up the same boilerplate code every time you start a new Flask project? Say hello to Flask Boilerplate Generator - your ultimate time-saving tool for Flask development!
+Are you tired of spending valuable time setting up the same boilerplate code every time you start a new Flask project? Say hello to Flask Quickstart Generator - your ultimate time-saving tool for Flask development!
 
-Flask Boilerplate Generator streamlines the development process by automating the setup of a Flask project with just a few simple commands. Whether you're a seasoned Flask developer or just starting out, this tool will help you get your project up and running in no time.
+Flask Quickstart Generator streamlines the development process by automating the setup of a Flask project with just a few simple commands. Whether you're a seasoned Flask developer or just starting out, this tool will help you get your project up and running in no time.
 
 ## Features
 | Features  |   Status | Details
