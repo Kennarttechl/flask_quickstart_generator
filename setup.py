@@ -6,9 +6,9 @@ with open(file="Readme.md", encoding="utf-8", mode="r") as file:
 
 
 setup(
-    name="flask_boilerplate",
+    name="flask_quickstart_generator",
     version="1.0",
-    description="Flask Boilerplate streamlines Flask development by automatically generating a structured folder layout, expediting project setup.",
+    description="Flask Boilerplate generator streamlines Flask development by automatically generating a structured folder layout, expediting project setup.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Kennartech",
@@ -47,7 +47,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "flask-manage = flask_boilerplate:main",
+            "flask-manage = flask_quickstart_generator:main",
         ],
     },
 )
