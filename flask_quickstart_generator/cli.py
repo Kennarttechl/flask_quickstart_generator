@@ -13,8 +13,8 @@ RESET = "\033[0m"
 
 
 docs = """ 
-flask-boilerplate generator:
-    The Flask Boilerplate Generator is a command-line tool (CLI) built with Python and the Flask framework. It provides developers with a convenient way to generate the folder structure and code for new Flask applications. This simplifies the process of starting new projects, allowing developers to focus on building application logic instead of skipping the boilerplate setup.
+Flask Quickstart Generator:
+    The Flask Quickstart Generator is a command-line tool (CLI) built with Python and the Flask framework. It provides developers with a convenient way to generate the folder structure and code for new Flask applications. This simplifies the process of starting new projects, allowing developers to focus on building application logic instead of skipping the boilerplate setup.
     
     ***** User Commands: To Get Started Quickly *****
 
