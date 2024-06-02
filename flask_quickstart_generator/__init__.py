@@ -21,18 +21,3 @@ from .routes_ import (
     AUTHENTICATION_TEMPLATE_CODE,
     ACCOUNT_SETTINGS_TEMPLATE_CODE,
 )
-
-
-"""
-op.create_table: Creates a new table.
-op.drop_table: Drops an existing table.
-op.add_column: Adds a new column to an existing table.
-op.drop_column: Removes a column from an existing table.
-op.alter_column: Modifies the definition of an existing column.
-op.rename_table: Renames an existing table.
-op.create_index: Creates an index on a table.
-op.drop_index: Drops an index from a table.
-op.create_foreign_key: Creates a foreign key constraint.
-op.drop_foreign_key: Drops a foreign key constraint.
-op.batch_alter_table: Used to make multiple alterations to a table within a single context, which is useful for databases that don't support transactional DDL.
-"""
