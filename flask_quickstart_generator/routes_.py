@@ -119,7 +119,7 @@ search_ = Blueprint(
 )
 
 
-@search_.route("/")
+@search_.route("/search")
 @limiter.limit("5 per minute", override_defaults=True)
 def search_item():
     form = ProductSearchForm()
