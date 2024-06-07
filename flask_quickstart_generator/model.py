@@ -4,7 +4,7 @@ from sqlalchemy.sql import func
 from flask_login import UserMixin
 
 
-class User(db.Model, UserMixin):
+class User(db.Model, UserMixin): # We assume a User can be a Teacher, Administrator
     __tablename__ = "user" 
     
     id = db.Column(db.Integer(), primary_key=True, unique=True)

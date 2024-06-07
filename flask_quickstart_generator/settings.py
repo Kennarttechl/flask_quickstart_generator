@@ -154,7 +154,7 @@ def app_middleware():
         session["error_message"] = (
             f"Middleware error: {e}, Request Path: {request.path}"
         )
-        return redirect(url_for("errors_.handle_value_error"))
+        return redirect(url_for("errors_.value_error"))
 
     # No need to modify the URL for non-dynamic routes
     return None
