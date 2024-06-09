@@ -7,8 +7,8 @@ with open(file="Readme.md", encoding="utf-8", mode="r") as file:
 
 setup(
     name="flask_quickstart_generator",
-    version="1.0.0",
-    description="Flask Boilerplate generator streamlines Flask development by automatically generating a structured folder layout, expediting project setup.",
+    version="1.0.1",
+    description="Flask Quickstart Generator streamlines Flask development by automatically generating a structured folder layout, expediting project setup.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Kennartech",
@@ -17,7 +17,10 @@ setup(
     maintainer_email="kennartdev@gmail.com",
     url="https://ktecht.pythonanywhere.com/",
     include_package_data=True,
-    package_data={"": ["requirements.txt", "Readme.md", "LICENSE.txt"]},
+    package_data={
+        "": ["requirements.txt", "Readme.md", "LICENSE.txt"],
+        "documentation": ["*"],  # Include all files in the documentation directory
+    },
     packages=find_packages(),
     license="MIT",
     classifiers=[
@@ -50,4 +53,37 @@ setup(
             "flask-manage = flask_quickstart_generator:main",
         ],
     },
+)
+
+
+# =========
+from setuptools import setup, find_packages
+
+with open(file="Readme.md", encoding="utf-8", mode="r") as file:
+    long_description = file.read()
+
+setup(
+    name="flask_quickstart_generator",
+    version="1.0.1",
+    description="Flask Quickstart Generator streamlines Flask development by automatically generating a structured folder layout, expediting project setup.",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    author="Kennartech",
+    author_email="kennartdev@gmail.com",
+    maintainer="Kennartech.Dev",
+    maintainer_email="kennartdev@gmail.com",
+    url="https://ktecht.pythonanywhere.com/",
+    include_package_data=True,
+    package_data={
+        "": ["requirements.txt", "Readme.md", "LICENSE.txt"],
+        "documentation": ["*"],  # Include all files in the documentation directory
+    },
+    packages=find_packages(),
+    license="MIT",
+    classifiers=[
+        "License :: OSI Approved :: MIT License",
+        "Programming Language :: Python :: 3",
+        "Operating System :: OS Independent",
+    ],
+
 )

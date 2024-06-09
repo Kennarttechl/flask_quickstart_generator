@@ -136,17 +136,17 @@ WTForms==3.1.2
 
 ## Link to the github 
 
-**https://github.com/Kennarttechl/flask_boilerplate_generator.git**
+**https://github.com/Kennarttechl/flask_quickstart_generator.git**
 
 
 ## Screenshot
 
 | Screenshot | Name |
 ----------|-----
-| Cloning package /Installing the package |  ![Cloning](documentation/screenshots/Git_Clone.png) |
-| Commands  |  ![Commands](documentation/screenshots/Commands.png) |
-| Project Creating |  ![Creating project](documentation/screenshots/Creating_Project.png) |
-| Installation Complete  |  ![Instatllation](documentation/screenshots/Installation_Complete.png) |
-| Application Startup  |  ![Application Start](documentation/screenshots/Application_Startup.png) |
-|Landing Page   |   ![Landing Page](documentation/screenshots/Landing_Page.png)|
+| Cloning package /Installing the package |  ![Cloning](documentation/Git_Clone.png) |
+| Commands  |  ![Commands](documentation/Commands.png) |
+| Project Creating |  ![Creating project](documentation/Creating_Project.png) |
+| Installation Complete  |  ![Instatllation](documentation/Installation_Complete.png) |
+| Application Startup  |  ![Application Start](documentation/Application_Startup.png) |
+|Landing Page   |   ![Landing Page](documentation/Landing_Page.png)|
 
