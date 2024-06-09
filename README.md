@@ -25,7 +25,7 @@ Flask Quickstart Generator streamlines the development process by automating the
 
 | Features  |   Status | Details
 | ------------- | ------------- | -------- |
-|**Asset Minification:**|✅         | Flask Boilerplate Generator integrates with Flask-Assets to automatically minify JavaScript and CSS files, improving page load times and performance.
+|**Asset Minification:**|✅         | Flask Quickstart Generator integrates with Flask-Assets to automatically minify JavaScript and CSS files, improving page load times and performance.
 |**Rate Limiting**|✅           |Flask-Limiter, a powerful tool for implementing rate limiting in your application. This helps protect your server from malicious attacks by limiting the number of requests a client can send within a specific timeframe.
 |The default configuration in `__init__.py` sets a limit of 3000 requests per hour. You can easily customize this limit to fit your specific needs.
 
@@ -48,14 +48,14 @@ Flask Quickstart Generator streamlines the development process by automating the
 
 **Increased Developer Efficiency:**
 
-With Flask Boilerplate Generator, you can focus on building the core functionalities of your application instead of wasting time on repetitive setup tasks. This translates to faster development cycles, improved productivity, and a more enjoyable development experience.
+With Flask Quickstart Generator, you can focus on building the core functionalities of your application instead of wasting time on repetitive setup tasks. This translates to faster development cycles, improved productivity, and a more enjoyable development experience.
 
-Flask Boilerplate Generator empowers you with a comprehensive set of features to streamline request processing and safeguard your application against common web vulnerabilities.
+Flask Quickstart Generator empowers you with a comprehensive set of features to streamline request processing and safeguard your application against common web vulnerabilities.
 
 
 ## User Commands: To Get Started Quickly 
 
-Flask Boilerplate Generator provides convenient commands to streamline your project setup:
+Flask Quickstart Generator provides convenient commands to streamline your project setup:
 
 **Create Project Folder:**
 
