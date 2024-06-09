@@ -82,7 +82,7 @@ DEMO_HTML_TEMPLATES = """
     <div class="hero-body">
         <div class="container">
             <h1 class="title is-1">
-                Welcome to Flask Flask Quickstart Generator
+                Welcome to Flask Quickstart Generator
             </h1>
             <h2 class="subtitle">
                 By eliminating repetitive tasks, you can focus on the core logic of your application.
