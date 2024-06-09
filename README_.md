@@ -75,11 +75,3 @@ The project generates boilerplate code for Flask applications.
 4. sys.executable: The absolute path to the Python interpreter binary that executed the current script.
 
 
-
-
-<!-- pip install flask_cli-0.1.0.tar.gz
-pip install flask_cli-0.1.0-py3-none-any.whl
-python setup.py sdist bdist_wheel
-pip install .
-
-
