@@ -8,7 +8,7 @@ with open(file="Readme.md", encoding="utf-8", mode="r") as file:
 setup(
     name="flask_quickstart_generator",
     version="1.0.1",
-    description="Flask Quickstart Generator streamlines Flask development by automatically generating a structured folder layout, expediting project setup.",
+    description="Flask Boilerplate generator streamlines Flask development by automatically generating a structured folder layout, expediting project setup.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Kennartech",
@@ -17,10 +17,7 @@ setup(
     maintainer_email="kennartdev@gmail.com",
     url="https://ktecht.pythonanywhere.com/",
     include_package_data=True,
-    package_data={
-        "": ["requirements.txt", "Readme.md", "LICENSE.txt"],
-        "documentation": ["*"],  # Include all files in the documentation directory
-    },
+    package_data={"": ["requirements.txt", "Readme.md", "LICENSE.txt"]},
     packages=find_packages(),
     license="MIT",
     classifiers=[
@@ -54,4 +51,3 @@ setup(
         ],
     },
 )
-
