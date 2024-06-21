@@ -1,6 +1,6 @@
 # Introducing Flask Quickstart Generator.
 
-pos
+
 [![Downloads](https://static.pepy.tech/badge/flask-quickstart-generator)](https://pepy.tech/project/flask-quickstart-generator)
 
 [![Downloads](https://static.pepy.tech/badge/flask-quickstart-generator/month)](https://pepy.tech/project/flask-quickstart-generator)
