@@ -1,11 +1,12 @@
 # Introducing Flask Quickstart Generator.
 
+|   |   |
+| ------------- | ------------- | -------- |
+|[![Downloads](https://static.pepy.tech/badge/flask-quickstart-generator)](https://pepy.tech/project/flask-quickstart-generator)|[![Downloads](https://static.pepy.tech/badge/flask-quickstart-generator/month)](https://pepy.tech/project/flask-quickstart-generator) |[![Downloads](https://static.pepy.tech/badge/flask-quickstart-generator/week)](https://pepy.tech/project/flask-quickstart-generator)
 
-[![Downloads](https://static.pepy.tech/badge/flask-quickstart-generator)](https://pepy.tech/project/flask-quickstart-generator)
 
-[![Downloads](https://static.pepy.tech/badge/flask-quickstart-generator/month)](https://pepy.tech/project/flask-quickstart-generator)
 
-[![Downloads](https://static.pepy.tech/badge/flask-quickstart-generator/week)](https://pepy.tech/project/flask-quickstart-generator)
+
 
 Are you tired of spending valuable time setting up the same boilerplate code every time you start a new Flask project? Say hello to Flask Quickstart Generator - your ultimate time-saving tool for Flask development!
 
