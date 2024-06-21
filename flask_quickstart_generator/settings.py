@@ -184,21 +184,19 @@ def app_security_headers_middleware(response):
     response.headers["X-Content-Type-Options"] = "nosniff"
 
     response.headers["Content-Security-Policy"] = (
-        "default-src 'self'; "
-        "script-src 'self' https://unpkg.com/htmx.org@1.9.12 https://cdn.example.com https://cdnjs.cloudflare.com; "
-        "style-src 'self' https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css; "
-        "font-src 'self' https://fonts.gstatic.com; "
-        "img-src 'self' https://cdn.example.com data;"
-        # Example of adding 1 or more links to => "style-src 'self' https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css https://example.com/other.css static/css/;"
+        "default-src 'self';"
+        "script-src 'self' static/js/;"
+        "style-src 'self' static/css/;"
+        "font-src 'self' static/fonts;"
+        "img-src 'self' static/media/ static/icons;"
     )
-
     response.headers["X-Frame-Options"] = "DENY"  # Prevent clickjacking
 
     # When executed the code below in a browser's console, it attempts to create an iframe pointing to http://127.0.0.1:5000/. However, because you've set the X-Frame-Options header to DENY, the browser will refuse to load your web page within an iframe, regardless of where it's hosted.
 
-    ''' var iframe = document.createElement('iframe');
+    '''var iframe = document.createElement('iframe');
     iframe.src = 'http://127.0.0.1:5000/';
-    document.body.appendChild(iframe); '''
+    document.body.appendChild(iframe);'''
 
     return response
     
