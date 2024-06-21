@@ -72,6 +72,8 @@ APPLICATION_STRUCTURE = {
     "static": {
         "css": "base_main.css", 
         "js": "script.js", 
+        "fonts": "",
+        "icons": "",
         "media": "flask_cli.png",
         },
     
