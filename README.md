@@ -11,7 +11,6 @@ Flask Quickstart Generator streamlines the development process by automating the
 
 # Install and update the package using the comand below
 | ✅ |   
-| ------------- | |
 |pip install -U flask-quickstart-generator|
   
 
