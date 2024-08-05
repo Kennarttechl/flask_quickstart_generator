@@ -28,6 +28,7 @@ setup(
     ],
     install_requires=[
         "Flask",
+        "Flask-Compress",
         "Flask-Assets",
         "Flask-Bcrypt",
         "flask-babel",

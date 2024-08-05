@@ -22,6 +22,8 @@ Flask Quickstart Generator streamlines the development process by automating the
 |**Virtual Environment Management:**|✅         | Automatically sets up a virtual environment for your project, ensuring clean and isolated dependencies.
 |**Blueprint Configuration:**|✅            | Quickly scaffold your project with pre-configured blueprints for common application `components` like `authentication`, `administration`, `error handling`, `search`, `caching`, `db migrations`, `uploads`, `account settings`, `views`, `database`(model) and more.
 |**Security Enhancements:**|✅          | Includes built-in security measures such as CSRF protection, HTTP headers middleware, and secure session management to help keep your application safe from common vulnerabilities.
+|**logging:**|✅          | Easier Debugging Debug messages can include detailed information about variables, function calls, and the state of your application. This makes it easier to pinpoint where things might be going wrong.
+|**Flask-Compress:**|✅          | Flask-Compress is an extension for Flask that compresses the response data sent from your Flask application to the client. By compressing the data, it helps reduce the size of the response, leading to faster data transfer and reduced bandwidth usage
 
 
 ## Robust Request Handling and Enhanced Security Measures 
