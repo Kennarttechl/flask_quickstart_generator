@@ -4,10 +4,11 @@ from setuptools import setup, find_packages
 with open(file="Readme.md", encoding="utf-8", mode="r") as file:
     long_description = file.read()
 
-
+    
+# Bump version:
 setup(
     name="flask_quickstart_generator",
-    version="1.1.0",
+    version="1.1.2",
     description="Flask Quickstart Generator streamlines Flask development by automatically generating a structured folder layout, expediting project setup.",
     long_description=long_description,
     long_description_content_type="text/markdown",

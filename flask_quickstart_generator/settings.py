@@ -186,7 +186,7 @@ def app_security_headers_middleware(response):
     response.headers["Content-Security-Policy"] = (
         "default-src 'self';"
         "script-src 'self' static/js/;"
-        "style-src 'self' static/css/;"
+        "style-src 'self' static/css/ https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css;"
         "font-src 'self' static/fonts;"
         "img-src 'self' static/media/ static/icons;"
     )
