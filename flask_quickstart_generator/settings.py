@@ -8,6 +8,7 @@ from flask_caching import Cache
 from flask_limiter import Limiter
 from flask_migrate import Migrate
 from flask_session import Session
+from flask_compress import Compress
 from flask_wtf.csrf import CSRFProtect
 from flask_sqlalchemy import SQLAlchemy
 from flask_assets import Environment, Bundle
@@ -60,6 +61,24 @@ app.config["CACHE_TYPE"] = "simple"  # You can use 'simple', 'redis', 'memcached
 app.config["CACHE_DEFAULT_TIMEOUT"] = (
     300  # Cache timeout in seconds (e.g., 300 seconds = 5 minutes)
 )
+
+
+'''Flask-Compress is an extension for Flask that compresses the response data sent from your Flask application to the client. By compressing the data, it helps reduce the size of the response, leading to faster data transfer and reduced bandwidth usage.'''
+
+# Configure Flask-Compress for your application.
+app.config['COMPRESS_MIMETYPES'] = [
+    'text/html', 
+    'text/css', 
+    'text/xml', 
+    'application/json', 
+    'application/javascript'
+]
+app.config['COMPRESS_LEVEL'] = 6  # Compression level 
+app.config['COMPRESS_MIN_SIZE'] = 500 # Minimum response size to compress (default is 500 bytes. you can adjust it)
+
+# Initialize Flask-Compress Instance
+compress = Compress()
+compress.init_app(app)
 
 
 # Initialize database, babel, cache, CSRF protection, and migration management instances
