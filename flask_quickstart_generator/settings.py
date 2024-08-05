@@ -1,6 +1,7 @@
 APP_SETTINGS = """
 import os
 import secrets
+import logging
 from flask import session
 from flask_babel import Babel
 from flask_caching import Cache
@@ -70,15 +71,21 @@ csrf = CSRFProtect(app)  # Protect against Cross-Site Request Forgery (CSRF) att
 migrate = Migrate(app, db)  # Database migration with Flask-Migrate
 
 
-# Configure Flask-Session for database-backed sessions
+# Session configuration
+app.config["SESSION_TYPE"] = "sqlalchemy" # Use SQLAlchemy backend
+app.config["SESSION_SQLALCHEMY"] = db # Reference SQLAlchemy instance
+app.config["SESSION_SQLALCHEMY_TABLE"] = "sessions" # Use the Session model
+app.config["SESSION_PERMANENT"] = True # Set to True for persistent sessions
+app.config["SESSION_USE_SIGNER"] = True
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=7)
+# app.config["SESSION_COOKIE_SAMESITE"] = 'None' Enable this config when using https:
 app.config["SESSION_COOKIE_HTTPONLY"] = True
-app.config["SESSION_TYPE"] = "sqlalchemy"  # Use SQLAlchemy backend
-app.config["SESSION_SQLALCHEMY"] = db  # Reference SQLAlchemy instance
-app.config["SESSION_SQLALCHEMY_TABLE"] = "user_sessions"  # Use the Session model
-app.config["SESSION_PERMANENT"] = False  # Set to True for persistent sessions
-app.config["SESSION_USE_SIGNER"] = True  # Use a secret key for signing
+app.config["SESSION_COOKIE_SECURE"] = False
+Session(app) # Initialize Flask-Session extension
 
-Session(app)  # Initialize Flask-Session extension
+
+# This makes it easier to pinpoint where things might be going wrong..
+logging.basicConfig(level=logging.DEBUG)
 
 
 # Flask_Asset for minifying js & css code for faster page loading
@@ -112,10 +119,17 @@ assets.register("base_main_", css)
 assets.register("bootstrap_js", bootjs)
 
 
+# ANSI escape color code for printing the MSG
+YELLOW = "\033[33m"
+RESET = "\033[0m"
+
+
 @app.before_request
 def app_middleware():
-    # This middleware function performs several actions before each request:
-
+    if not request.path.startswith("/static"):
+        print(
+            f"{YELLOW}app_middleware runs before the  '{request.endpoint}' route runs.{RESET}"
+        )
     '''
     # Skip Processing for Dynamic Routes:
     # We check if the path starts with a slash (/) to handle potential invalid paths.
@@ -156,12 +170,15 @@ def app_middleware():
         )
         return redirect(url_for("errors_.value_error"))
 
-    # No need to modify the URL for non-dynamic routes
     return None
 
 
 @app.after_request
 def app_security_headers_middleware(response):
+    if not request.path.startswith("/static"):
+        print(
+            f"{YELLOW}app_security_headers_middleware runs before the  '{request.endpoint}' route runs. {RESET}"
+        )
     # This middleware function sets the X-Frame-Options header to "DENY" to prevent clickjacking attacks.
 
     # Security Headers: Sets essential security headers to mitigate potential vulnerabilities:
