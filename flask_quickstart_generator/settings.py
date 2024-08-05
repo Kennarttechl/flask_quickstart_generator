@@ -4,6 +4,7 @@ import secrets
 import logging
 from flask import session
 from flask_babel import Babel
+from flask_bcrypt import Bcrypt
 from flask_caching import Cache
 from flask_limiter import Limiter
 from flask_migrate import Migrate
@@ -14,6 +15,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_assets import Environment, Bundle
 from flask_limiter.util import get_remote_address
 from flask import Flask, request, redirect, url_for
+from flask_login import login_manager, LoginManager
 
 
 # Create a Flask application instance
@@ -86,8 +88,16 @@ babel = Babel(app)
 cache = Cache(app)
 cache.init_app(app)
 db = SQLAlchemy(app)
+bcrypt = Bcrypt(app)
 csrf = CSRFProtect(app)  # Protect against Cross-Site Request Forgery (CSRF) attacks
 migrate = Migrate(app, db)  # Database migration with Flask-Migrate
+
+
+# Initialize LoginManager for handling user login, current_user, and user_logout
+login_manager = LoginManager()
+login_manager.login_view = "view.home_page"  # Redirect to homepage for login
+login_manager.init_app(app)  # Initialize the app with LoginManager
+login_manager.login_message_category = "info"  # Set the category for login messages
 
 
 # Session configuration

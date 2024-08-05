@@ -24,6 +24,7 @@ Flask Quickstart Generator streamlines the development process by automating the
 |**Security Enhancements:**|✅          | Includes built-in security measures such as CSRF protection, HTTP headers middleware, and secure session management to help keep your application safe from common vulnerabilities.
 |**logging:**|✅          | Easier Debugging Debug messages can include detailed information about variables, function calls, and the state of your application. This makes it easier to pinpoint where things might be going wrong.
 |**Flask-Compress:**|✅          | Flask-Compress is an extension for Flask that compresses the response data sent from your Flask application to the client. By compressing the data, it helps reduce the size of the response, leading to faster data transfer and reduced bandwidth usage
+|**login_manager, LoginManager:**|✅          | It handles user session management. This includes logging users in and out, managing session tokens, and providing user information to views.
 
 
 ## Robust Request Handling and Enhanced Security Measures 
