@@ -16,7 +16,7 @@ Flask Quickstart Generator streamlines the development process by automating the
 
 
 
-# New Update :
+## New Update :
 | New Features added and Update Existing Code  |   Benefit | Details
 | ------------- | ------------- | -------- |
 |1. logging | Easier Debugging |Debug messages can include detailed information about variables, function calls, and the state of your application. This makes it easier to pinpoint where things might be going wrong.
