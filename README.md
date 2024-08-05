@@ -20,7 +20,7 @@ Flask Quickstart Generator streamlines the development process by automating the
 | New Features added and Update Existing Code  |   Benefit | Details
 | ------------- | ------------- | -------- |
 |1. logging [new ✅] | Easier Debugging |Debug messages can include detailed information about variables, function calls, and the state of your application. This makes it easier to pinpoint where things might be going wrong.
-|2. @app.before_request & @app.after_request [update] | Pre-Request Logging: This helps in tracking the flow of requests and understanding which routes are being accessed. |✅ 
+|2. @app.before_request & @app.after_request [update ℹ️] | Pre-Request Logging: This helps in tracking the flow of requests and understanding which routes are being accessed. |✅ 
 |3. Enhances security by making it more difficult for attackers to exploit vulnerabilities.|✅ |✅ 
  
 
