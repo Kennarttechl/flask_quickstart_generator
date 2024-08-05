@@ -8,11 +8,19 @@ Are you tired of spending valuable time setting up the same boilerplate code eve
 
 Flask Quickstart Generator streamlines the development process by automating the setup of a Flask project with just a few simple commands. Whether you're a seasoned Flask developer or just starting out, this tool will help you get your project up and running in no time.
 
+# Requirements to Intall :
+| Requirements  |   
+| ------------- | 
+|alembic==1.13.1 
+Babel==2.15.0  
+bcrypt==4.1.3  
 
-# Install and update the package using the comand below
-| Install and update |   
-|pip install -U flask-quickstart-generator| ✅|
-  
+Installing
+
+install and update from PyPI using an installer such as pip:
+
+pip install -U flask-quickstart-generator
+
 
 ## Features
 | Features  |   Status | Details
