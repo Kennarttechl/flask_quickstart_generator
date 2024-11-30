@@ -1,8 +1,15 @@
 import os
-from .css import DEMO_CSS
+from .css import DEMO_CSS, REGISTER_LOGIN_CSS, BASE_CSS
 from .model import USER_MODEL
 from .settings import APP_SETTINGS
-from .html import BASE_HTML, FLASH_MESSAGE, DEMO_HTML_TEMPLATES
+from .html import (
+    BASE_HTML,
+    FLASH_MESSAGE,
+    DEMO_HTML_TEMPLATES,
+    AUTHENTICATION_LOGIN_HTML,
+    AUTHENTICATION_REGISTER_HTML
+)
+
 from .routes_ import (
     GITIGNORE,
     APP_STARTUP,
@@ -11,6 +18,7 @@ from .routes_ import (
     CACHING_CONSTANT,
     UPLOAD_FILES_FORM,
     VIEW_TEMPLATE_CODE,
+    AUTHENTICATION_FORM,
     ADMIN_TEMPLATE_CODE,
     SEARCH_TEMPLATE_CODE, 
     ACCOUNT_SETTINGS_FORM,
@@ -37,36 +45,40 @@ RESET = "\033[0m"
 
 APPLICATION_STRUCTURE = {
     "templates": {
-        "base.html": BASE_HTML, 
+        "base.html": BASE_HTML,
         "message.html": FLASH_MESSAGE
-        },
-    
+    },
+
     "views": {
-        "routes.py": VIEW_TEMPLATE_CODE, 
+        "routes.py": VIEW_TEMPLATE_CODE,
         "__init__.py": ""
-        },
-    
+    },
+
     "errors": {
         "routes.py": ERROR_HANDLER_TEMPLATE_CODE,
         "__init__.py": "",
     },
-    
-    "authentication":{
-      "routes.py": AUTHENTICATION_TEMPLATE_CODE,
-      "form.py": "",
-      "__init__.py": ""  
+
+    "authentication": {
+        "routes.py": AUTHENTICATION_TEMPLATE_CODE,
+        "form.py": AUTHENTICATION_FORM,
+        "__init__.py": "",
+        "templates": {
+            "login.html": "",
+            "signup.html": AUTHENTICATION_REGISTER_HTML,
+        },
     },
-    
-    "search":{
-      "routes.py": SEARCH_TEMPLATE_CODE,
-      "form.py": SEARCH_FORM,
-      "__init__.py": ""  
+
+    "search": {
+        "routes.py": SEARCH_TEMPLATE_CODE,
+        "form.py": SEARCH_FORM,
+        "__init__.py": ""
     },
-    
-    "admin":{
-      "routes.py": ADMIN_TEMPLATE_CODE,
-      "form.py": "",
-      "__init__.py": ""  
+
+    "admin": {
+        "routes.py": ADMIN_TEMPLATE_CODE,
+        "form.py": "",
+        "__init__.py": ""
     },
 
     "static": {
@@ -76,36 +88,36 @@ APPLICATION_STRUCTURE = {
         "icons": "flask_cli.png",
         "media": "flask_cli.png",
         },
-    
+
     "database": {
-        "models.py": USER_MODEL, 
+        "models.py": USER_MODEL,
         "__init__.py": ""
-        },
-    
-    "account_settings":{
-      "routes.py": ACCOUNT_SETTINGS_TEMPLATE_CODE,
-      "form.py": ACCOUNT_SETTINGS_FORM,
-      "__init__.py": "" 
     },
-    
-    "media_utils":{
-      "utils.py": ACCOUNT_UTILS, 
-      "routes.py": "",
-      "__init__.py": "" 
+
+    "account_settings": {
+        "routes.py": ACCOUNT_SETTINGS_TEMPLATE_CODE,
+        "form.py": ACCOUNT_SETTINGS_FORM,
+        "__init__.py": ""
     },
-    
-    "uploads":{
-      "routes.py": FILES_UPLOAD_TEMPLATE_CODE,
-      "form.py": UPLOAD_FILES_FORM,
-      "__init__.py": ""  
+
+    "media_utils": {
+        "utils.py": ACCOUNT_UTILS,
+        "routes.py": "",
+        "__init__.py": ""
     },
-    
-    "caching":{
+
+    "uploads": {
+        "routes.py": FILES_UPLOAD_TEMPLATE_CODE,
+        "form.py": UPLOAD_FILES_FORM,
+        "__init__.py": ""
+    },
+
+    "caching": {
         "cache_constant.py": CACHING_CONSTANT,
         "__init__.py": ""
     },
-    
-    "config":{
+
+    "config": {
         ".env": "",
         ".flaskenv": ""
     }
@@ -148,12 +160,11 @@ class CmdHandler:
 
         print("")
 
-
     def generate_flask_app_folder(app_folder_name):
         try:
             if not os.path.exists(app_folder_name):
                 os.mkdir(app_folder_name)
-                with open(file="app.py", mode="w") as file:
+                with open(file="wsgi.py", mode="w") as file:
                     file.write(APP_STARTUP.replace("my_demo_app", app_folder_name))
 
                 with open(
@@ -200,13 +211,18 @@ class CmdHandler:
                                         f"<!-- This is the {error_file} template -->\n{DEMO_HTML_TEMPLATES}"
                                     )
 
+                        elif dir == "authentication":
+                            for filename, html_content in content["templates"].items():
+                                file_path = os.path.join(template_folder, filename)
+                                with open(file=file_path, mode="w") as file:
+                                    file.write(html_content)
+
                         else:
                             template_filenames = {
                                 "views": "index.html",
                                 "admin": "controller.html",
                                 "search": "item_search.html",
                                 "uploads": "file_upload.html",
-                                "authentication": ["login.html", "signup.html"],
                                 "account_settings": [
                                     "reset_pswd.html",
                                     "update_account.html",
@@ -227,12 +243,6 @@ class CmdHandler:
                                     file.write(
                                         f"<!-- This is the {file_name} template -->\n{DEMO_HTML_TEMPLATES}"
                                     )
-
-                            # file_name = template_filenames.get(dir, None)
-                            # if file_name:
-                            #     file_path = os.path.join(template_folder, file_name)
-                            #     with open(file=file_path, mode="w") as file:
-                            #         file.write(f"<!-- This is the {file_name} template -->\n{DEMO_HTML_TEMPLATES}")
 
                     if dir == "static":
                         for static_dir, value in content.items():
@@ -260,13 +270,19 @@ class CmdHandler:
                         "account_settings",
                     ]:
                         for temp, value in content.items():
-                            with open(
-                                file=os.path.join(app_folder_name, dir, temp), mode="w"
-                            ) as file:
-                                file.write(
-                                    value.replace("my_demo_app", app_folder_name)
-                                )
+                            if temp != "templates":
+                                with open(
+                                    file=os.path.join(app_folder_name, dir, temp), mode="w"
+                                ) as file:
+                                    file.write(
+                                        value.replace("my_demo_app", app_folder_name)
+                                    )
             else:
                 print(f"{YELLOW} The Folder {app_folder_name} already exists. {RESET}")
         except FileExistsError as e:
             print(f"{YELLOW} Error: {e}{RESET}")
+
+
+
+
+

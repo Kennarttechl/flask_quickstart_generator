@@ -4,6 +4,7 @@ import secrets
 import logging
 from flask import session
 from flask_babel import Babel
+from datetime import timedelta
 from flask_bcrypt import Bcrypt
 from flask_caching import Cache
 from flask_limiter import Limiter

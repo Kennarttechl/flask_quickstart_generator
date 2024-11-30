@@ -1,9 +1,15 @@
 from .cli import main
-from .css import DEMO_CSS
+from .css import DEMO_CSS, REGISTER_LOGIN_CSS, BASE_CSS
 from .model import USER_MODEL
 from .settings import APP_SETTINGS
 from .cmd_handler import CmdHandler
-from .html import BASE_HTML, FLASH_MESSAGE, DEMO_HTML_TEMPLATES
+from .html import (
+    BASE_HTML,
+    FLASH_MESSAGE,
+    DEMO_HTML_TEMPLATES,
+    AUTHENTICATION_REGISTER_HTML,
+    AUTHENTICATION_LOGIN_HTML,
+)
 from .routes_ import (
     GITIGNORE,
     SEARCH_FORM,
@@ -13,6 +19,7 @@ from .routes_ import (
     UPLOAD_FILES_FORM,
     VIEW_TEMPLATE_CODE,
     ADMIN_TEMPLATE_CODE,
+    AUTHENTICATION_FORM,
     SEARCH_TEMPLATE_CODE,
     ACCOUNT_SETTINGS_FORM,
     ACCOUNT_SETTINGS_FORM,

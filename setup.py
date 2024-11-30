@@ -8,7 +8,7 @@ with open(file="Readme.md", encoding="utf-8", mode="r") as file:
 # Bump version:
 setup(
     name="flask_quickstart_generator",
-    version="1.1.2",
+    version="1.1.3",
     description="Flask Quickstart Generator streamlines Flask development by automatically generating a structured folder layout, expediting project setup.",
     long_description=long_description,
     long_description_content_type="text/markdown",
