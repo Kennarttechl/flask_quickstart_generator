@@ -30,9 +30,10 @@ BASE_HTML = """
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
     />
     
-    {% assets "base_main_" %}
-    <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
-    {% endassets %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/home.css')}}"
+    />
   </head>
   <body>
     <nav class="burger-menu">
@@ -101,12 +102,8 @@ BASE_HTML = """
       </div>
     </div>
 
-    {% assets "main_js" %}
-    <script src="{{ ASSET_URL }}" defer></script>
-    {% endassets %}
-
     <!--  -->
-    <script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/home.js')}}"></script>
     {% block content %}{% endblock content %}
 
     <!--  -->
@@ -129,14 +126,16 @@ AUTHENTICATION_REGISTER_HTML = \
   {% block head %}
   <title>{% block title %}Register{% endblock title %}</title>
 
-  {% assets "base_main_" %}
-  <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" />
-  {% endassets %}
-
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
   />
+  
+  <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/register.css')}}"
+  />
+
   {% endblock head %}
 </head>
 
@@ -194,10 +193,7 @@ AUTHENTICATION_REGISTER_HTML = \
   </div>
 </div>
 
-{% assets "main_js" %}
-<script src="{{ ASSET_URL }}"></script>
-{% endassets %}
-<!--  -->
+<script src="{{ url_for('static', filename='js/register.js')}}"></script>
 {% endblock content %} {% endblock body %}
 """
 
@@ -210,9 +206,10 @@ AUTHENTICATION_LOGIN_HTML =\
   {% block head %}
   <title>{% block title %}Flask QuickStart{% endblock title %}</title>
 
-  {% assets "base_main_" %}
-  <link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}" defer />
-  {% endassets %}
+  <link
+    rel="stylesheet"
+    href="{{ url_for('static', filename='css/login.css')}}"
+  />
 
   <link
     rel="stylesheet"
@@ -266,10 +263,7 @@ AUTHENTICATION_LOGIN_HTML =\
   </div>
 </div>
 
-{% assets "main_js" %}
-<script src="{{ ASSET_URL }}"></script>
-{% endassets %}
-<!--  -->
+<script src="{{ url_for('static', filename='js/login.js')}}"></script>
 {% endblock content %} {% endblock body %}
 """
 
@@ -280,9 +274,10 @@ DEMO_HTML_TEMPLATES = """
 {% block head %}
 <title>{% block title %}Flask Boiler_Plate{% endblock title %}</title>
 
-{% assets "base_main_" %}
-<link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
-{% endassets %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/login.css')}}"
+/>
 {% endblock head %}
 
 {% block body %}
@@ -318,15 +313,7 @@ DEMO_HTML_TEMPLATES = """
     </div>
 </section>
 
-
-{% assets "main_js" %}
-<script src="{{ ASSET_URL }}"></script>
-{% endassets %}
-
-{% assets "bootstrap_js" %}
-<script src="{{ ASSET_URL }}"></script>
-{% endassets %}
-
+<script src="{{ url_for('static', filename='js/home.js')}}"></script>
 
 {% block footer %}
 <footer class="footer is-fixed-bottom">
@@ -338,9 +325,10 @@ DEMO_HTML_TEMPLATES = """
 
 
 FLASH_MESSAGE = """
-{% assets "new_css" %}
-<link rel="stylesheet" type="text/css" href="{{ ASSET_URL }}"/>
-{% endassets %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/flash.css')}}"
+/>
 
 <link
   rel="stylesheet"

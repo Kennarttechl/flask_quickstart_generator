@@ -5,15 +5,14 @@ import logging
 from flask import session
 from flask_babel import Babel
 from datetime import timedelta
+from flask_minify import Minify
 from flask_bcrypt import Bcrypt
 from flask_caching import Cache
 from flask_limiter import Limiter
 from flask_migrate import Migrate
 from flask_session import Session
-from flask_compress import Compress
 from flask_wtf.csrf import CSRFProtect
 from flask_sqlalchemy import SQLAlchemy
-from flask_assets import Environment, Bundle
 from flask_limiter.util import get_remote_address
 from flask import Flask, request, redirect, url_for
 from flask_login import login_manager, LoginManager
@@ -66,24 +65,6 @@ app.config["CACHE_DEFAULT_TIMEOUT"] = (
 )
 
 
-'''Flask-Compress is an extension for Flask that compresses the response data sent from your Flask application to the client. By compressing the data, it helps reduce the size of the response, leading to faster data transfer and reduced bandwidth usage.'''
-
-# Configure Flask-Compress for your application.
-app.config['COMPRESS_MIMETYPES'] = [
-    'text/html', 
-    'text/css', 
-    'text/xml', 
-    'application/json', 
-    'application/javascript'
-]
-app.config['COMPRESS_LEVEL'] = 6  # Compression level 
-app.config['COMPRESS_MIN_SIZE'] = 500 # Minimum response size to compress (default is 500 bytes. you can adjust it)
-
-# Initialize Flask-Compress Instance
-compress = Compress()
-compress.init_app(app)
-
-
 # Initialize database, babel, cache, CSRF protection, and migration management instances
 babel = Babel(app)
 cache = Cache(app)
@@ -114,39 +95,12 @@ app.config["SESSION_COOKIE_SECURE"] = False
 Session(app) # Initialize Flask-Session extension
 
 
-# This makes it easier to pinpoint where things might be going wrong..
+# Flask extension to minify html, css, js and less.
+Minify(app=app, html=True, js=True, cssless=True, static=True)
+
+
+# This makes it easier to pinpoint where things might be going wrong in the app
 logging.basicConfig(level=logging.DEBUG)
-
-
-# Flask_Asset for minifying js & css code for faster page loading
-assets = Environment(app)
-
-
-# Creating an instance of the Bundle
-js = Bundle(
-    # "js/script.js",
-    # filters="jsmin",
-    # output="gen/packed.js",
-)
-
-
-bootjs = Bundle(
-    # filters="jsmin",
-    # output="gen/packed.js",
-)
-
-
-css = Bundle(
-    "css/base_main.css",
-    filters="cssmin",
-    output="gen/packed.css",
-)
-
-
-# Flask asset registration
-assets.register("main_js", js)
-assets.register("base_main_", css)
-assets.register("bootstrap_js", bootjs)
 
 
 # ANSI escape color code for printing the MSG
@@ -235,8 +189,15 @@ def app_security_headers_middleware(response):
         "script-src 'self' static/js/;"
         "style-src 'self' static/css/ https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css;"
         "font-src 'self' static/fonts;"
-        "img-src 'self' static/media/ static/icons;"
+        "img-src 'self' static/media/ static/icons blob: data:;"
     )
+    
+    #This ensures all communication with the server happens over HTTPS.
+    # Prevent downgrade attacks: It prevents attackers from tricking users into using HTTP instead of HTTPS.
+    response.headers["Strict-Transport-Security"] = (
+        "max-age=31536000; includeSubDomains"
+    )
+    
     response.headers["X-Frame-Options"] = "DENY"  # Prevent clickjacking
 
     # When executed the code below in a browser's console, it attempts to create an iframe pointing to http://127.0.0.1:5000/. However, because you've set the X-Frame-Options header to DENY, the browser will refuse to load your web page within an iframe, regardless of where it's hosted.
@@ -246,6 +207,11 @@ def app_security_headers_middleware(response):
     document.body.appendChild(iframe);'''
 
     return response
+    
+    
+@app.teardown_request
+def shutdown_session(except=None):
+    db.session.remove()
     
 
 def flask_db_init():

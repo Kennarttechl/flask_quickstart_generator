@@ -39,7 +39,7 @@ Flask Quickstart Generator streamlines the development process by automating the
 
 | Features  |   Status | Details
 | ------------- | ------------- | -------- |
-|**Asset Minification:**|✅         | Flask Quickstart Generator integrates with Flask-Assets to automatically minify JavaScript and CSS files, improving page load times and performance.
+|**Flask Minify:**|✅         | Flask Quickstart Generator integrates with Flask-Minify to automatically minify HTML, JavaScript and CSS files, improving page load times and performance.
 |**Rate Limiting**|✅           |Flask-Limiter, a powerful tool for implementing rate limiting in your application. This helps protect your server from malicious attacks by limiting the number of requests a client can send within a specific timeframe.
 |The default configuration in `__init__.py` sets a limit of 3000 requests per hour. You can easily customize this limit to fit your specific needs.
 
@@ -58,6 +58,10 @@ Flask Quickstart Generator streamlines the development process by automating the
 |**Referrer-Policy Control:** |✅       |Limits referrer information exposure using the `Referrer-Policy` header. This can be set to `strict-origin-when-cross-origin` to restrict referrer leaks to the same origin (your domain) when navigating away from your site in a cross-origin context. Alternatively, for stricter control, you can use `no-referrer` to prevent any referrer information from being sent.
 |**MIME-Sniffing Prevention:** |✅      |Configures `X-Content-Type-Options` to `nosniff`. This mitigates MIME-sniffing vulnerabilities where the browser attempts to guess the content type of a resource based on its initial bytes, potentially allowing attackers to inject malicious content.
 |**Content Security Policy (CSP):** |✅     |Implements a foundational CSP to restrict resource loading and enhance protection against XSS and data injection attacks. You can further customize this policy to specify allowed origins for scripts, stylesheets, fonts, images, and other resources. The provided example serves as a starting point:
+|**Strict-Transport-Security (STS):** |✅     |The Strict-Transport-Security header is used to enforce secure connections between the browser and the server by instructing the browser to only communicate with the server over HTTPS. Here's what each part of the header does:
+Purpose:
+Prevent downgrade attacks: It prevents attackers from tricking users into using HTTP instead of HTTPS.
+Protect against cookie hijacking: Cookies sent over HTTPS are encrypted, making it harder for attackers to steal session cookies.
 
 
 **Increased Developer Efficiency:**
@@ -105,7 +109,7 @@ click==8.1.7
 colorama==0.4.6 
 cssmin==0.2.0   
 Deprecated==1.2.14  
-Flask==3.0.3    
+Flask==3.1.0    
 Flask-Assets==2.1.0 
 flask-babel==4.0.0  
 Flask-Bcrypt==1.0.1 
@@ -119,8 +123,7 @@ Flask-WTF==1.2.1
 greenlet==3.0.3 
 importlib_resources==6.4.0  
 itsdangerous==2.2.0 
-Jinja2==3.1.4   
-jsmin==3.0.1    
+Jinja2==3.1.4     
 limits==3.11.0  
 Mako==1.3.3 
 markdown-it-py==3.0.0   
@@ -132,9 +135,7 @@ packaging==24.0
 pillow==10.3.0  
 Pygments==2.18.0    
 pytz==2024.1    
-rcssmin==1.1.2  
-rich==13.7.1    
-rjsmin==1.2.2   
+rich==13.7.1     
 SQLAlchemy==2.0.30  
 typing_extensions==4.11.0   
 webassets==2.0  

@@ -28,8 +28,8 @@ setup(
     ],
     install_requires=[
         "Flask",
-        "Flask-Compress",
-        "Flask-Assets",
+        "psycopg2",
+        "Flask-Minify",
         "Flask-Bcrypt",
         "flask-babel",
         "Flask-Caching",
@@ -41,11 +41,7 @@ setup(
         "Flask-SQLAlchemy",
         "Flask-WTF",
         "WTForms",
-        "cssmin",
-        "jsmin",
         "pillow",
-        "rcssmin",
-        "rjsmin",
     ],
     entry_points={
         "console_scripts": [

@@ -138,11 +138,11 @@ class CmdHandler:
         print("")
 
         print(
-            f"{YELLOW}Please wait installing collected packages: Flask, Flask-Session, Flask-Limiter, flask-babel, Flask-Caching, Flask-Assets, Flask-SQLAlchemy,Flask-Migrate, Flask-WTF, WTForms, cssmin, jsmin, rcssmin, rjsmin, pillow, Flask-Bcrypt, Flask-Compress, Flask-Login{RESET}"
+            f"{YELLOW}Please wait installing collected packages: Flask, Flask-Session, Flask-Limiter, flask-babel, Flask-Caching, Flask-SQLAlchemy, psycopg2, Flask-Migrate, Flask-WTF, WTForms, Flask-Minify, pillow, Flask-Bcrypt, Flask-Login{RESET}"
         )
 
         os.system(
-            "pip install Flask Flask-Assets flask-babel Flask-Bcrypt Flask-Caching Flask-Limiter Flask-Login Flask-Migrate Flask-Session Flask-SQLAlchemy Flask-WTF WTForms cssmin jsmin rcssmin rjsmin pillow Flask-Login"
+            "pip install Flask Flask-Assets flask-babel Flask-Bcrypt Flask-Caching Flask-Limiter Flask-Login Flask-Migrate Flask-Session Flask-SQLAlchemy Flask-WTF WTForms psycopg2 Flask-Minify pillow Flask-Login"
         )
 
         print(
