@@ -209,8 +209,9 @@ def app_security_headers_middleware(response):
     return response
     
     
+# Safely manage the database session after every request
 @app.teardown_request
-def shutdown_session(except=None):
+def shutdown_session(exception=None):
     db.session.remove()
     
 

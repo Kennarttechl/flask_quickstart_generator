@@ -142,7 +142,7 @@ class CmdHandler:
         )
 
         os.system(
-            "pip install Flask Flask-Assets flask-babel Flask-Bcrypt Flask-Caching Flask-Limiter Flask-Login Flask-Migrate Flask-Session Flask-SQLAlchemy Flask-WTF WTForms psycopg2 Flask-Minify pillow Flask-Login"
+            "pip install Flask flask-babel Flask-Bcrypt Flask-Caching Flask-Limiter Flask-Login Flask-Migrate Flask-Session Flask-SQLAlchemy Flask-WTF WTForms psycopg2 Flask-Minify pillow Flask-Login"
         )
 
         print(

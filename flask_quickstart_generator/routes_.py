@@ -19,7 +19,7 @@ if __name__ == "__main__":
         db.create_all()
         # db.drop_all()  
         flask_db_init()  # This function creates and initiates the `db migration`
-    app.run(debug=True, port=5000)
+    app.run(host='0.0.0.0', debug=True, port=5000)
 """
 
 
