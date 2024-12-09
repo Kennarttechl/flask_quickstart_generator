@@ -7,12 +7,6 @@ from my_demo_app import db, login_manager
 # This function is used by Flask-Login to load the user from the database.
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
-
-
-# This function is used by Flask-Login to load the user from the database.
-@login_manager.user_loader
-def load_user(user_id):
     # Retrieves a User object based on the user_id (primary key).
     return User.query.get(int(user_id))
 
