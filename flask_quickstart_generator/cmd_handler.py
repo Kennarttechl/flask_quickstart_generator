@@ -281,8 +281,3 @@ class CmdHandler:
                 print(f"{YELLOW} The Folder {app_folder_name} already exists. {RESET}")
         except FileExistsError as e:
             print(f"{YELLOW} Error: {e}{RESET}")
-
-
-
-
-

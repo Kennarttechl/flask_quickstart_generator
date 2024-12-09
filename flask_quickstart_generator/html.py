@@ -1,120 +1,59 @@
 BASE_HTML = """
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE-edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE-edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    {% block head %}
-    <title>{% block title %}Flask QuickStart{% endblock title %}</title>
-    {% endblock head %}
+{% block head %}
+<title>{% block title %}Flask QuickStart{% endblock title %}</title>
+{% endblock head %}
 
-    <link
-      rel="icon"
-      href="{{ url_for('static', filename='icons/curt-05.png') }}"
-    />
+<link rel="icon" href="">
 
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/bootstrap.min.css')}}"
-    />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+</head>
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/fontawesome.min.css"
-    />
+<link rel="stylesheet" type="text/css" href="#">
+<body>
+{% block body %}
 
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
-    />
-    
-    <link
-      rel="stylesheet"
-      href="{{ url_for('static', filename='css/home.css')}}"
-    />
-  </head>
-  <body>
-    <nav class="burger-menu">
-      <ul>
-        <li><a href="">Flask QuickStart</a></li>
-        <li><a href="{{ url_for('view.home_page') }}">Home</a></li>
-        <li>
-          <a href="#"
-            >Notification</a
-          >
-        </li>
-      </ul>
-    </nav>
+<!-- Write the rest of your code hear -->
 
-    <header class="header-main">
-      <div class="header-main-logo">
-        <img
-          src="#"
-          alt="brand_logo"
-          width="6"
-          height="60"
-        />
-        <nav class="header-main-nav">
-          <ul>
-            <li>
-              <a href="">Flask QuickStart</a>
-            </li>
-            <li>
-              <a href="{{ url_for('view.home_page') }}">Home</a>
-            </li>
-            <li class="dropdown">
-              <a href="#" class="dropbtn">More</a>
-              <div class="dropdown-content">
-                <a href="#">About</a>
-                <a href="#">None</a>
-                <a href="#">None</a>
-                <a href="#">None</a>
-              </div>
-            </li>
-          </ul>
-        </nav>
-      </div>
 
-      <!--navbar side icon -->
-      <div class="header-main-sm">
-        <a href="#"><div class="header-main-sm-fb"></div></a>
-        <a href="#"><div class="header-main-sm-in"></div></a>
-        <div class="burger-menu-btn"></div>
-      </div>
-    </header>
 
-    <div class="flash--message">
-      {% with messages = get_flashed_messages(with_categories=True) %} {% if
-      messages %} {% for category, message in messages %} {% if category ==
-      "error" %}
+<div class="flash--message">
+  {% with messages = get_flashed_messages(with_categories=True) %} {% if
+  messages %} {% for category, message in messages %} {% if category ==
+  "error" %}
 
-      <div class="alert alert-danger alter-dismissable fade show" role="alert">
-        <i class="fas fa-circle-xmark"></i>
-        {{ message }}
-      </div>
+  <div class="alert alert-danger alter-dismissable fade show" role="alert">
+    <i class="fa-solid fa-circle-xmark"></i>
+    {{ message }}
+  </div>
 
-      {% else %}
-      <div class="alert alert-success alter-dismissable fade show" role="alert">
-        <i class="fas fa-circle-check"></i>
-        {{ message }} {% endif %}{% endfor %}{% endif %}{% endwith %}
-      </div>
-    </div>
+  {% else %}
+  <div class="alert alert-success alter-dismissable fade show" role="alert">
+    <i class="fa-solid fa-circle-check"></i>
+    {{ message }} {% endif %}{% endfor %}{% endif %}{% endwith %}
+  </div>
+</div>
 
-    <!--  -->
-    <script src="{{ url_for('static', filename='js/home.js')}}"></script>
-    {% block content %}{% endblock content %}
+<script src="#"></script>
 
-    <!--  -->
-    {% block footer %}
+{% block content %}{% endblock content %}
+{% endblock body %}
+
+
+{% block footer %}
     <div class="footer">
       <div class="footer-bottom">
         &copy; Copyright © 2024 Flask Quick Start Generator
       </div>
     </div>
-    {% endblock footer %}
-  </body>
+{% endblock footer %}
+</body>
 </html>
 """
 
@@ -272,12 +211,9 @@ DEMO_HTML_TEMPLATES = """
 {% extends "base.html" %}
 
 {% block head %}
-<title>{% block title %}Flask Boiler_Plate{% endblock title %}</title>
+<title>{% block title %}Flask QuickStart{% endblock title %}</title>
 
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/login.css')}}"
-/>
+<link rel="stylesheet" type="text/css" href="#"/>
 {% endblock head %}
 
 {% block body %}
@@ -313,13 +249,7 @@ DEMO_HTML_TEMPLATES = """
     </div>
 </section>
 
-<script src="{{ url_for('static', filename='js/home.js')}}"></script>
-
-{% block footer %}
-<footer class="footer is-fixed-bottom">
-
-</footer>
-{% endblock footer %}
+<script src="#"></script>
 {% endblock body %}
 """
 
