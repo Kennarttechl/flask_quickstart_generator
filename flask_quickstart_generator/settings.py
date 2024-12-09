@@ -35,19 +35,19 @@ APP_DATABASE = os.path.join(os.path.dirname(__file__), "database")
 DATABASE_PATH = os.path.join(APP_DATABASE, "Database.db")  # Database name can be change
 
 
-# Flask-Limiter adds rate limiting to Flask applications (e.g limiting the number of request a client can send).
-limiter = Limiter(
-    app=app,
-    headers_enabled=True,
-    storage_uri="memory://",
-    key_func=get_remote_address,
-    default_limits=["3000 per hour"],
-)
+# Connecting to local postgress db
+POSTGRES_USER = "postgres"
+POSTGRES_PASSWORD = "your password"
+POSTGRES_DB = "your database name"
+POSTGRES_HOST = "localhost"
+POSTGRES_PORT = "5432"
 
 
 # Configure Flask application settings
 app.config["SECRET_KEY"] = SECRET_KEY
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DATABASE_PATH}"
+
+#app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}" # Please uncomment if you want to use it.
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["BABEL_DEFAULT_LOCALE"] = "en_US"
 app.config["BABEL_DEFAULT_TIMEZONE"] = "UTC"
@@ -102,6 +102,16 @@ Minify(app=app, html=True, js=True, cssless=True, static=True)
 
 # This makes it easier to pinpoint where things might be going wrong in the app
 logging.basicConfig(level=logging.DEBUG)
+
+
+# Flask-Limiter adds rate limiting to Flask applications (e.g limiting the number of request a client can send).
+limiter = Limiter(
+    app=app,
+    headers_enabled=True,
+    storage_uri="memory://",
+    key_func=get_remote_address,
+    default_limits=["3000 per hour"],
+)
 
 
 @app.before_request
