@@ -8,6 +8,7 @@ from datetime import timedelta
 from flask_minify import Minify
 from flask_bcrypt import Bcrypt
 from flask_caching import Cache
+from colorama import Fore, Style
 from flask_limiter import Limiter
 from flask_migrate import Migrate
 from flask_session import Session
@@ -103,17 +104,10 @@ Minify(app=app, html=True, js=True, cssless=True, static=True)
 logging.basicConfig(level=logging.DEBUG)
 
 
-# ANSI escape color code for printing the MSG
-YELLOW = "\033[33m"
-RESET = "\033[0m"
-
-
 @app.before_request
 def app_middleware():
     if not request.path.startswith("/static"):
-        print(
-            f"{YELLOW}app_middleware runs before the  '{request.endpoint}' route runs.{RESET}"
-        )
+        print(f"{Fore.YELLOW}app_middleware runs before the '{request.endpoint}' route runs.{Style.RESET_ALL}")
     '''
     # Skip Processing for Dynamic Routes:
     # We check if the path starts with a slash (/) to handle potential invalid paths.
@@ -161,7 +155,7 @@ def app_middleware():
 def app_security_headers_middleware(response):
     if not request.path.startswith("/static"):
         print(
-            f"{YELLOW}app_security_headers_middleware runs before the  '{request.endpoint}' route runs. {RESET}"
+            f"{Fore.YELLOW}app_security_headers_middleware runs before the  '{request.endpoint}' route runs. {Style.RESET_ALL}"
         )
     # This middleware function sets the X-Frame-Options header to "DENY" to prevent clickjacking attacks.
 
