@@ -49,7 +49,7 @@ BASE_HTML = """
 {% block footer %}
     <div class="footer">
       <div class="footer-bottom">
-        &copy; Copyright © 2024 Flask Quick Start Generator
+        &copy; Copyright 2024 Flask Quick Start Generator
       </div>
     </div>
 {% endblock footer %}
