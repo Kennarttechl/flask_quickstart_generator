@@ -18,7 +18,7 @@ Flask Quickstart Generator:
     
     ***** User Commands: To Get Started Quickly *****
 
-    command for creating the project folder `Only`:
+    command for creating the project folder structure `Only`:
         flask-manage create-app my_demo_app
 
     command for creating virtualenv venv `Only`:
