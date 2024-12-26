@@ -1,7 +1,8 @@
 import os
-from .css import DEMO_CSS, REGISTER_LOGIN_CSS, BASE_CSS
+from colorama import Fore, Style
 from .model import USER_MODEL
 from .settings import APP_SETTINGS
+from .css import DEMO_CSS, REGISTER_LOGIN_CSS, BASE_CSS
 from .html import (
     BASE_HTML,
     FLASH_MESSAGE,
@@ -27,20 +28,6 @@ from .routes_ import (
     AUTHENTICATION_TEMPLATE_CODE,
     ACCOUNT_SETTINGS_TEMPLATE_CODE,
 )
-
-
-# ANSI escape color code for displaying or printing sucessful message
-GREEN = "\033[92m"
-RESET = "\033[0m"
-
-
-# ANSI escape color code for displaying or printing sucessful message
-YELLOW = "\033[33m"
-RESET = "\033[0m"
-
-
-PINK = "\033[95m"
-RESET = "\033[0m"
 
 
 APPLICATION_STRUCTURE = {
@@ -124,21 +111,21 @@ APPLICATION_STRUCTURE = {
 }
 
 
-class CmdHandler:
+class CmdHandler():
 
     def init():
-        print(f"{GREEN}Please wait, app is setting up virtual environment....{RESET}")
+        print(f"{Fore.GREEN}Please wait, app is setting up virtual environment....{Style.RESET}")
 
         os.system("pip install virtualenv")
 
         os.system("python -m venv venv")
 
-        print(f"{GREEN}***** Successfully created virtual environment *****{RESET}")
+        print(f"{Fore.GREEN}***** Successfully created virtual environment *****{Style.RESET}")
 
         print("")
 
         print(
-            f"{YELLOW}Please wait installing collected packages: Flask, Flask-Session, Flask-Limiter, flask-babel, Flask-Caching, Flask-SQLAlchemy, psycopg2, Flask-Migrate, Flask-WTF, WTForms, Flask-Minify, pillow, Flask-Bcrypt, Flask-Login{RESET}"
+            f"{Fore.YELLOW}Please wait installing collected packages: Flask, Flask-Session, Flask-Limiter, flask-babel, Flask-Caching, Flask-SQLAlchemy, psycopg2, Flask-Migrate, Flask-WTF, WTForms, Flask-Minify, pillow, Flask-Bcrypt, Flask-Login{Style.RESET}"
         )
 
         os.system(
@@ -146,17 +133,17 @@ class CmdHandler:
         )
 
         print(
-            f"{GREEN}These packages are installed globally on your computer. To use them, activate your virtual environment and reinstall them inside.{RESET}"
+            f"{Fore.GREEN}These packages are installed globally on your computer. To use them, activate your virtual environment and reinstall them inside.{Style.RESET}"
         )
 
         print("")
 
         print(
-            f"{PINK}To activate the virtual environment, navigate into the 'venv' directory and run 'Scripts/activate' on Windows or 'source bin/activate' on Unix-based systems.{RESET}"
+            f"{Fore.PINK}To activate the virtual environment, navigate into the 'venv' directory and run 'Scripts/activate' on Windows or 'source bin/activate' on Unix-based systems.{Style.RESET}"
         )
         print("")
         
-        print(f"{GREEN}***** Project created successfully *****{RESET}")
+        print(f"{Fore.GREEN}***** Project created successfully *****{Style.RESET}")
 
         print("")
 
@@ -278,6 +265,6 @@ class CmdHandler:
                                         value.replace("my_demo_app", app_folder_name)
                                     )
             else:
-                print(f"{YELLOW} The Folder {app_folder_name} already exists. {RESET}")
+                print(f"{Fore.YELLOW} The Folder {app_folder_name} already exists. {Style.RESET}")
         except FileExistsError as e:
-            print(f"{YELLOW} Error: {e}{RESET}")
+            print(f"{Fore.YELLOW} Error: {e}{Style.RESET}")
