@@ -47,6 +47,8 @@ POSTGRES_PORT = "5432"
 app.config["SECRET_KEY"] = SECRET_KEY
 app.config["SQLALCHEMY_DATABASE_URI"] = f"sqlite:///{DATABASE_PATH}"
 
+
+# Please uncomment if you want to connect your Database to Postgress db.
 #app.config["SQLALCHEMY_DATABASE_URI"] = f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_HOST}:{POSTGRES_PORT}/{POSTGRES_DB}" # Please uncomment if you want to use it.
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.config["BABEL_DEFAULT_LOCALE"] = "en_US"
@@ -96,8 +98,8 @@ app.config["SESSION_COOKIE_SECURE"] = False
 Session(app) # Initialize Flask-Session extension
 
 
-# Flask extension to minify html, css, js and less.
-Minify(app=app, html=True, js=True, cssless=True, static=True)
+# Flask extension to minify html, css, js and less! Uncomment it if you want you use it.
+# Minify(app=app, html=True, js=True, cssless=True, static=True)
 
 
 # This makes it easier to pinpoint where things might be going wrong in the app
@@ -189,11 +191,15 @@ def app_security_headers_middleware(response):
     response.headers["X-Content-Type-Options"] = "nosniff"
 
     response.headers["Content-Security-Policy"] = (
-        "default-src 'self';"
-        "script-src 'self' static/js/;"
-        "style-src 'self' static/css/ https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css;"
-        "font-src 'self' static/fonts;"
-        "img-src 'self' static/media/ static/icons blob: data:;"
+    "default-src 'self'; "
+    
+    "script-src 'self' https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js https://cdn.jsdelivr.net/npm/chart.js; "
+    
+    "style-src 'self' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css; "
+    
+    "font-src 'self' https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/;"
+    
+    "img-src 'self' https://images.pexels.com/photos/450035/pexels-photo-450035.jpeg blob: data:;"
     )
     
     #This ensures all communication with the server happens over HTTPS.
@@ -236,6 +242,7 @@ from my_demo_app.admin.routes import admin_controller
 from my_demo_app.authentication.routes import authent_
 from my_demo_app.account_settings.routes import account_
 from my_demo_app.caching.cache_constant import app_cache
+from my_demo_app.super_admin.routes import super_admin_secure
 
 
 app.register_blueprint(view, url_prefix="/")
@@ -247,4 +254,5 @@ app.register_blueprint(img_utils, url_prefix="/")
 app.register_blueprint(app_cache, url_prefix="/")
 app.register_blueprint(file_upload_, url_prefix="/")
 app.register_blueprint(admin_controller, url_prefix="/")
+app.register_blueprint(super_admin_secure, url_prefix="/")
 """

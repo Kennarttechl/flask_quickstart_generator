@@ -14,14 +14,18 @@ class User(db.Model, UserMixin):  # We assume a User can be a Teacher, Administr
     __tablename__ = "users"
 
     id = db.Column(db.Integer, primary_key=True, unique=True)
-    username = db.Column(db.String(length=150), nullable=True)  
-    email = db.Column(db.String(255), unique=True, nullable=True)  
+    email = db.Column(db.String(255), unique=True, nullable=True)
+    username = db.Column(db.String(length=150), nullable=True)   
     password = db.Column(db.String(length=255), nullable=False)  
     user_role = db.Column(db.String(length=100), nullable=False)  
     user_profile = db.Column(
         db.String(length=200), nullable=False, default="default.jpg" 
     )
     date_created = db.Column(db.Date, default=func.current_date(), nullable=False)
+    
+    __table_args__ = (
+        db.Index('user_idx', 'date_created'),
+    )
 
     def __repr__(self) -> str:
         return f"User('{self.username}')"

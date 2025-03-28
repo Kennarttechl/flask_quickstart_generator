@@ -8,20 +8,22 @@ __pycache__
 **/*/__pycache__
 """
 
-
 APP_STARTUP = \
 """
+from waitress import serve
 from my_demo_app import db, app, flask_db_init
+from my_demo_app.super_admin.routes import seed_users
 
 
 if __name__ == "__main__":
     with app.app_context():
         db.create_all()
-        # db.drop_all()  
-        flask_db_init()  # This function creates and initiates the `db migration`
-    app.run(host='0.0.0.0', debug=True, port=5000)
+        # db.drop_all()
+        flask_db_init()  #This function creates and initiates the `db migration`
+        seed_users()
+    app.run(host="0.0.0.0",debug=True, port=5000) 
+    # serve(app, host='0.0.0.0', port=5000, threads=100) # Use Waitress to serve the app 
 """
-
 
 VIEW_TEMPLATE_CODE = \
 """
@@ -35,40 +37,33 @@ from my_demo_app.authentication.form import LoginForm
 
 view = Blueprint("view", __name__, template_folder="templates", static_folder="static")
 
-
-@view.route("/", methods=["GET", "POST"])
+@view.route("/")
+@view.route("/home_page")
 @limiter.limit("5 per minute", override_defaults=True)
 def home_page():
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
-            if user.user_role == "SuperAdmin":
-                login_user(user)
-                flash(message=f"Login Successfuly {user.username}", category="success")
-                return redirect(url_for(endpoint="admin_controller.secure_dashboard"))
-            elif user.user_role == "NormalUser":
-                login_user(user)
-                flash(message=f"Login Successfuly {user.username}", category="success")
-                return redirect(url_for(endpoint="admin_controller.secure_dashboard"))
-        else:
-            flash(message="Invalid Username or Password", category="error")
-    return render_template("index.html", form=form)
+
+    return render_template("index.html")
+
+# @view.route("/")
+# @view.route("/home_page", methods=["GET", "POST"])
+# @limiter.limit("5 per minute", override_defaults=True)
+# def home_page():
+#     form = LoginForm()
+#     if form.validate_on_submit():
+#         user = User.query.filter_by(username=form.username.data).first()
+#         if user and bcrypt.check_password_hash(user.password, form.password.data):
+#             if user.user_role == "SuperAdmin":
+#                 login_user(user)
+#                 flash(message=f"Login Successfuly {user.username}", category="success")
+#                 return redirect(url_for(endpoint="admin_controller.secure_dashboard"))
+#             elif user.user_role == "NormalUser":
+#                 login_user(user)
+#                 flash(message=f"Login Successfuly {user.username}", category="success")
+#                 return redirect(url_for(endpoint="admin_controller.secure_dashboard"))
+#         else:
+#             flash(message="Invalid Username or Password", category="error")
+#     return render_template("index.html", form=form)
 """
-
-
-SEARCH_FORM = \
-""" 
-from flask_wtf import FlaskForm
-from wtforms.validators import DataRequired
-from wtforms import SearchField, SubmitField
-
-
-class ProductSearchForm(FlaskForm):
-    search_query = SearchField(validators=[DataRequired()], render_kw={"placeholder": "Search product name"})
-    submit = SubmitField(label="Search")
-"""
-
 
 SEARCH_TEMPLATE_CODE = \
 """
@@ -82,7 +77,6 @@ from flask import render_template, Blueprint, flash
 search_ = Blueprint(
     "search_", __name__, template_folder="templates", static_folder="static"
 )
-
 
 @search_.route("/search")
 @limiter.limit("5 per minute", override_defaults=True)
@@ -104,7 +98,6 @@ def search_item():
             flash(message=f"Data not found for query: {search_query}", category="error")
     return render_template("item_search.html", form=form, search_results=search_results)
 """
-
 
 ERROR_HANDLER_TEMPLATE_CODE = \
 """
@@ -174,105 +167,6 @@ def app_maintenance_mode(error):  # Optional prefix for consistency
 
 """
 
-
-AUTHENTICATION_FORM = \
-""" 
-from flask_wtf import FlaskForm
-from my_demo_app.database.models import User
-from wtforms import SubmitField, StringField, PasswordField, SelectField, EmailField
-from wtforms.validators import (
-    Length,
-    EqualTo,
-    DataRequired,
-    InputRequired,
-    ValidationError,
-)
-
-
-class RegisterForm(FlaskForm):
-    # Registration form for creating new user accounts.
-
-    username = StringField(
-        validators=[DataRequired(), Length(min=4, max=15)],
-        render_kw={"placeholder": "Username"},
-    )
-    
-    email = EmailField(
-        validators=[DataRequired(), Length(max=100)],
-        render_kw={"placeholder": "Email"},)
-    
-    password = PasswordField(
-        validators=[DataRequired(message="Enter password"), Length(min=4, max=15)],
-        render_kw={"placeholder": "Password"},
-    )
-
-    confirm_password = PasswordField(
-        validators=[InputRequired(), EqualTo("password", message="Password must much")],
-        render_kw={"placeholder": "Repeat Password"},
-    )
-
-    user_role = SelectField(
-        validators=[DataRequired()],
-        choices=[
-            ("", "Select Role"),
-            ("NormalUser", "NormalUser"),
-            ("SuperAdmin", "SuperAdmin"),
-        ],
-        coerce=str,
-        default="",
-    )
-
-    register = SubmitField(label="Register")
-    
-
-    def validate_username(self, username):
-        '''
-        Custom validation function to check for existing username.
-        Raises a ValidationError if the username already exists in the database.
-        '''
-        user = User.query.filter_by(username=username.data).first()
-        if user:
-            raise ValidationError(message="Username already exist!")
-
-    def validate_email(self, email):
-        '''
-        Custom validation function to check for existing email.
-        Raises a ValidationError if the email already exists in the database.
-        '''
-        
-        user = User.query.filter_by(email=email.data).first()
-        if user:
-            raise ValidationError(message="Email already exists!")
-
-    def validate_user_role(self, user_role):
-        '''
-        Custom validation function to ensure a valid user role is selected.
-        Raises a ValidationError if the selected role is invalid or already exists.
-        '''
-
-        if user_role.data == "":
-            raise ValidationError(message="Please select a valid user role.")
-
-        existing_user = User.query.filter_by(user_role=user_role.data).first()
-        if existing_user:
-            raise ValidationError(message="User role already exists!")
-
-
-class LoginForm(FlaskForm):
-    # Login form for authenticating existing user accounts.
-
-    username = StringField(
-        validators=[DataRequired()], render_kw={"placeholder": "Username"}
-    )
-
-    password = PasswordField(
-        validators=[DataRequired()], render_kw={"placeholder": "Password"}
-    )
-
-    loginb_ = SubmitField(label="Submit")
-"""
-
-
 AUTHENTICATION_TEMPLATE_CODE = \
 """
 import secrets
@@ -335,15 +229,15 @@ def user_logout():
     return redirect(url_for("view.home_page"))
 """
 
-
 ACCOUNT_UTILS = \
 """ 
 import os
 import secrets
-from PIL import Image
 from my_demo_app import app
+from PIL import Image
 from flask import Blueprint
 from flask_login import current_user
+from werkzeug.utils import secure_filename
 
 
 img_utils = Blueprint(
@@ -351,59 +245,40 @@ img_utils = Blueprint(
 )
 
 
-def save_picture(form_picture):
+def save_user_picture(form_picture):
+    # Generate a random hexadecimal name
     random_hex = secrets.token_hex(8)
     _, f_ext = os.path.splitext(form_picture.filename)
-    picture_fn = random_hex + f_ext
+    
+    # Sanitize the filename using secure_filename
+    picture_fn = secure_filename(random_hex + f_ext)
+    
+    # Define the picture path
     picture_path = os.path.join(
-        app.root_path, "static/profile_pics", picture_fn
-    )  # app.
+        app.root_path, "static/media", picture_fn
+    )
+    
+    # Remove the existing user profile picture if it exists
     if os.path.exists(
-        app.root_path + "/static/media/" + current_user.user_profile
-    ):
-        os.remove(app.root_path + "/static/media/" + current_user.user_profile)
-
-    output_size = (100, 100)
+        os.path.join(app.root_path, "static/media", current_user.user_profile)):
+        os.remove(os.path.join(app.root_path, "static/media", current_user.user_profile))
+    
+    # Resize the image
+    output_size = (700, 700)
     i = Image.open(form_picture)
     i.thumbnail(output_size)
     i.save(picture_path)
+    
     return picture_fn
 """
 
-
-ACCOUNT_SETTINGS_FORM = \
-""" 
-from flask_wtf import FlaskForm
-from flask_login import current_user
-from my_demo_app.database.models import User
-from wtforms import StringField, SubmitField
-from flask_wtf.file import FileField, FileAllowed
-from wtforms.validators import DataRequired, ValidationError
-
-
-class UpdateAccount(FlaskForm):
-    username = StringField(validators=[DataRequired()])
-    picture = FileField(
-        label="Update account profile", validators=[FileAllowed(["jpg", "png"])]
-    )
-    submit = SubmitField(label="Update")
-
-    def validate_username(self, username):
-        if username.data != current_user.username:
-            user = User.query.filter_by(username=username.data).first()
-            if user:
-                raise ValidationError(
-                    "That username already exist! Please try a different username"
-                )
-"""
-
-
 ACCOUNT_SETTINGS_TEMPLATE_CODE = \
 """
-import secrets
-from my_demo_app import db
+from my_demo_app import db, bcrypt
 from .form import UpdateAccount
-from flask import render_template, Blueprint
+from my_demo_app.media_utils.utils import save_user_picture
+from flask_login import current_user, login_required
+from flask import render_template, Blueprint, request, redirect, flash, url_for
 
 
 account_ = Blueprint(
@@ -411,40 +286,56 @@ account_ = Blueprint(
 )
 
 
-#@account_.route(f"/{secrets.token_urlsafe()}")
-@account_.route("/reset", methods=["GET"])
-def secure_password():
-    return render_template("reset_pswd.html")
-
-
-@account_.route(f"/{secrets.token_urlsafe()}")
+@account_.route(f"/account", methods=["GET", "POST"])
+@login_required
 def secure_account_update():
-    return render_template("update_account.html")
+    form = UpdateAccount()
+
+    if form.validate_on_submit():
+        # Handle profile picture update if provided
+        if form.picture.data:
+            picture_file = save_user_picture(form.picture.data)
+            current_user.user_profile = picture_file
+
+        # Handle username update
+        current_user.username = form.username.data
+
+        # Handle password update only if a new password is provided
+        if form.password.data:
+            # Check if passwords match
+            if form.password.data == form.confirm_password.data:
+                # Hash the new password and update it
+                hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
+                current_user.password = hashed_password
+            else:
+                flash(message="Passwords do not match.", category="error")
+                return redirect(url_for(endpoint="account_.secure_account_update"))
+
+        # Commit the changes to the database
+        db.session.commit()
+        flash(message="Your account has been updated!", category="success")
+        return redirect(url_for(endpoint="admin_controller.secure_dashboard"))
+
+    # If validation fails, flash the errors for debugging
+    if form.errors:
+        for field, errors in form.errors.items():
+            for error in errors:
+                flash(message=f"Error in {field}: {error}", category="error")
+
+    # Prepopulate fields for GET request
+    elif request.method == "GET":
+        form.username.data = current_user.username
+
+    image_file = url_for("static", filename="media/" + current_user.user_profile)
+
+    return render_template(
+        template_name_or_list="img_account.html", image_file=image_file, form=form
+    )
 """
-
-
-UPLOAD_FILES_FORM = \
-""" 
-from flask_wtf import FlaskForm
-from wtforms import FileField, SubmitField
-from flask_wtf.file import FileField, MultipleFileField, DataRequired
-
-
-class SingleFileUploadForm(FlaskForm):
-    file = FileField(label="Select File", validators=[DataRequired()])
-    submit = SubmitField("Submit")
-
-
-class MultipleFileUploadForm(FlaskForm):
-    files_ = MultipleFileField(label="Select files", validators=[DataRequired()])
-    submit = SubmitField(label="Submit")
-"""
-
 
 FILES_UPLOAD_TEMPLATE_CODE = \
 """ 
 import os
-import secrets
 from my_demo_app import limiter, app, cache
 from werkzeug.utils import secure_filename
 from .form import MultipleFileUploadForm, SingleFileUploadForm
@@ -457,8 +348,7 @@ file_upload_ = Blueprint(
 
 
 # Route for handling single file upload
-@file_upload_.route(f"/{secrets.token_urlsafe()}", methods=["GET", "POST"])
-#@file_upload_.route("/singleupload", methods=["GET", "POST"])
+@file_upload_.route("/singleupload", methods=["GET", "POST"])
 @limiter.limit("10 per minute", override_defaults=True)
 def secure_single_upload():
     # Create form instance
@@ -539,9 +429,7 @@ def secure_single_upload():
 
 #     # Render the template with the form
 #     return render_template("file_upload.html", form=form)
-
 """
-
 
 ADMIN_TEMPLATE_CODE = \
 """
@@ -560,6 +448,71 @@ def controller():
     return render_template("controller.html")
 """
 
+SUPER_ADMIN_DASHBOARD_ = \
+""" 
+import os
+import secrets
+from .form import LoginForm
+from dotenv import load_dotenv
+from testing import db, bcrypt
+from testing import limiter, app, cache
+from testing.database.models import User
+from flask_login import current_user, login_required, login_user
+from flask import render_template, url_for, flash, request, redirect, Blueprint
+
+
+super_admin_secure = Blueprint(
+    import_name=__name__, name="super_admin_secure", template_folder="templates",
+    static_folder="static",
+)
+
+
+load_dotenv(dotenv_path="testing/config/.env")
+admin_username = os.getenv("ADMIN_USERNAME")
+admin_password = os.getenv("ADMIN_PASSWORD")
+
+
+def seed_users():
+    # Check if the admin user already exists
+    existing_admin = User.query.filter_by(email="admin@example.com").first()
+    if existing_admin:
+        # Admin user already exists, no need to add again
+        return
+
+    # If the admin doesn't exist, create it
+    admin = User(
+        username=admin_username,
+        password=bcrypt.generate_password_hash(admin_password).decode("utf-8"),
+        user_role="Admin",
+        email="admin@example.com",
+        user_profile="default.jpg",
+    )
+    db.session.add(admin)
+    db.session.commit()
+
+
+@super_admin_secure.route("/superlogin", methods=["GET", "POST"])
+@limiter.limit("5 per minute", override_defaults=True)
+def secure_superlogin():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user)
+            flash(message=f"Login Successfuly {user.username}", category="success")
+            return redirect(url_for(endpoint="super_admin_secure.secure_adashboard"))
+        else:
+            flash(message="Invalid Username or Password", category="error")
+    return render_template("salogin_secure.html", form=form)
+
+
+#@super_admin_secure.route("/adashboard", methods=["GET"])
+@super_admin_secure.route(f"/{secrets.token_urlsafe(5)}", methods=["GET", "POST"])
+@limiter.limit("5 per minute", override_defaults=True)
+@login_required
+def secure_adashboard():
+    return render_template("sadashboard_secure.html")
+"""
 
 CACHING_CONSTANT = \
 """ 

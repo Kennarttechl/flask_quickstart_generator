@@ -10,17 +10,20 @@ BASE_HTML = """
 <title>{% block title %}Flask QuickStart{% endblock title %}</title>
 {% endblock head %}
 
-<link rel="icon" href="">
+<link rel="icon" href="#">
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+<link rel="stylesheet" href="#">
 </head>
 
-<link rel="stylesheet" type="text/css" href="#">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/flash.css')}}">
+
+<link rel="stylesheet" href="#">
 <body>
 {% block body %}
 
-<!-- Write the rest of your code hear -->
 
+
+<!-- WRITE YOUR THE REST OF YOUR CODE HERE -->
 
 
 <div class="flash--message">
@@ -49,12 +52,34 @@ BASE_HTML = """
 {% block footer %}
     <div class="footer">
       <div class="footer-bottom">
-        &copy; Copyright 2024 Flask Quick Start Generator
+        &copy; Copyright 2025 Flask Quick Start Generator
       </div>
     </div>
 {% endblock footer %}
 </body>
 </html>
+"""
+
+FLASH_CUSTOM_HTML = \
+  """ 
+<link rel="stylesheet" href="{{ url_for('static', filename='css/flash.css') }}">
+
+<div class="flash--message">
+  {% with messages = get_flashed_messages(with_categories=True) %} {% if
+  messages %} {% for category, message in messages %} {% if category ==
+  "error" %}
+
+  <div class="alert alert-danger alter-dismissable fade show" role="alert">
+    <i class="fa-solid fa-circle-xmark"></i>
+    {{ message }}
+  </div>
+
+  {% else %}
+  <div class="alert alert-success alter-dismissable fade show" role="alert">
+    <i class="fa-solid fa-circle-check"></i>
+    {{ message }} {% endif %}{% endfor %}{% endif %}{% endwith %}
+  </div>
+</div>
 """
 
 AUTHENTICATION_REGISTER_HTML = \
@@ -72,7 +97,7 @@ AUTHENTICATION_REGISTER_HTML = \
   
   <link
       rel="stylesheet"
-      href="{{ url_for('static', filename='css/register.css')}}"
+      href="#"
   />
 
   {% endblock head %}
@@ -132,10 +157,9 @@ AUTHENTICATION_REGISTER_HTML = \
   </div>
 </div>
 
-<script src="{{ url_for('static', filename='js/register.js')}}"></script>
+<script src="#"></script>
 {% endblock content %} {% endblock body %}
 """
-
 
 AUTHENTICATION_LOGIN_HTML =\
 """ 
@@ -147,7 +171,7 @@ AUTHENTICATION_LOGIN_HTML =\
 
   <link
     rel="stylesheet"
-    href="{{ url_for('static', filename='css/login.css')}}"
+    href="#"
   />
 
   <link
@@ -202,10 +226,9 @@ AUTHENTICATION_LOGIN_HTML =\
   </div>
 </div>
 
-<script src="{{ url_for('static', filename='js/login.js')}}"></script>
+<script src="#"></script>
 {% endblock content %} {% endblock body %}
 """
-
 
 DEMO_HTML_TEMPLATES = """ 
 {% extends "base.html" %}
@@ -217,119 +240,716 @@ DEMO_HTML_TEMPLATES = """
 {% endblock head %}
 
 {% block body %}
-<!-- The rest of your code here -->
+{% block content %}
 
-<section class="hero is-primary">
-    <div class="hero-body">
-        <div class="container">
-            <h1 class="title is-1">
-                Welcome to Flask Quickstart Generator
-            </h1>
-            <h2 class="subtitle">
-                By eliminating repetitive tasks, you can focus on the core logic of your application.
-            </h2>
-            <label class="toggle-switch">
-                <input type="checkbox" id="dark-mode-toggle">
-                <span class="slider round"></span>
-            </label>
-        </div>
-    </div>
-</section>
 
-<section class="section">
-    <div class="container">
-        <div class="content">
-            <h1></h1>
-            <h1>flask-boilerplate</h1>
-            <ul>
-                <li class=""><b>-v  for creating virtualenv</b></li>
-                <li class=""> <b>command for creating app => create-app </b> <i>demo_app</i></li>
-            </ul>
-        </div>
-    </div>
-</section>
 
+<!-- WRITE YOUR CODE HERE -->
+
+
+
+{% endblock content %}
 <script src="#"></script>
 {% endblock body %}
 """
 
+SADMIN_LOGIN_SECURE = """ 
+<!-- Include the flash message section here -->
+{% include 'flash_message.html' %} 
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flask Admin</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
 
-FLASH_MESSAGE = """
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/flash.css')}}"
-/>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/log.css') }}"
+    />
 
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/fontawesome.min.css') }}"
-/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/flash.css') }}">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="left"></div>
+      <div class="right">
+        <div class="toggle-switch">
+          <input type="checkbox" id="dark-mode-toggle" />
+          <label class="slider" for="dark-mode-toggle"></label>
+        </div>
+        <h2>Flask administration</h2>
+        <p>Build scalable web applications with ease</p>
 
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='css/bost-4.1.3/css/bootstrap.min.css')}}"
-/>
-
-{% block message %}
-<div class="container">
-  <div class="flash--message">
-    {% with messages = get_flashed_messages(with_categories=True) %} {% if
-    messages %} {% for category, message in messages %} {% if category ==
-    "error" %}
-
-    <div class="alert alert-danger alter-dismissable fade show" role="alert">
-      {{ message }}
+        <form action="#" method="post">
+          {{ form.hidden_tag() }}
+          <div class="form-group">
+            {{ form.email(class="form-control mb-3") }}
+          </div>
+          <div class="form-group">
+            {{ form.username(class="form-control mb-3") }}
+          </div>
+          <div class="form-group">
+            {{ form.password(class="form-control mb-3") }}
+          </div>
+          <button type="submit" class="btn btn-primary w-100">Login</button>
+        </form>
+      </div>
     </div>
 
-    {% else %}
-    <div class="alert alert-success alter-dismissable fade show" role="alert">
-      {{ message }}
-    </div>
-    {% endif %}{% endfor %}{% endif %}{% endwith %}
-  </div>
-</div>
-{% endblock message %}
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+
+    <script src="{{ url_for('static', filename='js/log.js') }}"></script>
+  </body>
+</html>
 """
 
+SADASHBOARD_SECURE = """ 
+<!-- Include the flash message section here -->
+{% include 'flash_message.html' %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flask Administration</title>
 
-NOT_USE = """ 
-<script src="https://unpkg.com/htmx.org@1.9.12"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
-<select class="section">
-  <div class="columns">
-    <div class="column is-on-third is-offset-one-third">
-      <input
-        type="text"
-        class="input"
-        placeholder="Search"
-        name="q"
-        hx-get="search"
-        hx-trigger="keyup change delay:500ms"
-        hx-target="#results"
-      />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/sadashboard.css') }}"
+    />
+    
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/flash.css') }}">
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="topbar-left">
+        <i class="fas fa-angle-double-left toggle-sidebar"></i>
+        <div class="input-group">
+          <form method="post" class="d-flex">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search item..."
+            />
+            <button class="btn btn-success" type="submit">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="user-profile">
+        <img src="{{ url_for('static', filename='media/Image/s3.png')}}" alt="User" />
+        <span>Admin</span>
+        <i class="fas fa-chevron-down"></i>
+        <div class="dropdown-menu">
+          <ul>
+            <li>
+              <a href="#settings"> <i class="fas fa-cog"></i> Settings </a>
+            </li>
+            <li>
+              <a href="#account"> <i class="fas fa-user"></i> Account </a>
+            </li>
+            <li>
+              <a href="#theme" id="theme-toggle">
+                <i class="fas fa-moon"></i> Theme
+              </a>
+            </li>
+            <li>
+              <a href="{{ url_for('super_admin_secure.secure_superlogin')}}">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <div class="main-section">
+      <aside class="sidebar">
+        <div class="logo">
+          <i class="fas fa-tachometer-alt"></i>
+          Flask Administration
+        </div>
+        <hr />
+        <ul class="nav-menu">
+          <li>
+            <a href="#!" class="active">
+              <i class="fas fa-home"></i> Dashboard
+            </a>
+          </li>
+
+          <li class="has-submenu">
+            <a href="#!">
+              <i class="fas fa-file-invoice"></i>
+              Access Control
+              <i class="fas fa-chevron-right arrow"></i>
+            </a>
+            <ul class="submenu">
+              <li><a href="#!">User Roles</a></li>
+              <li><a href="#!">Permissions</a></li>
+              <li><a href="#!">Security Settings</a></li>
+            </ul>
+          </li>
+
+          <li class="has-submenu">
+            <a href="#!">
+              <i class="fas fa-user-tie"></i> Admin Tools
+              <i class="fas fa-chevron-right arrow"></i>
+            </a>
+            <ul class="submenu">
+              <li><a href="#!">User Management</a></li>
+              <li><a href="#!">Activity Logs</a></li>
+              <li><a href="#!">System Settings</a></li>
+            </ul>
+          </li>
+
+          <li class="has-submenu">
+            <a href="#!">
+              <i class="fas fa-users"></i>
+              User Accounts
+              <i class="fas fa-chevron-right arrow"></i>
+            </a>
+            <ul class="submenu">
+              <li><a href="#!">Edit Profile</a></li>
+              <li><a href="#!">Create Account</a></li>
+              <li><a href="#!">Manage Accounts</a></li>
+              <li><a href="#!">Password Reset</a></li>
+              <li><a href="#!">Account Activation</a></li>
+            </ul>
+          </li>
+
+          <li class="has-submenu">
+            <a href="#!">
+              <i class="fas fa-chart-line"></i>
+              Reports & Anlyt
+              <i class="fas fa-chevron-right arrow"></i>
+            </a>
+            <ul class="submenu">
+              <li><a href="#!">User Activity</a></li>
+              <li><a href="#!">Performance Metrics</a></li>
+            </ul>
+          </li>
+
+          <li class="has-submenu">
+            <a href="#!">
+              <i class="fas fa-heartbeat"></i>
+              System Health
+              <i class="fas fa-chevron-right arrow"></i>
+            </a>
+            <ul class="submenu">
+              <li><a href="#!">Resource Monitoring</a></li>
+              <li><a href="#!">Uptime Monitoring</a></li>
+              <li><a href="#!">Performance Reports</a></li>
+            </ul>
+          </li>
+
+          <li class="has-submenu">
+            <a href="#!">
+              <i class="fas fa-database"></i>
+              Database Mgt
+              <i class="fas fa-chevron-right arrow"></i>
+            </a>
+            <ul class="submenu">
+              <li><a href="#!">Backup Database</a></li>
+              <li><a href="#!">View Tables</a></li>
+            </ul>
+          </li>
+
+          <li class="has-submenu">
+            <a href="#!">
+              <i class="fas fa-bell"></i>
+              Notifications
+              <i class="fas fa-chevron-right arrow"></i>
+            </a>
+            <ul class="submenu">
+              <li><a href="#!">View Alerts</a></li>
+              <li><a href="#!">Set Up Alerts</a></li>
+            </ul>
+          </li>
+
+          <li class="has-submenu">
+            <a href="#!">
+              <i class="fas fa-code"></i>
+              API Mgt
+              <i class="fas fa-chevron-right arrow"></i>
+            </a>
+            <ul class="submenu">
+              <li><a href="#!">Admin</a></li>
+              <li><a href="#!">Super Admin</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href="#!"> <i class="fas fa-user-cog"></i> Settings </a>
+          </li>
+        </ul>
+      </aside>
+
+      <div class="main-content">
+        <div class="content-header">
+          <div>
+            <h1>Project Invoice</h1>
+            <p class="invoice-meta">Date: 03/19/2025 | Invoice #: PRJ-12457</p>
+          </div>
+          <div class="invoice-info">
+            <p>Acme Corporation</p>
+            <p>Total: $4,250.00</p>
+          </div>
+        </div>
+
+        <div class="dashboard-container">
+          <div class="dashboard-box">
+            <h2>Total Users Registered: 1,240</h2>
+            <p>587.00</p>
+            <p class="subtext">12.5% increase in the last week</p>
+          </div>
+          <div class="dashboard-box">
+            <h2>System Uptime: 99.97%</h2>
+            <p>6,084</p>
+            <p class="subtext">Updated hourly</p>
+          </div>
+          <div class="dashboard-box">
+            <h2>Pending Admin Tasks: 14</h2>
+            <p>250.00</p>
+            <p class="subtext">28.6% of total tasks pending this week</p>
+          </div>
+          <div class="dashboard-box">
+            <h2>Total Revenue: $12,360</h2>
+            <p>7,360.00</p>
+            <p class="subtext">45.3% of quarterly revenue goal</p>
+          </div>
+        </div>
+
+        <div class="table-container overflow-auto">
+          <h3 class="main--title">Admin Activity Logs</h3>
+          <hr />
+          <div class="search-container">
+            <form method="post" class="d-flex">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search item..."
+              />
+              <button class="btn btn-success" type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </form>
+          </div>
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">USER ID</th>
+                <th scope="col">ACTION</th>
+                <th scope="col">TIMESTAMP</th>
+                <th scope="col">STATUS</th>
+                <th scope="col">ROLE</th>
+                <th scope="col">IP ADDRESS</th>
+                <th scope="col">SESSION DURATION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>#U1001</td>
+                <td>Login</td>
+                <td>2025-03-19 08:45:12</td>
+                <td>Success</td>
+                <td>Admin</td>
+                <td>192.168.1.15</td>
+                <td>45 minutes</td>
+              </tr>
+
+              <tr>
+                <td>#U1002</td>
+                <td>File Upload</td>
+                <td>2025-03-19 09:20:43</td>
+                <td>Success</td>
+                <td>User</td>
+                <td>192.168.1.18</td>
+                <td>30 minutes</td>
+              </tr>
+
+              <tr>
+                <td>#U1003</td>
+                <td>Password Change</td>
+                <td>2025-03-19 09:55:11</td>
+                <td>Failed</td>
+                <td>Admin</td>
+                <td>192.168.1.22</td>
+                <td>15 minutes</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="7" class="total">
+                  <strong>Total Records: 3</strong>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+
+          <div class="d-flex justify-content-between mb-2">
+            <div>
+              <a class="btn btn-info" href="#">1</a>
+              <a class="btn btn-outline-info" href="#">2</a>
+            </div>
+            <div>
+              <button class="btn btn-primary">
+                <i class="fas fa-print"></i> Print
+              </button>
+              <button class="btn btn-success">
+                <i class="fas fa-file-excel"></i> Excel
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="table-container overflow-auto table-light-shadow">
+          <div class="search-container">
+            <form method="post" class="d-flex">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search item..."
+              />
+              <button class="btn btn-success" type="submit">
+                <i class="fas fa-search"></i>
+              </button>
+            </form>
+          </div>
+
+          <table class="table table-striped table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">ITEM</th>
+                <th scope="col">QUANTITY</th>
+                <th scope="col">PRICE</th>
+                <th scope="col">AMOUNT</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Consultation Report</td>
+                <td>3 reports</td>
+                <td>$150.00</td>
+                <td>$450.00</td>
+              </tr>
+              <tr>
+                <td>Software License</td>
+                <td>2 licenses</td>
+                <td>$300.00</td>
+                <td>$600.00</td>
+              </tr>
+              <tr>
+                <td>Cloud Hosting Plan (6 Months)</td>
+                <td>1 subscription</td>
+                <td>$500.00</td>
+                <td>$500.00</td>
+              </tr>
+              <tr>
+                <td>Marketing Campaign (3 Weeks)</td>
+                <td>2 campaigns</td>
+                <td>$1,000.00</td>
+                <td>$2,000.00</td>
+              </tr>
+              <tr>
+                <td>Custom Website Design</td>
+                <td>1 project</td>
+                <td>$2,500.00</td>
+                <td>$2,500.00</td>
+              </tr>
+              <tr>
+                <td>Cybersecurity Audit</td>
+                <td>1 audit</td>
+                <td>$800.00</td>
+                <td>$800.00</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <td colspan="4" class="total">
+                  <strong>Total Amount: $6,850.00</strong>
+                </td>
+              </tr>
+            </tfoot>
+          </table>
+          <a class="btn btn-info" href="#">1</a>
+          <a class="btn btn-outline-info" href="#">2</a>
+        </div>
+
+        <div class="three-line-charts-wrapper">
+          <div class="single-line-box">
+            <canvas id="chart1"></canvas>
+          </div>
+          <div class="single-line-box">
+            <canvas id="chart2"></canvas>
+          </div>
+          <div class="single-line-box">
+            <canvas id="chart3"></canvas>
+          </div>
+        </div>
+
+        <div class="three-pie-charts-wrapper">
+          <div class="single-pie-box">
+            <canvas id="pieChartA"></canvas>
+          </div>
+          <div class="single-pie-box">
+            <canvas id="pieChartB"></canvas>
+          </div>
+          <div class="single-pie-box">
+            <canvas id="pieChartC"></canvas>
+          </div>
+        </div>
+
+        <h1>Live data</h1>
+        <hr />
+        <div class="three-bar-charts-wrapper">
+          <div class="single-bar-box">
+            <canvas id="barChartA"></canvas>
+          </div>
+          <div class="single-bar-box">
+            <canvas id="barChartB"></canvas>
+          </div>
+          <div class="single-bar-box">
+            <canvas id="barChartC"></canvas>
+          </div>
+        </div>
+
+        <div class="content-header">
+          <h1>Profile Overview</h1>
+          <p class="invoice-meta">User: <strong>John Doe</strong></p>
+        </div>
+
+        <div class="profile-container">
+          <div class="profile-left-panel">
+            <div class="profile-user">
+              <img
+                src="{{ url_for('static', filename='media/Image/s3.png')}}"
+                alt="User"
+                width="60"
+                height="60"
+              />
+              <h2 class="profile-name">John Doe</h2>
+              <p class="profile-email">john.doe@example.com</p>
+              <p class="profile-phone">123-123-555</p>
+            </div>
+            <hr />
+            <ul class="profile-menu">
+              <li>
+                <a id="profile-overview-link" class="active-link"
+                  >Profile Overview</a
+                >
+              </li>
+              <li><a id="edit-profile-link">Edit Profile</a></li>
+              <li><a id="create-account-link">Create Account</a></li>
+              <li><a id="password-reset-link">Password Reset</a></li>
+            </ul>
+          </div>
+
+          <div id="profile-overview" class="content-section active-section">
+            <h3>About Me</h3>
+            <div class="profile-details">
+              <p><strong>Full Name:</strong> John Doe</p>
+              <p><strong>Address:</strong> Redmond, Washington</p>
+              <p><strong>Zip Code:</strong> 98052</p>
+              <p><strong>Phone:</strong> 123-123-555</p>
+              <p><strong>Email:</strong> john.doe@example.com</p>
+            </div>
+          </div>
+
+          <div id="edit-profile" class="content-section">
+            <h3>Edit Profile</h3>
+            <form>
+              <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input
+                  type="text"
+                  id="fullName"
+                  class="form-control"
+                  value="John Doe"
+                />
+              </div>
+              <div class="form-group">
+                <label for="contactPhone">Contact Phone</label>
+                <input
+                  type="text"
+                  id="contactPhone"
+                  class="form-control"
+                  value="123-123-555"
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email (read-only)</label>
+                <input
+                  type="email"
+                  id="email"
+                  class="form-control"
+                  value="john.doe@example.com"
+                  readonly
+                />
+              </div>
+              <div class="form-group">
+                <label for="address">Address</label>
+                <input
+                  type="text"
+                  id="address"
+                  class="form-control"
+                  value="Redmond, Washington"
+                />
+              </div>
+              <div class="form-group">
+                <label for="city">City</label>
+                <input
+                  type="text"
+                  id="city"
+                  class="form-control"
+                  value="Redmond"
+                />
+              </div>
+              <div class="form-group">
+                <label for="zipCode">Zip Code</label>
+                <input
+                  type="text"
+                  id="zipCode"
+                  class="form-control"
+                  value="98052"
+                />
+              </div>
+              <div class="form-group">
+                <label for="country">Country</label>
+                <input
+                  type="text"
+                  id="country"
+                  class="form-control"
+                  value="USA"
+                />
+              </div>
+              <button type="submit" class="btn btn-success">
+                Update Profile
+              </button>
+            </form>
+          </div>
+
+          <div id="create-account" class="content-section">
+            <h3>Create New User</h3>
+            <form action="#">
+              <div class="form-group">
+                <label for="fullName">Full Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter full name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  placeholder="user@example.com"
+                />
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone</label>
+                <input
+                  type="text"
+                  id="phone"
+                  class="form-control"
+                  placeholder="123-123-555"
+                />
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Enter password"
+                />
+              </div>
+              <div class="form-group">
+                <label for="confirmPass">Confirm Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  placeholder="Re-enter password"
+                />
+              </div>
+              <button type="submit" class="btn btn-success">Create User</button>
+            </form>
+          </div>
+
+          <div id="password-reset" class="content-section">
+            <h3>Password Reset</h3>
+            <form>
+              <div class="form-group">
+                <label for="currentPass">Current Password <span>*</span></label>
+                <input
+                  type="password"
+                  id="currentPass"
+                  class="form-control"
+                  placeholder="Enter your current password"
+                />
+              </div>
+              <div class="form-group">
+                <label for="newPass">New Password <span>*</span></label>
+                <input
+                  type="password"
+                  id="newPass"
+                  class="form-control"
+                  placeholder="Enter new password"
+                />
+              </div>
+              <div class="form-group">
+                <label for="confirmPass">Confirm Password <span>*</span></label>
+                <input
+                  type="password"
+                  id="confirmPass"
+                  class="form-control"
+                  placeholder="Enter new password again"
+                />
+              </div>
+              <button type="submit" class="btn btn-success">
+                Change Password
+              </button>
+              <button type="reset" class="btn btn-secondary">Clear</button>
+            </form>
+          </div>
+        </div>
+        <button id="scrollTopBtn" title="Go to top">&#8679;</button>
+      </div>
     </div>
-    <table class="table is-fullwidth">
-      <thead>
-        <tr>
-          <th>Title</th>
-          <th>Performance</th>
-          <th>Peak Position</th>
-          <th>Time on Chart</th>
-          <th>Chart Debut</th>
-        </tr>
-      </thead>
-      <tbody id="results"></tbody>
-    </table>
-  </div>
-</select>
 
-{% for result in results %}
-<tr>
-  <td>{{ result.username }}</td>
-  <td>{{ result.email }}</td>
-  <td>{{ result.password }}</td>
-  <td>{{ result.user_profile }}</td>
-  <td>{{ result.confirm_password }}</td>
-</tr>
-{% endfor %} -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/flash_remove_dom.js') }}"></script>
+  </body>
+</html>
 """

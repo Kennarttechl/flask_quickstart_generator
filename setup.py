@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 with open(file="Readme.md", encoding="utf-8", mode="r") as file:
     long_description = file.read()
 
-    
+
 # Bump version:
 setup(
     name="flask_quickstart_generator",
@@ -23,7 +23,7 @@ setup(
     license="MIT",
     classifiers=[
         "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 3",
+        "Programming Language :: Python Python :: 3 Python :: 3:: Only Python :: 3.10     Python :: 3.11 Python :: 3.12 Python :: 3.13",
         "Operating System :: OS Independent",
     ],
     install_requires=[
@@ -35,6 +35,7 @@ setup(
         "Flask-Caching",
         "Flask-Limiter",
         "Flask-Login",
+        "python-dotenv",
         "Flask-Migrate",
         "Flask-Session",
         "Flask-Login",
@@ -49,3 +50,4 @@ setup(
         ],
     },
 )
+

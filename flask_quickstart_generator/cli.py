@@ -1,15 +1,6 @@
 import sys
+from colorama import Fore, Style
 from .cmd_handler import CmdHandler
-
-
-# ANSI escape color code for displaying or printing sucessful message
-GREEN = "\033[92m"
-RESET = "\033[0m"
-
-
-# ANSI escape color code for displaying or printing the docs
-YELLOW = "\033[33m"
-RESET = "\033[0m"
 
 
 docs = """ 
@@ -49,11 +40,10 @@ def main():
 
     elif command == "create-app" and argument != "":
         CmdHandler.generate_flask_app_folder(argument)
-        print(f"{GREEN}***** Project created successfully *****{RESET}")
+        print(f"{Fore.GREEN}***** Project created successfully *****{Style.RESET_ALL}")
 
     else:
-        sys.exit(f"{YELLOW}{docs}{RESET}")
-
-
+        sys.exit(f"{Fore.YELLOW}{docs}{Style.RESET_ALL}")
+        
 if __name__ == "__main__":
     main()
