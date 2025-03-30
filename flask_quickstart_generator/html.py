@@ -1,67 +1,67 @@
 BASE_HTML = """
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE-edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE-edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-{% block head %}
-<title>{% block title %}Flask QuickStart{% endblock title %}</title>
-{% endblock head %}
+    {% block head %}
+    <title>{% block title %}Flask QuickStart{% endblock title %}</title>
+    {% endblock head %}
 
-<link rel="icon" href="#">
+    <link rel="icon" href="#" />
 
-<link rel="stylesheet" href="#">
-</head>
+    <!-- <link rel="stylesheet" href=" Your css path here "> -->
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/flash.css')}}">
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/flash.css')}}"
+    />
 
-<link rel="stylesheet" href="#">
-<body>
-{% block body %}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/footer.css')}}"
+    />
+  </head>
+  <body>
+    {% block body %}
 
+    <!-- WRITE YOUR THE REST OF YOUR CODE HERE -->
 
+    <div class="flash--message">
+      {% with messages = get_flashed_messages(with_categories=True) %} {% if
+      messages %} {% for category, message in messages %} {% if category ==
+      "error" %}
 
-<!-- WRITE YOUR THE REST OF YOUR CODE HERE -->
+      <div class="alert alert-danger alter-dismissable fade show" role="alert">
+        <i class="fa-solid fa-circle-xmark"></i>
+        {{ message }}
+      </div>
 
+      {% else %}
+      <div class="alert alert-success alter-dismissable fade show" role="alert">
+        <i class="fa-solid fa-circle-check"></i>
+        {{ message }} {% endif %}{% endfor %}{% endif %}{% endwith %}
+      </div>
+    </div>
 
-<div class="flash--message">
-  {% with messages = get_flashed_messages(with_categories=True) %} {% if
-  messages %} {% for category, message in messages %} {% if category ==
-  "error" %}
+    <!-- <script src="Your js scripts path here "></script> -->
+    {% block content %}{% endblock content %} {% endblock body %}
 
-  <div class="alert alert-danger alter-dismissable fade show" role="alert">
-    <i class="fa-solid fa-circle-xmark"></i>
-    {{ message }}
-  </div>
-
-  {% else %}
-  <div class="alert alert-success alter-dismissable fade show" role="alert">
-    <i class="fa-solid fa-circle-check"></i>
-    {{ message }} {% endif %}{% endfor %}{% endif %}{% endwith %}
-  </div>
-</div>
-
-<script src="#"></script>
-
-{% block content %}{% endblock content %}
-{% endblock body %}
-
-
-{% block footer %}
+    <!-- footer  -->
+    {% block footer %}
     <div class="footer">
       <div class="footer-bottom">
         &copy; Copyright 2025 Flask Quick Start Generator
       </div>
     </div>
-{% endblock footer %}
-</body>
+    {% endblock footer %}
+  </body>
 </html>
 """
 
-FLASH_CUSTOM_HTML = \
-  """ 
+FLASH_CUSTOM_HTML = """ 
 <link rel="stylesheet" href="{{ url_for('static', filename='css/flash.css') }}">
 
 <div class="flash--message">
@@ -70,20 +70,19 @@ FLASH_CUSTOM_HTML = \
   "error" %}
 
   <div class="alert alert-danger alter-dismissable fade show" role="alert">
-    <i class="fa-solid fa-circle-xmark"></i>
+    <i class="fas fa-times"></i>
     {{ message }}
   </div>
 
   {% else %}
   <div class="alert alert-success alter-dismissable fade show" role="alert">
-    <i class="fa-solid fa-circle-check"></i>
+    <i class="fas fa-check"></i>
     {{ message }} {% endif %}{% endfor %}{% endif %}{% endwith %}
   </div>
 </div>
 """
 
-AUTHENTICATION_REGISTER_HTML = \
-""" 
+AUTHENTICATION_REGISTER_HTML = """ 
 {% extends "base.html" %}
 
 <head>
@@ -95,10 +94,7 @@ AUTHENTICATION_REGISTER_HTML = \
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
   />
   
-  <link
-      rel="stylesheet"
-      href="#"
-  />
+  <!-- <link rel="stylesheet" href="Your css path here"/> -->
 
   {% endblock head %}
 </head>
@@ -157,22 +153,18 @@ AUTHENTICATION_REGISTER_HTML = \
   </div>
 </div>
 
-<script src="#"></script>
+<!-- <script src="Your js scripts path here "></script> -->
 {% endblock content %} {% endblock body %}
 """
 
-AUTHENTICATION_LOGIN_HTML =\
-""" 
+AUTHENTICATION_LOGIN_HTML = """ 
 {% extends "base.html" %}
 
 <head>
   {% block head %}
   <title>{% block title %}Flask QuickStart{% endblock title %}</title>
 
-  <link
-    rel="stylesheet"
-    href="#"
-  />
+  <!-- <link rel="stylesheet" href="Your css path here"/> -->
 
   <link
     rel="stylesheet"
@@ -226,7 +218,7 @@ AUTHENTICATION_LOGIN_HTML =\
   </div>
 </div>
 
-<script src="#"></script>
+<!-- <script src="Your js scripts path here "></script> -->
 {% endblock content %} {% endblock body %}
 """
 
@@ -236,7 +228,7 @@ DEMO_HTML_TEMPLATES = """
 {% block head %}
 <title>{% block title %}Flask QuickStart{% endblock title %}</title>
 
-<link rel="stylesheet" type="text/css" href="#"/>
+<!-- <link rel="stylesheet" href="Your css path here"/> -->
 {% endblock head %}
 
 {% block body %}
@@ -249,13 +241,11 @@ DEMO_HTML_TEMPLATES = """
 
 
 {% endblock content %}
-<script src="#"></script>
+<!-- <script src="Your js scripts path here "></script> -->
 {% endblock body %}
 """
 
 SADMIN_LOGIN_SECURE = """ 
-<!-- Include the flash message section here -->
-{% include 'flash_message.html' %} 
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -302,6 +292,8 @@ SADMIN_LOGIN_SECURE = """
         </form>
       </div>
     </div>
+    <!-- Include the flash message section here -->
+    {% include 'flash_message.html' %}
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -310,13 +302,12 @@ SADMIN_LOGIN_SECURE = """
     ></script>
 
     <script src="{{ url_for('static', filename='js/log.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/flash_remove_dom.js') }}"></script>
   </body>
 </html>
 """
 
 SADASHBOARD_SECURE = """ 
-<!-- Include the flash message section here -->
-{% include 'flash_message.html' %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -364,7 +355,7 @@ SADASHBOARD_SECURE = """
       </div>
       <div class="user-profile">
         <img src="{{ url_for('static', filename='media/Image/s3.png')}}" alt="User" />
-        <span>Admin</span>
+        <span>{{ current_user.username }}</span>
         <i class="fas fa-chevron-down"></i>
         <div class="dropdown-menu">
           <ul>
@@ -941,6 +932,8 @@ SADASHBOARD_SECURE = """
         <button id="scrollTopBtn" title="Go to top">&#8679;</button>
       </div>
     </div>
+    <!-- Include the flash message section here -->
+    {% include 'flash_message.html' %}
 
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
@@ -952,4 +945,203 @@ SADASHBOARD_SECURE = """
     <script src="{{ url_for('static', filename='js/flash_remove_dom.js') }}"></script>
   </body>
 </html>
+"""
+
+
+BAD_REQUESTS_HTML = """
+{% extends "base.html" %} {% block head %}
+<title>{% block title %}Bad Request{% endblock title %}</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/400.css')}}" />
+{% endblock head %} {% block body %} {% block content %}
+
+<div class="container">
+  <div class="glitch" id="glitch-text">
+    <h1>400</h1>
+    <h2>Bad Request</h2>
+    <p>Sorry, your request couldn't be processed.</p>
+    <button id="go-back-btn">Go Back</button>
+  </div>
+</div>
+
+{% endblock content %}
+<script src="{{ url_for('static', filename='js/error_pages_all.js')}}"></script>
+{% endblock body %}
+"""
+
+
+CONTENT_TOO_LARGE_HTML = """
+{% extends "base.html" %} {% block head %}
+<title>{% block title %}File Too Large{% endblock title %}</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/413.css')}}" />
+{% endblock head %} {% block body %} {% block content %}
+
+<div class="container">
+  <div class="file-icon">
+    <div class="file">
+      <div class="fold"></div>
+    </div>
+    <div class="exceed-text">TOO LARGE</div>
+  </div>
+  <h1>413</h1>
+  <h2>Payload Too Large</h2>
+  <p>The file or request data you tried to upload exceeds the allowed limit.</p>
+  <button id="go-back-btn">Go Back</button>
+</div>
+
+{% endblock content %}
+<script src="{{ url_for('static', filename='js/error_pages_all.js')}}"></script>
+{% endblock body %}
+"""
+
+
+FORBIDDEN_HTML = """
+{% extends "base.html" %} {% block head %}
+<title>{% block title %}Forbidden{% endblock title %}</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/403.css')}}" />
+{% endblock head %} {% block body %} {% block content %}
+
+<div class="container">
+  <div class="stop-icon">
+    <div class="stop-sign">
+      <span>403</span>
+    </div>
+  </div>
+  <h2>Forbidden</h2>
+  <p>You don't have permission to access this page.</p>
+  <button id="go-back-btn">Go Back</button>
+</div>
+
+{% endblock content %}
+<script src="{{ url_for('static', filename='js/error_pages_all.js')}}"></script>
+{% endblock body %}
+"""
+
+
+INTERNAL_SERVER_HTML = """
+{% extends "base.html" %} {% block head %}
+<title>{% block title %}Internal Server Error{% endblock title %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/500.css')}}" />
+{% endblock head %} {% block body %}
+
+<!--  -->
+{% block content %}
+<div class="container">
+  <div class="glitch-error">
+    <h1>500</h1>
+    <h2>Internal Server Error</h2>
+    <p>Something went wrong on our end. Please try again later.</p>
+    <button id="server_refresh-btn">Retry</button>
+  </div>
+  <div class="glitch-background"></div>
+</div>
+
+{% endblock content %}
+<script src="{{ url_for('static', filename='js/error_pages_all.js')}}"></script>
+{% endblock body %}
+
+"""
+
+
+MAINTAINANCE_HTML = """
+{% extends "base.html" %} {% block head %}
+<title>{% block title %}503 Service Unavailable{% endblock title %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/503.css')}}" />
+{% endblock head %}
+
+<!--  -->
+{% block body %} {% block content %}
+<div class="container">
+  <div class="gear-icon">
+    <div class="gear"></div>
+  </div>
+  <h1>503</h1>
+  <h2>Service Unavailable</h2>
+  <p>
+    Our service is temporarily unavailable. We're working on it and will be back
+    soon!
+  </p>
+  <button id="main-reload-btn">Try Again</button>
+</div>
+
+{% endblock content %}
+<script src="{{ url_for('static', filename='js/maintainance.js')}}"></script>
+{% endblock body %}
+"""
+
+
+NOT_FOUND_HTML = """
+<!-- This is the not_found.html template -->
+
+{% extends "base.html" %} {% block head %}
+<title>{% block title %}404 Page Not Found{% endblock title %}</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/404.css')}}" />
+{% endblock head %} {% block body %} {% block content %}
+
+<div class="container">
+  <div class="error">
+    <h1>404</h1>
+    <p>Oops! The page you're looking for doesn't exist.</p>
+    <button id="go-back-btn">Go Back</button>
+  </div>
+  <div class="stars"></div>
+</div>
+
+{% endblock content %}
+<script src="{{ url_for('static', filename='js/notfound.js')}}"></script>
+{% endblock body %}
+"""
+
+
+TOO_MANAY_REQUEST_HTML = """
+{% extends "base.html" %} {% block head %}
+<title>{% block title %}Too Many Requests{% endblock title %}</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/429.css')}}" />
+{% endblock head %} {% block body %} {% block content %}
+
+<div class="container">
+  <div class="error-message">
+    <h1>429</h1>
+    <h2>Too Many Requests</h2>
+    <p>You've sent too many requests in a short time. Please wait.</p>
+    <div class="timer">
+      <span id="countdown">10</span>
+      <p>seconds remaining</p>
+    </div>
+    <button id="retry-btn">Retry</button>
+    <!-- Assign an id to the button -->
+  </div>
+</div>
+
+{% endblock content %}
+<script src="{{ url_for('static', filename='js/error_pages_all.js')}}"></script>
+{% endblock body %}
+"""
+
+
+UNAUTHORIZED_HTML = """
+{% extends "base.html" %} {% block head %}
+<title>{% block title %}Unauthorized{% endblock title %}</title>
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/401.css')}}" />
+{% endblock head %} {% block body %} {% block content %}
+
+<div class="container">
+  <div class="lock-icon">
+    <div class="lock-body"></div>
+    <div class="lock-shackle"></div>
+  </div>
+  <h1>401</h1>
+  <h2>Unauthorized</h2>
+  <p>Oops! You don't have permission to access this page.</p>
+  <button id="go-back-btn">Go Back</button>
+</div>
+
+{% endblock content %}
+<script src="{{ url_for('static', filename='js/error_pages_all.js')}}"></script>
+{% endblock body %}
 """

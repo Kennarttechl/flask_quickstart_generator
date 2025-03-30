@@ -98,10 +98,6 @@ app.config["SESSION_COOKIE_SECURE"] = False
 Session(app) # Initialize Flask-Session extension
 
 
-# Flask extension to minify html, css, js and less! Uncomment it if you want you use it.
-# Minify(app=app, html=True, js=True, cssless=True, static=True)
-
-
 # This makes it easier to pinpoint where things might be going wrong in the app
 logging.basicConfig(level=logging.DEBUG)
 
@@ -117,9 +113,9 @@ limiter = Limiter(
 
 
 @app.before_request
-def app_middleware():
+def middleware():
     if not request.path.startswith("/static"):
-        print(f"{Fore.YELLOW}app_middleware runs before the '{request.endpoint}' route runs.{Style.RESET_ALL}")
+        print(f"{Fore.GREEN}middleware executes before: '{request.endpoint}' route.{Style.RESET_ALL}")
     '''
     # Skip Processing for Dynamic Routes:
     # We check if the path starts with a slash (/) to handle potential invalid paths.
@@ -164,10 +160,10 @@ def app_middleware():
 
 
 @app.after_request
-def app_security_headers_middleware(response):
+def security_headers(response):
     if not request.path.startswith("/static"):
         print(
-            f"{Fore.YELLOW}app_security_headers_middleware runs before the  '{request.endpoint}' route runs. {Style.RESET_ALL}"
+            f"{Fore.GREEN}security header executes before: '{request.endpoint}' route. {Style.RESET_ALL}"
         )
     # This middleware function sets the X-Frame-Options header to "DENY" to prevent clickjacking attacks.
 

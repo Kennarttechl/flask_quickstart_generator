@@ -12,7 +12,7 @@ APP_STARTUP = \
 """
 from waitress import serve
 from my_demo_app import db, app, flask_db_init
-from my_demo_app.super_admin.routes import seed_users
+from my_demo_app.super_admin.routes import seed_super_admin
 
 
 if __name__ == "__main__":
@@ -20,7 +20,7 @@ if __name__ == "__main__":
         db.create_all()
         # db.drop_all()
         flask_db_init()  #This function creates and initiates the `db migration`
-        seed_users()
+        seed_super_admin()
     app.run(host="0.0.0.0",debug=True, port=5000) 
     # serve(app, host='0.0.0.0', port=5000, threads=100) # Use Waitress to serve the app 
 """
@@ -101,8 +101,8 @@ def search_item():
 
 ERROR_HANDLER_TEMPLATE_CODE = \
 """
-from flask import session
 from my_demo_app import app
+from flask import session
 from http import HTTPStatus
 from flask import render_template, Blueprint, flash
 
@@ -110,6 +110,15 @@ from flask import render_template, Blueprint, flash
 errors_ = Blueprint(
     "errors_", __name__, template_folder="templates", static_folder="static"
 )
+
+@errors_.app_errorhandler(400)
+def bad_request(error):
+    return render_template("bad_request.html"), HTTPStatus.BAD_REQUEST
+
+
+@errors_.app_errorhandler(401)
+def un_authorized(error):
+    return render_template("unauthorized.html"), HTTPStatus.UNAUTHORIZED
 
 
 @errors_.app_errorhandler(403)
@@ -124,7 +133,7 @@ def not_found_error(error):
 
 @errors_.app_errorhandler(413)
 def payload_too_large_error(error):
-    return render_template("payload_data.html"), HTTPStatus.PAYLOAD_TOO_LARGE
+    return render_template("content_too_large.html"), HTTPStatus.CONTENT_TOO_LARGE
 
 
 @errors_.app_errorhandler(429)
@@ -164,7 +173,6 @@ def app_maintenance_mode(error):  # Optional prefix for consistency
         return render_template("maintenance.html"), HTTPStatus.SERVICE_UNAVAILABLE
     # Code to handle other 503 errors (optional)
     return None  # Fallback for non-maintenance related 503 errors
-
 """
 
 AUTHENTICATION_TEMPLATE_CODE = \
@@ -451,14 +459,13 @@ def controller():
 SUPER_ADMIN_DASHBOARD_ = \
 """ 
 import os
-import secrets
+from my_demo_app import limiter
 from .form import LoginForm
 from dotenv import load_dotenv
-from testing import db, bcrypt
-from testing import limiter, app, cache
-from testing.database.models import User
-from flask_login import current_user, login_required, login_user
-from flask import render_template, url_for, flash, request, redirect, Blueprint
+from my_demo_app import db, bcrypt, app
+from my_demo_app.database.models import User
+from flask_login import login_required, login_user
+from flask import render_template, url_for, flash, redirect, Blueprint
 
 
 super_admin_secure = Blueprint(
@@ -472,7 +479,7 @@ admin_username = os.getenv("ADMIN_USERNAME")
 admin_password = os.getenv("ADMIN_PASSWORD")
 
 
-def seed_users():
+def seed_super_admin():
     # Check if the admin user already exists
     existing_admin = User.query.filter_by(email="admin@example.com").first()
     if existing_admin:
@@ -483,7 +490,7 @@ def seed_users():
     admin = User(
         username=admin_username,
         password=bcrypt.generate_password_hash(admin_password).decode("utf-8"),
-        user_role="Admin",
+        user_role="SuperUser",
         email="admin@example.com",
         user_profile="default.jpg",
     )
@@ -491,8 +498,8 @@ def seed_users():
     db.session.commit()
 
 
-@super_admin_secure.route("/superlogin", methods=["GET", "POST"])
-@limiter.limit("5 per minute", override_defaults=True)
+@super_admin_secure.route(rule="/superlogin", methods=["GET", "POST"])
+@limiter.limit(limit_value="5 per minute", override_defaults=True)
 def secure_superlogin():
     form = LoginForm()
     if form.validate_on_submit():
@@ -506,9 +513,8 @@ def secure_superlogin():
     return render_template("salogin_secure.html", form=form)
 
 
-#@super_admin_secure.route("/adashboard", methods=["GET"])
-@super_admin_secure.route(f"/{secrets.token_urlsafe(5)}", methods=["GET", "POST"])
-@limiter.limit("5 per minute", override_defaults=True)
+@super_admin_secure.route(rule="/secure_adashboard", methods=["GET", "POST"])
+@limiter.limit(limit_value="5 per minute", override_defaults=True)
 @login_required
 def secure_adashboard():
     return render_template("sadashboard_secure.html")

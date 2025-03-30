@@ -1,5 +1,4 @@
-SADASHBOARD_JS = \
-    """ 
+SADASHBOARD_JS = """ 
 // USER PROFILE DROPDOWN
 const userProfile = document.querySelector(".user-profile");
 userProfile.addEventListener("click", () => {
@@ -369,8 +368,7 @@ scrollToTopBtn.addEventListener("click", function () {
 """
 
 
-LOG_JS = \
-    """ 
+LOG_JS = """ 
 const darkModeToggle = document.getElementById("dark-mode-toggle");
 const mainContainer = document.querySelector(".container-fluid");
 
@@ -397,8 +395,7 @@ darkModeToggle.addEventListener("change", () => {
 });
 """
 
-FLASH_DOM_REMOVE =\
-  """ 
+FLASH_DOM_REMOVE = """ 
 document.addEventListener("DOMContentLoaded", function () {
     // Find all the flash messages
     const flashMessages = document.querySelectorAll(".flash--message .alert");
@@ -414,4 +411,88 @@ document.addEventListener("DOMContentLoaded", function () {
       }, totalAnimationTime);
     });
 });
+"""
+
+ERROR_PAGES = """
+document.addEventListener("DOMContentLoaded", function () {
+  // Select the button by id
+  const goBackButton = document.getElementById("go-back-btn");
+
+  // Attach the click event handler to the button
+  if (goBackButton) {
+    goBackButton.addEventListener("click", function () {
+      window.history.back();
+    });
+  }
+});
+
+// Too manay request
+document.addEventListener("DOMContentLoaded", function () {
+  // Countdown Timer Logic
+  let timeLeft = 40; // You can adjust the time
+  const countdownElement = document.getElementById("countdown");
+  const retryButton = document.getElementById("retry-btn");
+
+  const countdown = setInterval(() => {
+    timeLeft--;
+    countdownElement.innerText = timeLeft;
+
+    if (timeLeft <= 0) {
+      clearInterval(countdown);
+      document.querySelector(".timer").innerHTML =
+        "<p>You can try again now.</p>";
+    }
+  }, 1000);
+
+  // Retry button logic
+  if (retryButton) {
+    retryButton.addEventListener("click", function () {
+      location.reload(); // Reloads the page after countdown finishes
+    });
+  }
+});
+
+// 500 server
+document.addEventListener("DOMContentLoaded", function () {
+  // Select the button by its id
+  const refreshBtn = document.getElementById("server_refresh-btn");
+
+  // Attach the click event if the button exists
+  if (refreshBtn) {
+    refreshBtn.addEventListener("click", function () {
+      location.reload(); // Refresh the page on click
+    });
+  }
+});
+"""
+
+MAINTAINANCE_JS = """ 
+document.addEventListener('DOMContentLoaded', function () {
+    // Auto-refresh every 10 minutes (600000 milliseconds)
+    setInterval(function () {
+        window.location.reload();
+    }, 60000);
+
+    // Bind click event to the reload button (if it exists) to allow immediate reload
+    const reloadBtn = document.getElementById('main-reload-btn');
+    if (reloadBtn) {
+        reloadBtn.addEventListener('click', function () {
+            window.location.reload();
+        });
+    }
+});
+"""
+
+NOT_FOUND_JS = """ 
+document.addEventListener("DOMContentLoaded", function () {
+    // Select the button by id
+    const goBackButton = document.getElementById("go-back-btn");
+  
+    // Attach the click event handler to the button
+    if (goBackButton) {
+      goBackButton.addEventListener("click", function () {
+        window.history.back();
+      });
+    }
+  });  
 """
