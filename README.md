@@ -177,6 +177,8 @@ WTForms==3.1.2
 | Screenshot | Name |
 ----------|-----
 | Installation |  ![Cloning](documentation/one.png) |
+| Creating Project |  ![Cloning](documentation/two.png) |
+| Installation |  ![Cloning](documentation/one.png) |
 | Commands  |  ![Commands](documentation/Commands.png) |
 | Project Creating |  ![Creating project](documentation/Creating_Project.png) |
 | Installation Complete  |  ![Instatllation](documentation/Installation_Complete.png) |
