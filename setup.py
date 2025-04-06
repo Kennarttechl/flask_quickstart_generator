@@ -55,4 +55,4 @@ setup(
     },
 )
 
-# twine upload dist/* -u __token__ -p
+# twine upload dist/* -u __token__ -p => token_id
