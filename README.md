@@ -14,7 +14,24 @@ Flask Quickstart Generator streamlines the development process by automating the
 | ------------- | 
 |pip install -U flask-quickstart-generator 
 
+
 ## Version 1.1.3 Features
+| Features  |   Status | Details
+| ------------- | ------------- | -------- |
+|**Built-in Admin Dashboard:** |✅          | Comes with a fully integrated admin panel for managing key parts of the application.
+|**User Authentication System:**|✅         | Users must log in before accessing the dashboard, with role-based access control.
+|**Profile & Account Management:**|✅            | Authenticated users can view and update their profile details, including account settings.
+|**User Registration with Role Assignment:**|✅          | Supports user sign-up and assigning specific roles (e.g., admin, user).
+|**Comprehensive Error Handling Pages:**|✅          | Custom templates for HTTP errors like 400, 401, 403, 404, 413, 429, 500, and 503. Includes handling for exceptions like ValueError.
+|**Maintenance Mode (503):**|✅          | Shows a maintenance page when the app is under scheduled updates.
+|**Flash Messaging for Rate Limits:**|✅          | Uses Flask’s flash() to alert users (e.g., for 429 errors: too many requests).
+|**Session Timeout Auto Logout:**|✅          | Logs users out automatically after inactivity for better security.
+|**Responsive Design:**|✅          | Fully responsive layout that works across mobile, tablet, and desktop.
+|**Theme Customization:**|✅          | Offers pre-built themes or theme switching for a modern UI.
+|**Automatic DB Migration Init:**|✅          | Automatically checks for and initializes the Flask-Migrate folder via flask db init, saving setup time.
+|**Debug Logging Setup:**|✅          | Uses logging.basicConfig(level=logging.DEBUG) to provide detailed logs for pinpointing errors and tracking behavior.
+|**Color-Coded Terminal Logs:**|✅          | Adds colorful terminal outputs in middleware and response hooks to make request flow and security header injection easier to track.
+
 
 ## Features
 | Features  |   Status | Details
