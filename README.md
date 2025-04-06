@@ -188,6 +188,7 @@ WTForms==3.1.2
 | Admin Dashboard |  ![Cloning](documentation/ten.png) |
 | Dashboard Mobile View |  ![Cloning](documentation/eleven.png) |
 | Dashboard Mobile View(white theme) |  ![Cloning](documentation/twelve.png) |
+| Reset Profile Page |  ![Cloning](documentation/thirteen.png) |
 | Installation |  ![Cloning](documentation/one.png) |
 | Commands  |  ![Commands](documentation/Commands.png) |
 | Project Creating |  ![Creating project](documentation/Creating_Project.png) |
