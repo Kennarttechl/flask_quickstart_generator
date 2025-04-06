@@ -187,6 +187,7 @@ WTForms==3.1.2
 | Login page(Theme change) |  ![Cloning](documentation/nine.png) |
 | Admin Dashboard |  ![Cloning](documentation/ten.png) |
 | Dashboard Mobile View |  ![Cloning](documentation/eleven.png) |
+| Dashboard Mobile View(white theme) |  ![Cloning](documentation/twelve.png) |
 | Installation |  ![Cloning](documentation/one.png) |
 | Commands  |  ![Commands](documentation/Commands.png) |
 | Project Creating |  ![Creating project](documentation/Creating_Project.png) |
