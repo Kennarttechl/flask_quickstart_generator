@@ -55,4 +55,3 @@ setup(
     },
 )
 
-# twine upload dist/* -u __token__ -p => pypi token_id
