@@ -176,10 +176,13 @@ WTForms==3.1.2
 
 | Screenshot | Name |
 ----------|-----
-| Successfull Installation |  ![Cloning](documentation/one.png) |
+| Successful Installation |  ![Cloning](documentation/one.png) |
 | Creating Project |  ![Cloning](documentation/two.png) |
 | Folder Structure |  ![Cloning](documentation/three.png) |
 | Running wsgi/initializing |  ![Cloning](documentation/four.png) |
+| Project Running Successful |  ![Cloning](documentation/five.png) |
+| View Page |  ![Cloning](documentation/six.png) |
+| Installation |  ![Cloning](documentation/one.png) |
 | Installation |  ![Cloning](documentation/one.png) |
 | Commands  |  ![Commands](documentation/Commands.png) |
 | Project Creating |  ![Creating project](documentation/Creating_Project.png) |
