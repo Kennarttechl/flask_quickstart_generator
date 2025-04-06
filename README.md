@@ -182,7 +182,7 @@ WTForms==3.1.2
 | Running wsgi/initializing |  ![Cloning](documentation/four.png) |
 | Project Running Successful |  ![Cloning](documentation/five.png) |
 | View Page |  ![Cloning](documentation/six.png) |
-| Installation |  ![Cloning](documentation/one.png) |
+| Admin Login Page |  ![Cloning](documentation/seven.png) |
 | Installation |  ![Cloning](documentation/one.png) |
 | Commands  |  ![Commands](documentation/Commands.png) |
 | Project Creating |  ![Creating project](documentation/Creating_Project.png) |
