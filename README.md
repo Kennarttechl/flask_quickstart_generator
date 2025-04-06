@@ -14,6 +14,7 @@ Flask Quickstart Generator streamlines the development process by automating the
 | ------------- | 
 |pip install -U flask-quickstart-generator 
 
+## Version 1.1.3 Features
 
 ## Features
 | Features  |   Status | Details
