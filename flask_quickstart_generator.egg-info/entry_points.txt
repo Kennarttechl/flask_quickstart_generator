@@ -1,2 +1,0 @@
-[console_scripts]
-flask-manage = flask_quickstart_generator:main

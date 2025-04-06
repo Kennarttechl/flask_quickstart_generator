@@ -1,5 +1,0 @@
-ENVIRONMENT_VARIABLE = \
-""" 
-ADMIN_USERNAME=admin
-ADMIN_PASSWORD=adminpass
-"""
