@@ -55,3 +55,4 @@ setup(
     },
 )
 
+# twine upload dist/* -u __token__ -p
