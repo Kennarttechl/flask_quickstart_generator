@@ -22,9 +22,12 @@ setup(
     packages=find_packages(),
     license="MIT",
     classifiers=[
-        "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python Python :: 3 Python :: 3:: Only Python :: 3.10     Python :: 3.11 Python :: 3.12 Python :: 3.13",
-        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
+        "Programming Language :: Python :: 3.12",
+        "Programming Language :: Python :: 3.13",
     ],
     install_requires=[
         "Flask",

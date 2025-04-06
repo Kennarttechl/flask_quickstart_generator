@@ -15,7 +15,7 @@ Flask Quickstart Generator streamlines the development process by automating the
 |pip install -U flask-quickstart-generator 
 
 
-## Version 1.1.3 – Features (April 5, 2025)
+## Version 1.1.3 – Features (April 6, 2025)
 | Features  |   Status | Details
 | ------------- | ------------- | -------- |
 |**Built-in Admin Dashboard:** |✅          | Comes with a fully integrated admin panel for managing key parts of the application.
