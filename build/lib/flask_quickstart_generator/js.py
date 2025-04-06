@@ -580,26 +580,3 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 """
-
-AUTO_LOGOUT_ = """ 
-let timeout;
-
-function resetTimer() {
-  clearTimeout(timeout);
-  timeout = setTimeout(logout, 180000); // 3 minutes
-}
-
-function logout() {
-  const logoutUrl = document.body.getAttribute("data-logout-url");
-  if (logoutUrl) {
-    window.location.href = logoutUrl;
-  }
-}
-
-// Start/reset on common activity
-document.addEventListener('DOMContentLoaded', resetTimer);
-document.addEventListener('mousemove', resetTimer);
-document.addEventListener('keypress', resetTimer);
-document.addEventListener('click', resetTimer);
-document.addEventListener('scroll', resetTimer);
-"""

@@ -302,7 +302,7 @@ SADASHBOARD_SECURE = """
       href="{{ url_for('static', filename='css/flash.css') }}"
     />
   </head>
-  <body data-logout-url="{{ url_for('super_admin_secure.user_logout') }}">
+  <body>
     {% block top_navbar %}
     <header class="topbar">
       <div class="topbar-left">
@@ -964,7 +964,6 @@ SADASHBOARD_SECURE = """
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
     <script src="{{ url_for('static', filename='js/flash_remove_dom.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/auto_logout.js') }}"></script>
   </body>
 </html>
 """

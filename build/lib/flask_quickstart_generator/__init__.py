@@ -7,7 +7,6 @@ from .js import (
     LOG_JS,
     PROFILE_AC,
     ERROR_PAGES,
-    AUTO_LOGOUT_,
     TOO_MANY_JS,
     NOT_FOUND_JS,
     SADASHBOARD_JS,
