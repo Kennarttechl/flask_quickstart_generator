@@ -5,7 +5,9 @@ from .settings import APP_SETTINGS
 from .env import ENVIRONMENT_VARIABLE
 from .js import (
     LOG_JS,
+    PROFILE_AC,
     ERROR_PAGES,
+    TOO_MANY_JS,
     NOT_FOUND_JS,
     MAINTAINANCE_JS,
     SADASHBOARD_JS,
@@ -13,6 +15,7 @@ from .js import (
 )
 from .css import (
     LOG_CSS,
+    VIEW_CSS,
     FORBIDDEN,
     NOT_FOUND,
     BASE_FOOTER,
@@ -24,6 +27,7 @@ from .css import (
     INTERNAL_SERVER,
     CONTENT_TOO_LARGE,
     TOO_MANAY_REQUEST,
+    ACCOUNT_CSS_PROFILE,
 )
 from .forms import (
     SEARCH_FORM,
@@ -35,6 +39,8 @@ from .forms import (
 
 from .html import (
     BASE_HTML,
+    VIEW_HTML,
+    USER_ROLE_HTML,
     FORBIDDEN_HTML,
     NOT_FOUND_HTML,
     UNAUTHORIZED_HTML,
@@ -44,9 +50,11 @@ from .html import (
     SADASHBOARD_SECURE,
     SADMIN_LOGIN_SECURE,
     DEMO_HTML_TEMPLATES,
+    PROFILE_UPDATE_HTML,
     INTERNAL_SERVER_HTML,
     CONTENT_TOO_LARGE_HTML,
     TOO_MANAY_REQUEST_HTML,
+    ACCOUNT_SETTING_FORM_HTML,
     AUTHENTICATION_LOGIN_HTML,
     AUTHENTICATION_REGISTER_HTML,
 )
@@ -54,6 +62,7 @@ from .html import (
 from .routes_ import (
     GITIGNORE,
     APP_STARTUP,
+    ANSI_COLORS_,
     ACCOUNT_UTILS,
     CACHING_CONSTANT,
     VIEW_TEMPLATE_CODE,
@@ -101,9 +110,9 @@ APPLICATION_STRUCTURE = {
     "static": {
         "css": None,
         "js": None,
-        "fonts": "flask_cli.png",
+        "fonts": None,
         "icons": "flask_cli.png",
-        "media": "flask_cli.png",
+        "media": "default.jpg",
     },
     "database": {"models.py": USER_MODEL, "__init__.py": ""},
     "account_settings": {
@@ -139,11 +148,11 @@ class CmdHandler:
         print("")
 
         print(
-            f"{Fore.YELLOW}Please wait installing collected packages: Flask, Flask-Session, Flask-Limiter, flask-babel, Flask-Caching, Flask-SQLAlchemy, psycopg2, Flask-Migrate, Flask-WTF, WTForms, waitress, pillow, Flask-Bcrypt, Flask-Login {Style.RESET_ALL}"
+            f"{Fore.YELLOW}Please wait installing collected packages: Flask, python-dotenv, Flask-Session, Flask-Limiter, flask-babel, Flask-Caching, Flask-SQLAlchemy, psycopg2, Flask-Migrate, Flask-WTF, WTForms, waitress, pillow, Flask-Bcrypt, Flask-Login {Style.RESET_ALL}"
         )
 
         os.system(
-            "pip install Flask flask-babel Flask-Bcrypt Flask-Caching Flask-Limiter Flask-Login Flask-Migrate Flask-Session Flask-SQLAlchemy Flask-WTF WTForms psycopg2 Flask-Minify pillow Flask-Login"
+            "pip install Flask flask-babel python-dotenv Flask-Bcrypt waitress Flask-Caching Flask-Limiter Flask-Login Flask-Migrate Flask-Session Flask-SQLAlchemy Flask-WTF WTForms psycopg2 pillow Flask-Login"
         )
 
         print(
@@ -153,7 +162,7 @@ class CmdHandler:
         print("")
 
         print(
-            f"{Fore.MAGENTA}To activate the virtual environment, navigate into the 'venv' directory and run 'Scripts/activate' on Windows or 'source bin/activate' on Unix-based systems.{Style.RESET_ALL}"
+            f"{Fore.RED}To activate the virtual environment, navigate into the 'venv' directory and run 'Scripts/activate' on Windows or 'source bin/activate' on Unix-based systems.{Style.RESET_ALL}"
         )
         print("")
 
@@ -177,6 +186,9 @@ class CmdHandler:
                 )
                 CmdHandler.create_file(
                     os.path.join(app_folder_name, ".gitignore"), GITIGNORE
+                )
+                CmdHandler.create_file(
+                    os.path.join(app_folder_name, "ansi_.py"), ANSI_COLORS_
                 )
 
                 for dir_name, content in APPLICATION_STRUCTURE.items():
@@ -288,9 +300,11 @@ class CmdHandler:
             "413.css": CONTENT_TOO_LARGE,
             "429.css": TOO_MANAY_REQUEST,
             "log.css": LOG_CSS,
+            "view.css": VIEW_CSS,
             "footer.css": BASE_FOOTER,
             "flash.css": FLASH_MESSAGE,
             "sadashboard.css": SADASHBOARD_CSS,
+            "account.css": ACCOUNT_CSS_PROFILE,
         }
 
         for filename, css_content in css_files.items():
@@ -334,7 +348,16 @@ class CmdHandler:
         CmdHandler.create_file(
             os.path.join(template_folder, "flash_message.html"), FLASH_CUSTOM_HTML
         )
-
+        CmdHandler.create_file(
+            os.path.join(template_folder, "flash_message.html"), FLASH_CUSTOM_HTML
+        )
+        CmdHandler.create_file(
+            os.path.join(template_folder, "account_edit_data.html"), PROFILE_UPDATE_HTML
+        )
+        CmdHandler.create_file(
+            os.path.join(template_folder, "user_role.html"), USER_ROLE_HTML
+        )
+    
     @staticmethod
     def create_templates_for_directories(template_folder, dir_name):
         """Create general templates for directories like views, admin, search."""
@@ -343,19 +366,42 @@ class CmdHandler:
             "admin": "controller.html",
             "search": "item_search.html",
             "uploads": "file_upload.html",
-            "account_settings": ["reset_pswd.html", "update_account.html"],
+            "account_settings": "update_account.html",  # Fix incorrect variable reference
         }
 
-        file_names = template_filenames.get(dir_name, None)
-        if isinstance(file_names, list):
-            for file_name in file_names:
-                CmdHandler.create_file(
-                    os.path.join(template_folder, file_name), DEMO_HTML_TEMPLATES
-                )
-        else:
-            CmdHandler.create_file(
-                os.path.join(template_folder, file_names), DEMO_HTML_TEMPLATES
-            )
+        file_name = template_filenames.get(dir_name, None)
+
+        if file_name:
+            if dir_name == "views":
+                content = VIEW_HTML  # Use VIEW_HTML for index.html
+            elif dir_name == "account_settings":
+                content = ACCOUNT_SETTING_FORM_HTML
+            else:
+                content = DEMO_HTML_TEMPLATES  # Keep default content for other templates
+            
+            CmdHandler.create_file(os.path.join(template_folder, file_name), content)
+
+
+    # @staticmethod
+    # def create_templates_for_directories(template_folder, dir_name):
+    #     """Create general templates for directories like views, admin, search."""
+    #     template_filenames = {
+    #         "views": "index.html",
+    #         "admin": "controller.html",
+    #         "search": "item_search.html",
+    #         "uploads": "file_upload.html",
+    #         "account_settings": "update_account.html",  # Fix incorrect variable reference
+    #     }
+
+    #     file_name = template_filenames.get(dir_name, None)
+
+    #     if file_name:
+    #         content = (
+    #             ACCOUNT_SETTING_FORM_HTML
+    #             if dir_name == "account_settings"
+    #             else DEMO_HTML_TEMPLATES
+    #         )
+    #         CmdHandler.create_file(os.path.join(template_folder, file_name), content)
 
     @staticmethod
     def create_static_files(app_folder_name, static_dir, content):
@@ -372,20 +418,37 @@ class CmdHandler:
             if static_subdir == "js":
                 js_files = {
                     "log.js": LOG_JS,
+                    "account.js": PROFILE_AC,
+                    "too_many.js": TOO_MANY_JS,
                     "notfound.js": NOT_FOUND_JS,
                     "dashboard.js": SADASHBOARD_JS,
-                    "maintainance.js": MAINTAINANCE_JS,
                     "error_pages_all.js": ERROR_PAGES,
+                    "maintainance.js": MAINTAINANCE_JS,
                     "flash_remove_dom.js": FLASH_DOM_REMOVE,
                 }
 
                 for filename, js_content in js_files.items():
                     js_file_path = os.path.join(static_subdir_path, filename)
                     CmdHandler.create_file(js_file_path, js_content)
-
-            # Only create files if 'value' is not empty (avoid creating empty files)
-            if value and static_subdir != "js":  # We handle JS separately, so skip here
+                    
+            # Handle font files in static/fonts directory
+            if static_subdir == "fonts":
+                font_files = [
+                    "EBGaramond-Medium.woff",
+                    "EBGaramond-Medium.woff2",
+                ]
+                for font_file in font_files:
+                    font_file_path = os.path.join(static_subdir_path, font_file)
+                    CmdHandler.create_file(font_file_path, "") #Creates an empty file for now
+                    
+             # Only create files if 'value' is not empty (avoid creating empty files)
+            if value and static_subdir not in ["js", "fonts"]:  # We handle JS and fonts separately
                 static_file_path = os.path.join(static_subdir_path, value)
-                CmdHandler.create_file(
-                    static_file_path, ""
-                )  # Create empty files for now
+                CmdHandler.create_file(static_file_path, "")  # Create empty files for now
+
+            # # Only create files if 'value' is not empty (avoid creating empty files)
+            # if value and static_subdir != "js":  # We handle JS separately, so skip here
+            #     static_file_path = os.path.join(static_subdir_path, value)
+            #     CmdHandler.create_file(
+            #         static_file_path, ""
+            #     )  # Create empty files for now

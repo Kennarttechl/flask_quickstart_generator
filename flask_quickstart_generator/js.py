@@ -1,4 +1,5 @@
 SADASHBOARD_JS = """ 
+ 
 // USER PROFILE DROPDOWN
 const userProfile = document.querySelector(".user-profile");
 userProfile.addEventListener("click", () => {
@@ -414,6 +415,7 @@ document.addEventListener("DOMContentLoaded", function () {
 """
 
 ERROR_PAGES = """
+
 document.addEventListener("DOMContentLoaded", function () {
   // Select the button by id
   const goBackButton = document.getElementById("go-back-btn");
@@ -422,32 +424,6 @@ document.addEventListener("DOMContentLoaded", function () {
   if (goBackButton) {
     goBackButton.addEventListener("click", function () {
       window.history.back();
-    });
-  }
-});
-
-// Too manay request
-document.addEventListener("DOMContentLoaded", function () {
-  // Countdown Timer Logic
-  let timeLeft = 40; // You can adjust the time
-  const countdownElement = document.getElementById("countdown");
-  const retryButton = document.getElementById("retry-btn");
-
-  const countdown = setInterval(() => {
-    timeLeft--;
-    countdownElement.innerText = timeLeft;
-
-    if (timeLeft <= 0) {
-      clearInterval(countdown);
-      document.querySelector(".timer").innerHTML =
-        "<p>You can try again now.</p>";
-    }
-  }, 1000);
-
-  // Retry button logic
-  if (retryButton) {
-    retryButton.addEventListener("click", function () {
-      location.reload(); // Reloads the page after countdown finishes
     });
   }
 });
@@ -484,6 +460,7 @@ document.addEventListener('DOMContentLoaded', function () {
 """
 
 NOT_FOUND_JS = """ 
+ 
 document.addEventListener("DOMContentLoaded", function () {
     // Select the button by id
     const goBackButton = document.getElementById("go-back-btn");
@@ -494,5 +471,112 @@ document.addEventListener("DOMContentLoaded", function () {
         window.history.back();
       });
     }
-  });  
+  });    
+"""
+
+TOO_MANY_JS =\
+"""
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Countdown Timer Logic
+  let timeLeft = 40; // You can adjust the time
+  const countdownElement = document.getElementById("countdown");
+  const retryButton = document.getElementById("retry-btn");
+
+  if (countdownElement) {
+    const countdown = setInterval(() => {
+      timeLeft--;
+      countdownElement.innerText = timeLeft;
+
+      if (timeLeft <= 0) {
+        clearInterval(countdown);
+        document.querySelector(".timer").innerHTML =
+          "<p>You can try again now.</p>";
+      }
+    }, 1000);
+  } else {
+    console.error("Element with id 'countdown' not found.");
+  }
+
+  // Retry button logic
+  if (retryButton) {
+    retryButton.addEventListener("click", function () {
+      location.reload(); // Reloads the page after countdown finishes
+    });
+  }
+});
+"""
+
+
+PROFILE_AC =\
+"""
+// document.addEventListener("DOMContentLoaded", function () {
+//   function showSection(section) {
+//     document.getElementById("profile").style.display = "none";
+//     document.getElementById("create").style.display = "none";
+//     document.getElementById("reset").style.display = "none";
+//     document.getElementById(section).style.display = "block";
+//   }
+
+//   document.getElementById("profileLink").addEventListener("click", function () {
+//     showSection("profile");
+//   });
+
+//   document.getElementById("createLink").addEventListener("click", function () {
+//     showSection("create");
+//   });
+
+//   document.getElementById("resetLink").addEventListener("click", function () {
+//     showSection("reset");
+//   });
+
+//   // Show profile overview by default
+//   showSection("profile");
+// });
+
+document.addEventListener("DOMContentLoaded", function () {
+  function showSection(section) {
+    let profile = document.getElementById("profile");
+    let create = document.getElementById("create");
+    let reset = document.getElementById("reset");
+
+    if (profile) profile.style.display = "none";
+    if (create) create.style.display = "none";
+    if (reset) reset.style.display = "none";
+
+    let target = document.getElementById(section);
+    if (target) target.style.display = "block";
+  }
+
+  const profileLink = document.getElementById("profileLink");
+  const createLink = document.getElementById("createLink");
+  const resetLink = document.getElementById("resetLink");
+
+  if (profileLink) {
+    profileLink.addEventListener("click", function () {
+      showSection("profile");
+    });
+  }
+
+  if (createLink) {
+    createLink.addEventListener("click", function () {
+      showSection("create");
+    });
+  }
+
+  if (resetLink) {
+    resetLink.addEventListener("click", function () {
+      showSection("reset");
+    });
+  }
+
+  // Default section to show (if available)
+  if (document.getElementById("profile")) {
+    showSection("profile");
+  } else if (document.getElementById("create")) {
+    showSection("create");
+  } else if (document.getElementById("reset")) {
+    showSection("reset");
+  }
+});
 """

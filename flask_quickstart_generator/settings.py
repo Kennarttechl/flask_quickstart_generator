@@ -1,17 +1,18 @@
 APP_SETTINGS = """
+
 import os
 import secrets
 import logging
 from flask import session
 from flask_babel import Babel
 from datetime import timedelta
-from flask_minify import Minify
 from flask_bcrypt import Bcrypt
 from flask_caching import Cache
 from colorama import Fore, Style
 from flask_limiter import Limiter
 from flask_migrate import Migrate
 from flask_session import Session
+from .ansi_ import get_color_support
 from flask_wtf.csrf import CSRFProtect
 from flask_sqlalchemy import SQLAlchemy
 from flask_limiter.util import get_remote_address
@@ -32,13 +33,13 @@ secret_key = secrets.token_urlsafe(20)  # Generate a secure secret key
 
 # Define the database path relative to the application directory
 APP_DATABASE = os.path.join(os.path.dirname(__file__), "database")
-DATABASE_PATH = os.path.join(APP_DATABASE, "Database.db")  # Database name can be change
+DATABASE_PATH = os.path.join(APP_DATABASE, "Database.db")  
 
 
 # Connecting to local postgress db
 POSTGRES_USER = "postgres"
 POSTGRES_PASSWORD = "your password"
-POSTGRES_DB = "your database name"
+POSTGRES_DB = "database name"
 POSTGRES_HOST = "localhost"
 POSTGRES_PORT = "5432"
 
@@ -80,7 +81,7 @@ migrate = Migrate(app, db)  # Database migration with Flask-Migrate
 
 # Initialize LoginManager for handling user login, current_user, and user_logout
 login_manager = LoginManager()
-login_manager.login_view = "view.home_page"  # Redirect to homepage for login
+login_manager.login_view = "super_admin_secure.secure_superlogin" # Redirect to homepage for login
 login_manager.init_app(app)  # Initialize the app with LoginManager
 login_manager.login_message_category = "info"  # Set the category for login messages
 
@@ -91,7 +92,7 @@ app.config["SESSION_SQLALCHEMY"] = db # Reference SQLAlchemy instance
 app.config["SESSION_SQLALCHEMY_TABLE"] = "sessions" # Use the Session model
 app.config["SESSION_PERMANENT"] = True # Set to True for persistent sessions
 app.config["SESSION_USE_SIGNER"] = True
-app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=7)
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=1)
 # app.config["SESSION_COOKIE_SAMESITE"] = 'None' Enable this config when using https:
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SECURE"] = False
@@ -111,11 +112,12 @@ limiter = Limiter(
     default_limits=["3000 per hour"],
 )
 
+colors = get_color_support()
 
 @app.before_request
 def middleware():
     if not request.path.startswith("/static"):
-        print(f"{Fore.GREEN}middleware executes before: '{request.endpoint}' route.{Style.RESET_ALL}")
+        print(f"{colors['GREEN']}middleware executes before: '{request.endpoint}' route.{colors['RESET']}")
     '''
     # Skip Processing for Dynamic Routes:
     # We check if the path starts with a slash (/) to handle potential invalid paths.
@@ -163,7 +165,7 @@ def middleware():
 def security_headers(response):
     if not request.path.startswith("/static"):
         print(
-            f"{Fore.GREEN}security header executes before: '{request.endpoint}' route. {Style.RESET_ALL}"
+            f"{colors['GREEN']}security header executes before: '{request.endpoint}' route. {colors['RESET']}"
         )
     # This middleware function sets the X-Frame-Options header to "DENY" to prevent clickjacking attacks.
 

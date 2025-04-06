@@ -5,7 +5,7 @@ from .cmd_handler import CmdHandler
 
 docs = """ 
 Flask Quickstart Generator:
-    The Flask Quickstart Generator is a command-line tool (CLI) built with Python and the Flask framework. It provides developers with a convenient way to generate the folder structure and code for new Flask applications. This simplifies the process of starting new projects, allowing developers to focus on building application logic instead of skipping the boilerplate setup.
+    The Flask Quickstart Generator is a command-line tool (CLI) built with Python and the Flask Framework. It provides Developers with a convenient way to generate the folder structure and code for new Flask applications. This simplifies the process of starting new projects, allowing developers to focus on building application logic instead of skipping the boilerplate setup.
     
     ***** User Commands: To Get Started Quickly *****
 
@@ -15,11 +15,12 @@ Flask Quickstart Generator:
     command for creating virtualenv venv `Only`:
         flask-manage -v  
         
-    commands for creating Both (Virtual Environment & App or Project) :
+    commands for creating Both (Virtual Environment & App or Project Structure) :
         flask-manage -v create-app my_demo_app
         
+
     ==== Note =====
-    You can change `my_demo_app` to any name of your choice
+    You can change `my_demo_app` to any name of your choice (Depending on your project)
 """
 
 
@@ -41,6 +42,8 @@ def main():
     elif command == "create-app" and argument != "":
         CmdHandler.generate_flask_app_folder(argument)
         print(f"{Fore.GREEN}***** Project created successfully *****{Style.RESET_ALL}")
+        print('')
+        print(f"{Fore.GREEN}***** Happy Coding *****{Style.RESET_ALL}")
 
     else:
         sys.exit(f"{Fore.YELLOW}{docs}{Style.RESET_ALL}")

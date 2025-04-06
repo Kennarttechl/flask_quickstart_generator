@@ -5,7 +5,9 @@ from .cmd_handler import CmdHandler
 from .env import ENVIRONMENT_VARIABLE
 from .js import (
     LOG_JS,
+    PROFILE_AC,
     ERROR_PAGES,
+    TOO_MANY_JS,
     NOT_FOUND_JS,
     SADASHBOARD_JS,
     MAINTAINANCE_JS,
@@ -13,6 +15,7 @@ from .js import (
 )
 from .css import (
     LOG_CSS,
+    VIEW_CSS,
     FORBIDDEN,
     NOT_FOUND,
     BASE_FOOTER,
@@ -24,6 +27,7 @@ from .css import (
     INTERNAL_SERVER,
     CONTENT_TOO_LARGE,
     TOO_MANAY_REQUEST,
+    ACCOUNT_CSS_PROFILE
 )
 from .forms import (
     SEARCH_FORM,
@@ -34,6 +38,8 @@ from .forms import (
 )
 from .html import (
     BASE_HTML,
+    VIEW_HTML,
+    USER_ROLE_HTML,
     FORBIDDEN_HTML,
     NOT_FOUND_HTML,
     UNAUTHORIZED_HTML,
@@ -43,15 +49,18 @@ from .html import (
     SADASHBOARD_SECURE,
     SADMIN_LOGIN_SECURE,
     DEMO_HTML_TEMPLATES,
+    PROFILE_UPDATE_HTML,
     INTERNAL_SERVER_HTML,
     CONTENT_TOO_LARGE_HTML,
     TOO_MANAY_REQUEST_HTML,
+    ACCOUNT_SETTING_FORM_HTML,
     AUTHENTICATION_LOGIN_HTML,
     AUTHENTICATION_REGISTER_HTML,
 )
 from .routes_ import (
     GITIGNORE,
     APP_STARTUP,
+    ANSI_COLORS_,
     ACCOUNT_UTILS,
     CACHING_CONSTANT,
     VIEW_TEMPLATE_CODE,

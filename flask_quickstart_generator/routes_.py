@@ -8,6 +8,58 @@ __pycache__
 **/*/__pycache__
 """
 
+ANSI_COLORS_ = \
+    """ 
+import sys
+import os
+
+# Custom ANSI escape codes
+CUSTOM_COLORS = {
+    "GREEN": "\033[92m",
+    "RED": "\033[91m",
+    "YELLOW": "\033[93m",
+    "RESET": "\033[0m",
+}
+
+# No color fallback
+NO_COLOR = {
+    "GREEN": "",
+    "RED": "",
+    "YELLOW": "",
+    "RESET": "",
+}
+
+def get_color_support():
+    # Dynamically returns the best color support depending on the environment.
+    # - VS Code => colorama
+    # - Sublime Text or others => ANSI (custom)
+    # - Fallback => no color
+    try:
+        # If output is a real terminal
+        if sys.stdout.isatty():
+            # VS Code specific: has full ANSI + colorama support
+            if "VSCODE_PID" in os.environ:
+                from colorama import init, Fore, Style
+
+                init(autoreset=True)
+                return {
+                    "GREEN": Fore.GREEN,
+                    "RED": Fore.RED,
+                    "YELLOW": Fore.YELLOW,
+                    "RESET": Style.RESET_ALL,
+                }
+
+            # Other terminals that support ANSI (like CMD, Linux)
+            return CUSTOM_COLORS
+
+    except Exception:
+        pass
+
+    # Fallback (Sublime Text or broken shell)
+    return NO_COLOR
+"""
+
+
 APP_STARTUP = \
 """
 from waitress import serve
@@ -19,7 +71,7 @@ if __name__ == "__main__":
     with app.app_context():
         db.create_all()
         # db.drop_all()
-        flask_db_init()  #This function creates and initiates the `db migration`
+        flask_db_init()  #This function creates and initiates the `db migration folder`
         seed_super_admin()
     app.run(host="0.0.0.0",debug=True, port=5000) 
     # serve(app, host='0.0.0.0', port=5000, threads=100) # Use Waitress to serve the app 
@@ -133,7 +185,7 @@ def not_found_error(error):
 
 @errors_.app_errorhandler(413)
 def payload_too_large_error(error):
-    return render_template("content_too_large.html"), HTTPStatus.CONTENT_TOO_LARGE
+    return render_template("payload_data.html"), HTTPStatus.CONTENT_TOO_LARGE
 
 
 @errors_.app_errorhandler(429)
@@ -177,11 +229,10 @@ def app_maintenance_mode(error):  # Optional prefix for consistency
 
 AUTHENTICATION_TEMPLATE_CODE = \
 """
-import secrets
 from .form import RegisterForm
-from flask_login import logout_user
-from my_demo_app.database.models import User
+from my_demo_app.database.models import Role, User
 from my_demo_app import limiter, bcrypt, db, logging
+from flask_login import current_user, logout_user, login_required
 from flask import render_template, Blueprint, flash, redirect, url_for
 
 
@@ -190,10 +241,18 @@ authent_ = Blueprint(
 )
 
 
-@authent_.route("/reguser", methods=["GET", "POST"])
+@authent_.route(rule="/reguser", methods=["GET", "POST"])
 @limiter.limit("5 per minute", override_defaults=True)
-# @login_required
+@login_required
 def secure_register():
+    # Check if any roles exist
+    if not Role.query.first():
+        flash(
+            message="No user roles found! Please add roles before registering users.",
+            category="error",
+        )
+        return redirect(url_for("super_admin_secure.add_role"))  # Redirect admin to add roles
+
     form = RegisterForm()
     if form.validate_on_submit():
         try:
@@ -210,7 +269,7 @@ def secure_register():
                 message=f"Account Created Successfully {user.username}",
                 category="success",
             )
-            return redirect(url_for(endpoint="admin_controller.secure_dashboard"))
+            return redirect(url_for(endpoint="super_admin_secure.secure_adashboard"))
         except Exception as e:
             db.session.rollback()
             logging.error(msg=f"Error adding new user to the database {e}")
@@ -224,17 +283,18 @@ def secure_register():
     ]
     if error_messages:
         flash(
-            message=f"Registration Unsuccessfull! {', '.join(error_messages)}",
+            message=f"Registration Unsuccessful! {', '.join(error_messages)}",
             category="error",
         )
-    return render_template("signup.html", form=form)
+    image_file = url_for("static", filename="media/" + current_user.user_profile)
+    return render_template("signup.html", form=form, image_file=image_file)
 
 
-@authent_.route("/logout")
-def user_logout():
-    logout_user()
-    flash(message="Logout Successfully", category="success")
-    return redirect(url_for("view.home_page"))
+# @authent_.route("/logout")
+# def user_logout():
+#     logout_user()
+#     flash(message="Logout Successfully", category="success")
+#     return redirect(url_for("view.home_page"))
 """
 
 ACCOUNT_UTILS = \
@@ -272,7 +332,7 @@ def save_user_picture(form_picture):
         os.remove(os.path.join(app.root_path, "static/media", current_user.user_profile))
     
     # Resize the image
-    output_size = (700, 700)
+    output_size = (750, 750)
     i = Image.open(form_picture)
     i.thumbnail(output_size)
     i.save(picture_path)
@@ -294,7 +354,7 @@ account_ = Blueprint(
 )
 
 
-@account_.route(f"/account", methods=["GET", "POST"])
+@account_.route(rule=f"/account", methods=["GET", "POST"])
 @login_required
 def secure_account_update():
     form = UpdateAccount()
@@ -306,6 +366,7 @@ def secure_account_update():
             current_user.user_profile = picture_file
 
         # Handle username update
+        current_user.email = form.email.data
         current_user.username = form.username.data
 
         # Handle password update only if a new password is provided
@@ -313,7 +374,9 @@ def secure_account_update():
             # Check if passwords match
             if form.password.data == form.confirm_password.data:
                 # Hash the new password and update it
-                hashed_password = bcrypt.generate_password_hash(form.password.data).decode("utf-8")
+                hashed_password = bcrypt.generate_password_hash(
+                    form.password.data
+                ).decode("utf-8")
                 current_user.password = hashed_password
             else:
                 flash(message="Passwords do not match.", category="error")
@@ -322,7 +385,7 @@ def secure_account_update():
         # Commit the changes to the database
         db.session.commit()
         flash(message="Your account has been updated!", category="success")
-        return redirect(url_for(endpoint="admin_controller.secure_dashboard"))
+        return redirect(url_for(endpoint="super_admin_secure.secure_adashboard"))
 
     # If validation fails, flash the errors for debugging
     if form.errors:
@@ -332,12 +395,13 @@ def secure_account_update():
 
     # Prepopulate fields for GET request
     elif request.method == "GET":
+        form.email.data = current_user.email
         form.username.data = current_user.username
 
     image_file = url_for("static", filename="media/" + current_user.user_profile)
 
     return render_template(
-        template_name_or_list="img_account.html", image_file=image_file, form=form
+        template_name_or_list="update_account.html", image_file=image_file, form=form
     )
 """
 
@@ -460,21 +524,23 @@ SUPER_ADMIN_DASHBOARD_ = \
 """ 
 import os
 from my_demo_app import limiter
-from .form import LoginForm
 from dotenv import load_dotenv
-from my_demo_app import db, bcrypt, app
-from my_demo_app.database.models import User
-from flask_login import login_required, login_user
-from flask import render_template, url_for, flash, redirect, Blueprint
+from .form import LoginForm, RoleForm
+from my_demo_app import db, bcrypt, app, logging
+from my_demo_app.database.models import User, Role
+from flask_login import current_user, login_required, login_user, logout_user
+from flask import render_template, session, url_for, flash, redirect, Blueprint
 
 
 super_admin_secure = Blueprint(
-    import_name=__name__, name="super_admin_secure", template_folder="templates",
+    import_name=__name__,
+    name="super_admin_secure",
+    template_folder="templates",
     static_folder="static",
 )
 
 
-load_dotenv(dotenv_path="testing/config/.env")
+load_dotenv(dotenv_path="my_demo_app/config/.env")
 admin_username = os.getenv("ADMIN_USERNAME")
 admin_password = os.getenv("ADMIN_PASSWORD")
 
@@ -517,7 +583,57 @@ def secure_superlogin():
 @limiter.limit(limit_value="5 per minute", override_defaults=True)
 @login_required
 def secure_adashboard():
-    return render_template("sadashboard_secure.html")
+    image_file = url_for("static", filename="media/" + current_user.user_profile)
+    return render_template("sadashboard_secure.html", image_file=image_file)
+
+
+@super_admin_secure.route(rule="/user_role", methods=["GET", "POST"])
+@login_required
+def add_role():
+    form = RoleForm()
+    if form.validate_on_submit():
+        try:
+            # Check if the role already exists before adding it
+            existing_role = Role.query.filter_by(name=form.role_name.data).first()
+            if existing_role:
+                flash(message="Role already exists! choose different role", category="error")
+                return redirect(url_for("super_admin_secure.add_role"))
+
+            # Create a new role
+            roles = Role(name=form.role_name.data)
+            db.session.add(roles)
+            db.session.commit()
+
+            flash(message="User role added successfully", category="success")
+            return redirect(url_for(endpoint="super_admin_secure.secure_adashboard"))
+
+        except Exception as e:
+            db.session.rollback()
+            logging.error(f"Error adding User Roles: {str(e)}")
+            flash(
+                message="There was a problem adding User Role to the database",
+                category="error",
+            )
+
+    # If form errors exist, flash the error messages
+    if form.errors:
+        error_message = [
+            err_msg for err_msg_list in form.errors.values() for err_msg in err_msg_list
+        ]
+        flash(
+            message=f"There was a problem with the form submission: {'. '.join(error_message)}",
+            category="error",
+        )
+    image_file = url_for("static", filename="media/" + current_user.user_profile)
+    return render_template("user_role.html", form=form, image_file=image_file)
+
+
+
+@super_admin_secure.route("/logout")
+def user_logout():
+    logout_user()  # Logs out the user
+    flash(message="Logout Successfully", category="success")
+    return redirect(url_for("super_admin_secure.secure_superlogin"))
 """
 
 CACHING_CONSTANT = \

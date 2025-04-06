@@ -1,4 +1,5 @@
 USER_MODEL = """
+
 from sqlalchemy.sql import func
 from flask_login import UserMixin
 from my_demo_app import db, login_manager
@@ -29,4 +30,14 @@ class User(db.Model, UserMixin):  # We assume a User can be a Teacher, Administr
 
     def __repr__(self) -> str:
         return f"User('{self.username}')"
+
+
+class Role(db.Model):
+    __tablename__ = "roles"
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), unique=True, nullable=False)
+
+    def __repr__(self):
+        return f"Role('{self.name}')"
 """

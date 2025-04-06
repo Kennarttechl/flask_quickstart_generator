@@ -37,6 +37,7 @@ setup(
         "flask-babel",
         "Flask-Login",
         "Flask-Bcrypt",
+        "python-dotenv",
         "Flask-Caching",
         "Flask-Limiter",
         "python-dotenv",
