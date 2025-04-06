@@ -190,10 +190,12 @@ WTForms==3.1.2
 | Dashboard Mobile View(white theme) |  ![Cloning](documentation/twelve.png) |
 | Reset Profile Page |  ![Cloning](documentation/thirteen.png) |
 | Landing Page (Dark theme) |  ![Cloning](documentation/fourteen.png) |
-| Installation |  ![Cloning](documentation/one.png) |
-| Commands  |  ![Commands](documentation/Commands.png) |
-| Project Creating |  ![Creating project](documentation/Creating_Project.png) |
-| Installation Complete  |  ![Instatllation](documentation/Installation_Complete.png) |
-| Application Startup  |  ![Application Start](documentation/Application_Startup.png) |
-|Landing Page   |   ![Landing Page](documentation/Landing_Page.png)|
+| Page Note Found |  ![Cloning](documentation/404.png) |
+| Not found (Mobile View) |  ![Cloning](documentation/4042.png) |
+| Too Many Request(Prevent by Limiter) |  ![Cloning](documentation/tomany.png) |
+| Mobile View |  ![Cloning](documentation/many.png) |
+| Server Error |  ![Cloning](documentation/server.png) |
+| Mobile View |  ![Cloning](documentation/serverr.png) |
+| File too Large to Upload |  ![Cloning](documentation/filetool.png) |
+| Mobile View  |  ![Commands](documentation/large.png) |
 
